@@ -1,0 +1,9 @@
+
+/venv
+/src/core/__pycache__
+/.pytest_cache
+/.vscode
+/test/__pycache__
+/test/core/__pycache__
+/test/core/application/input_dtos/__pycache__
+/test/core/application/__pycache__
