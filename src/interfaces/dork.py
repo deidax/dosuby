@@ -22,8 +22,8 @@ class Dork(ABC):
     
     
     @abstractmethod
-    def _set_dork_queries(self, query: str):
-        pass
+    def _set_dork_queries(self, querys: list) -> None:
+        self._querys = querys
     
     @abstractmethod
     def get_results(self) -> dict:

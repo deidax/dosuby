@@ -8,7 +8,7 @@ class GoogleDorksAdapter(Dork):
         """
         super().__init__()
     
-    def _set_dork_queries(self, query: str):
+    def _set_dork_queries(self, querys: list):
         """Set the Google query that will be used in the enumeration process
 
         Args:
@@ -17,7 +17,7 @@ class GoogleDorksAdapter(Dork):
         Returns:
             _type_: None
         """
-        return super()._set_dork_queries(query)
+        return super()._set_dork_queries(querys)
     
     def get_results(self) -> dict:
         return super().get_results()
