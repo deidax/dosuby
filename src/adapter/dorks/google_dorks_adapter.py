@@ -1,4 +1,10 @@
+try:
+    from googlesearch import search, get_random_user_agent
+except ImportError:
+    print("No module named 'google' found")
+    
 from src.interfaces.dork import Dork
+from time import sleep
 
 class GoogleDorksAdapter(Dork):
     
@@ -18,9 +24,10 @@ class GoogleDorksAdapter(Dork):
         """
         return [
             f'site:{self.target_uri} -www',
+            f'site:{self.target_uri}',
             f'site:*.{self.target_uri}',
-            f'inurl:{self.target_uri}',
-            f'inurl:{self.target_uri} -www'
+            f'site:*.*.{self.target_uri}',
+            f'site:*.*.*{self.target_uri}',
         ]
     
     def add_dork_queries(self, query: str) -> None:
@@ -38,4 +45,13 @@ class GoogleDorksAdapter(Dork):
         return super().get_results()
     
     def run(self):
-        pass
+        
+        for query in self.queries:
+            user_agent = get_random_user_agent()
+            for j in search(query,tld="com", num=10, stop=2, pause=10, user_agent=user_agent, verify_ssl=False):
+                print(f'{j}\n')
+                self.subdomains = j
+            
+            sleep(2)
+        
+        return self.get_results()

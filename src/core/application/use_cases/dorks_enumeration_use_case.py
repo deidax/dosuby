@@ -30,5 +30,5 @@ class DorksEnumerationUseCase:
         
         self._dork.target_uri = target.uri
         
-        return self._dork.get_results()
+        return self._dork.run()
     

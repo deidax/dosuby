@@ -7,16 +7,20 @@ from src.core.application.exceptions.invalid_target_input_exception import Inval
 def main():
     
     try:
-        target_input_dto = TargetInputDTO(uri='somedomain.com')
+        target_input_dto = TargetInputDTO(uri='uca.ma')
     except InvalidTargetException as ex:
         print(ex)
         return
-        
-    google_dork = GoogleDorksAdapter()
-    target_google_dork_usecase = DorksEnumerationUseCase(dork=google_dork)
-    result = target_google_dork_usecase.execute(target=target_input_dto)
     
-    print(result)
+    try:
+        google_dork = GoogleDorksAdapter()
+        target_google_dork_usecase = DorksEnumerationUseCase(dork=google_dork)
+        result = target_google_dork_usecase.execute(target=target_input_dto)
+        print(result)
+    except Exception as ex:
+        print(ex)
+        return
+
 
 if __name__ == "__main__":
     main()

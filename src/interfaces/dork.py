@@ -43,15 +43,16 @@ class Dork(ABC):
         self.queries.append(query)
     
     @abstractmethod
-    def run(self):
+    def run(self) -> list:
         """This method will run the dork enumeration logic
 
         Returns:
-            None
+            list: returns the output from get_results()
         """
+        return self.get_results()
     
     @abstractmethod
-    def get_results(self) -> dict:
+    def get_results(self) -> list:
         """Get the result output of the enumerated subdomains
 
         Returns:
