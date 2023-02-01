@@ -1,0 +1,22 @@
+from src.core.application.use_cases.dorks_enumeration_use_case import DorksEnumerationUseCase
+from src.core.application.input_dtos.target_input_dto import TargetInputDTO
+from src.adapter.dorks.google_dorks_adapter import GoogleDorksAdapter
+from src.core.application.exceptions.invalid_target_input_exception import InvalidTargetException
+
+
+def main():
+    
+    try:
+        target_input_dto = TargetInputDTO(uri='somedomain.com')
+    except InvalidTargetException as ex:
+        print(ex)
+        return
+        
+    google_dork = GoogleDorksAdapter()
+    target_google_dork_usecase = DorksEnumerationUseCase(dork=google_dork)
+    result = target_google_dork_usecase.execute(target=target_input_dto)
+    
+    print(result)
+
+if __name__ == "__main__":
+    main()

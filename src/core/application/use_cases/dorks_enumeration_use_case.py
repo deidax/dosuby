@@ -28,5 +28,7 @@ class DorksEnumerationUseCase:
         if not isinstance(target, TargetInputDTO):
             raise ValueError(f'target param should be a TargetInputDTO instance, not a {type(target)}.')
         
-        return ['fake.sometext.test', 'dork.sometext.test']
+        self._dork.target_uri = target.uri
+        
+        return self._dork.get_results()
     
