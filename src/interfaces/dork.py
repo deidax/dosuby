@@ -7,9 +7,10 @@ class Dork(ABC):
 
         """
         super().__init__()
-        self._querys = []
+        self._queries = []
         self._target_uri = ''
         self._extra_params = {}
+        self._subdomains = []
     
     
     @property
@@ -19,11 +20,35 @@ class Dork(ABC):
     @target_uri.setter
     def target_uri(self, value):
         self._target_uri = value
+        
+    @property
+    def queries(self):
+        return self._queries
+    
+    @queries.setter
+    def queries(self, value):
+        pass
+    
+    @property
+    def subdomains(self):
+        return self._subdomains
+    
+    @subdomains.setter
+    def subdomains(self, value):
+        self._subdomains.append(value)
     
     
     @abstractmethod
-    def _set_dork_queries(self, querys: list) -> None:
-        self._querys = querys
+    def add_dork_queries(self, query: str) -> None:
+        self.queries.append(query)
+    
+    @abstractmethod
+    def run(self):
+        """This method will run the dork enumeration logic
+
+        Returns:
+            None
+        """
     
     @abstractmethod
     def get_results(self) -> dict:
@@ -32,4 +57,4 @@ class Dork(ABC):
         Returns:
             dict: dictionary output of enumerated subdomains
         """
-        return ['fake.sometext.test', 'dork.sometext.test']
+        return self.subdomains
