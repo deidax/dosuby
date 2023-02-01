@@ -6,8 +6,8 @@ class ValidateTargetInput:
     """
     
     @classmethod
-    def extract_domain(self, target: str) -> Union[str, bool] :
-        """Extract the domain name from target.\n
+    def extract_domain(self, target_uri: str) -> Union[str, bool] :
+        """Extract the domain name from target uri.\n
         if target is not valid return false
 
         Args:
@@ -19,6 +19,6 @@ class ValidateTargetInput:
         """
         pattern = re.compile(r'(?:https?://)?(?:www\.)?([\w-]+\.[\w-]+)')
         
-        match = pattern.search(target)
+        match = pattern.search(target_uri)
         
         return match.group(1) if match else False
