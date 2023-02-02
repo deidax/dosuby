@@ -48,9 +48,9 @@ class GoogleDorksAdapter(Dork):
         
         for query in self.queries:
             user_agent = get_random_user_agent()
-            for j in search(query,tld="com", num=10, stop=2, pause=10, user_agent=user_agent, verify_ssl=False):
-                print(f'{j}\n')
-                self.subdomains = j
+            for q in search(query,tld="com", num=10, stop=2, pause=10, user_agent=user_agent, verify_ssl=False):
+                print(f'{q}\n')
+                self.subdomains = q
             
             sleep(2)
         
