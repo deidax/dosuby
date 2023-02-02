@@ -73,12 +73,14 @@ class SearchEngine(object):
 
     def _item(self, link):
         '''Returns a dictionary of the link data.'''
-        return {
+        i = {
             'host': utils.domain(self._get_url(link)), 
             'link': self._get_url(link), 
             'title': self._get_title(link).strip(), 
             'text': self._get_text(link).strip()
-        } 
+        }
+        
+        return i
 
     def _query_in(self, item):
         '''Checks if query is contained in the item.'''
@@ -87,8 +89,9 @@ class SearchEngine(object):
     def _filter_results(self, soup):
         '''Processes and filters the search results.''' 
         tags = soup.select(self._selectors('links'))
-        results = [self._item(l) for l in tags]
 
+        results = [self._item(l) for l in tags]
+        
         if u'url' in self._filters:
             results = [l for l in results if self._query_in(l['link'])]
         if u'title' in self._filters:
@@ -111,6 +114,8 @@ class SearchEngine(object):
             if self.ignore_duplicate_domains and item['host'] in self.results.hosts():
                 continue
             self.results.append(item)
+            
+            yield item
 
     def _is_ok(self, response):
         '''Checks if the HTTP response is 200 OK.'''
@@ -164,7 +169,8 @@ class SearchEngine(object):
                     break
                 tags = BeautifulSoup(response.html, "html.parser")
                 items = self._filter_results(tags)
-                self._collect_results(items)
+                yield self._collect_results(items)
+                
                 
                 msg = 'page: {:<8} links: {}'.format(page, len(self.results))
                 out.console(msg, end='')

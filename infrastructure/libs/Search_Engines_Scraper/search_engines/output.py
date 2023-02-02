@@ -15,15 +15,17 @@ from .utils import encode_str, decode_bytes
 from .libs import windows_cmd_encoding
 from .config import PYTHON_VERSION
 
+SHOW = False
 
-def print_results(search_engines):
+def print_results(search_engines, show=SHOW):
     '''Prints the search results.'''
-    for engine in search_engines:
-        console(engine.__class__.__name__ + u' results') 
+    if show is True:
+        for engine in search_engines:
+            console(engine.__class__.__name__ + u' results') 
 
-        for i, v in enumerate(engine.results, 1):
-            console(u'{:<4}{}'.format(i, v['link'])) 
-        console(u'')
+            for i, v in enumerate(engine.results, 1):
+                console(u'{:<4}{}'.format(i, v['link'])) 
+            console(u'')
 
 def create_csv_data(search_engines):
     '''CSV formats the search results.'''
@@ -97,12 +99,13 @@ def write_file(data, path, encoding='utf-8'):
         console(e, level=Level.error)
 
 
-def console(msg, end='\n', level=None):
+def console(msg, end='\n', level=None, show=SHOW):
     '''Prints data on the console.'''
-    console_len = get_terminal_size().columns
-    clear_line = u'\r{}\r'.format(u' ' * (console_len - 1))
-    msg = clear_line + (level or u'') + msg
-    print(msg, end=end)
+    if show is True:
+        console_len = get_terminal_size().columns
+        clear_line = u'\r{}\r'.format(u' ' * (console_len - 1))
+        msg = clear_line + (level or u'') + msg
+        print(msg, end=end)
 
 Level = namedtuple('Level', ['info', 'warning', 'error'])(
     info = u'INFO ',
