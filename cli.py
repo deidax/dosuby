@@ -4,6 +4,8 @@ from src.adapter.dorks.google_dorks_adapter import GoogleDorksAdapter
 from src.adapter.dorks.yahoo_dorks_adapter import YahooDorksAdapter
 from src.core.application.exceptions.invalid_target_input_exception import InvalidTargetException
 
+from src.core.application.response.cli.success_response_builder import SuccessResponseBuilder
+
 
 def main():
     
@@ -14,16 +16,21 @@ def main():
         return
     
     try:
-        """
-        google_dork = GoogleDorksAdapter()
-        target_google_dork_usecase = DorksEnumerationUseCase(dork=google_dork)
-        result = target_google_dork_usecase.execute(target=target_input_dto)
-        """
+        # Note: create a service for each dork subdomain enumeration
+        
+        # google_dork = GoogleDorksAdapter()
+        # target_google_dork_usecase = DorksEnumerationUseCase(dork=google_dork)
+        # result = target_google_dork_usecase.execute(target=target_input_dto)
+        
         yahoo_dork = YahooDorksAdapter()
         target_yahoo_dork_usecase = DorksEnumerationUseCase(dork=yahoo_dork)
         result = target_yahoo_dork_usecase.execute(target=target_input_dto)
-        
-        print(result)
+        for rs in result:
+            for r in rs:
+                # print(r.get('link'))
+                success_output = SuccessResponseBuilder().set_value(r.get('link'))\
+                                                         .set_response_message_and_build('Subdomain Found!')
+                print(success_output.get_response())                                       
     except Exception as ex:
         print(ex)
         return

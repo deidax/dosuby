@@ -43,11 +43,12 @@ class YahooDorksAdapter(Dork):
     def run(self):
         yahoo = Yahoo()
         for query in self.queries:
-            for q in yahoo.search(query=query,pages=10):
-                for result in q:
-                    print(result.get('link'))
-                    self.subdomains = result.get('link')
+            for page in yahoo.search(query=query,pages=10):
+                yield page
+                # for result in q:
+                #     self.subdomains = result.get('link')
+                #     print(result.get('link')
             
             sleep(2)
         
-        return self.get_results()
+        # return self.get_results()

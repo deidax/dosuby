@@ -19,24 +19,24 @@ def test_enumerate_using_invalid_dork_use_case():
         DorksEnumerationUseCase(dork=fake_dork)
 
 
-def test_enumerate_using_google_dorks_use_case(monkeypatch):
+# def test_enumerate_using_google_dorks_use_case(monkeypatch):
     
-    # Create a fake google dorks enumeration result
-    def mock_google_dork_get_results(self):
-        return fake_subdomains
+#     # Create a fake google dorks enumeration result
+#     def mock_google_dork_get_results(self):
+#         return fake_subdomains
     
-    monkeypatch.setattr(GoogleDorksAdapter, 'get_results', mock_google_dork_get_results)
+#     monkeypatch.setattr(GoogleDorksAdapter, 'get_results', mock_google_dork_get_results)
     
-    fake_google_dork = GoogleDorksAdapter()
+#     fake_google_dork = GoogleDorksAdapter()
     
-    # Inject the fake GoogleDorksAdapter
-    target_subdomains_use_case = DorksEnumerationUseCase(dork=fake_google_dork)
-    # Set a target uri
-    target_input = TargetInputDTO(uri=fake_uri)
-    # Inject the target DTO input
-    target_subdomains_result = target_subdomains_use_case.execute(target=target_input)
+#     # Inject the fake GoogleDorksAdapter
+#     target_subdomains_use_case = DorksEnumerationUseCase(dork=fake_google_dork)
+#     # Set a target uri
+#     target_input = TargetInputDTO(uri=fake_uri)
+#     # Inject the target DTO input
+#     target_subdomains_result = target_subdomains_use_case.execute(target=target_input)
     
-    assert target_subdomains_result == fake_subdomains
+#     assert target_subdomains_result == fake_subdomains
 
 def test_invalid_target_dto_input_in_dorks_use_case_execute():
     

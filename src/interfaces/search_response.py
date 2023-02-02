@@ -1,5 +1,6 @@
+from abc import ABC, abstractmethod
 
-class SearchResponse():
+class SearchResponse(ABC):
     
     def __init__(self) -> None:
         """This abstract class manages the search response
@@ -31,7 +32,7 @@ class SearchResponse():
     
     @response_message.setter
     def response_message(self, value):
-        self._res_message = self._format_message(value)
+        self._res_message = value
     
     @property
     def status_code(self):
@@ -44,10 +45,8 @@ class SearchResponse():
     def __bool__(self):
         return self._res_type['value']
     
+    @abstractmethod
     def get_response(self):
-        return {
-            'type': self.response_type,
-            'status_code': self.status_code,
-            'message': self.response_message,
-            'response': self.response_value
-        }
+        """Return search results
+        """
+        pass
