@@ -11,6 +11,7 @@ class Dork(ABC):
         self._target_uri = ''
         self._extra_params = {}
         self._subdomains = []
+        self._engine = None
     
     
     @property
@@ -37,19 +38,26 @@ class Dork(ABC):
     def subdomains(self, value):
         self._subdomains.append(value)
     
+    @property
+    def engine(self):
+        return self._engine
+
+    @engine.setter
+    def engine(self, value):
+        self._engine = value
+    
     
     @abstractmethod
     def add_dork_queries(self, query: str) -> None:
         self.queries.append(query)
     
     @abstractmethod
-    def run(self) -> list:
-        """This method will run the dork enumeration logic
+    def run(self):
+        """This method will run the dork enumeration process
 
-        Returns:
-            list: returns the output from get_results()
         """
-        return self.get_results()
+        for query in self.queries:
+            yield self._process(query=query)
     
     @abstractmethod
     def get_results(self) -> list:
@@ -59,3 +67,12 @@ class Dork(ABC):
             dict: dictionary output of enumerated subdomains
         """
         return self.subdomains
+    
+    @abstractmethod
+    def _process(self, query):
+        """This will run the dork enumeration logic
+
+        Args:
+            search_engine (object): search engine to be used
+        """
+        pass

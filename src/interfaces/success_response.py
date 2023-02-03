@@ -10,6 +10,7 @@ class SuccessResponse(SearchResponse):
             'message': self.response_message,
             'subdomain': self.response_value
         }
+        
         return f"Status:    {response.get('status_code')}\n"\
                f"Message:   {response.get('message')}\n"\
                f"Subdomain: {response.get('subdomain')}\n"\
