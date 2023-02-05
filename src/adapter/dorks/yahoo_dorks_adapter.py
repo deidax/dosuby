@@ -12,8 +12,8 @@ class YahooDorksAdapter(Dork):
         """This class will manage the enumeration logic using the Yahoo dorks
 
         """
-        self.engine = Yahoo()
         super().__init__()
+        self.engine = Yahoo()
     
     @property
     def queries(self):
@@ -43,7 +43,7 @@ class YahooDorksAdapter(Dork):
     
     def run(self):
         for query in self.queries:
-            yield self._process(query=query,engine=self.yahoo)
+            yield self._process(query=query)
             sleep(2)
     
     def _process(self, query):
