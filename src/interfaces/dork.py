@@ -51,7 +51,6 @@ class Dork(ABC):
     def add_dork_queries(self, query: str) -> None:
         self.queries.append(query)
     
-    @abstractmethod
     def run(self):
         """This method will run the dork enumeration process
 

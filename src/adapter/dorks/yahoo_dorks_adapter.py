@@ -41,12 +41,8 @@ class YahooDorksAdapter(Dork):
     def get_results(self) -> dict:
         return super().get_results()
     
-    def run(self):
-        for query in self.queries:
-            yield self._process(query=query)
-            sleep(2)
     
     def _process(self, query):
         for page in self.engine.search(query=query,pages=10):
-                
-            yield page
+            for p in page:
+                yield p

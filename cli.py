@@ -18,19 +18,24 @@ def main():
     try:
         # Note: create a service for each dork subdomain enumeration
         
-        # google_dork = GoogleDorksAdapter()
-        # target_google_dork_usecase = DorksEnumerationUseCase(dork=google_dork)
-        # result = target_google_dork_usecase.execute(target=target_input_dto)
+        google_dork = GoogleDorksAdapter()
+        target_google_dork_usecase = DorksEnumerationUseCase(dork=google_dork)
+        result = target_google_dork_usecase.execute(target=target_input_dto)
         
-        yahoo_dork = YahooDorksAdapter()
-        target_yahoo_dork_usecase = DorksEnumerationUseCase(dork=yahoo_dork)
-        result = target_yahoo_dork_usecase.execute(target=target_input_dto)
         for rs in result:
             for r in rs:
-                # print(r.get('link'))
-                success_output = SuccessResponseBuilder().set_value(r.get('link'))\
+                success_output = SuccessResponseBuilder().set_value(r)\
                                                          .set_response_message_and_build('Subdomain Found!')
-                print(success_output.get_response())                                       
+                print(success_output.get_response())       
+        
+        # yahoo_dork = YahooDorksAdapter()
+        # target_yahoo_dork_usecase = DorksEnumerationUseCase(dork=yahoo_dork)
+        # result = target_yahoo_dork_usecase.execute(target=target_input_dto)
+        # for rs in result:
+        #     for r in rs:
+        #         success_output = SuccessResponseBuilder().set_value(r.get('link'))\
+        #                                                  .set_response_message_and_build('Subdomain Found!')
+        #         print(success_output.get_response())                                       
     except Exception as ex:
         print(ex)
         return

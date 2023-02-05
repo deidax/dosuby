@@ -44,13 +44,9 @@ class GoogleDorksAdapter(Dork):
     def get_results(self) -> dict:
         return super().get_results()
     
-    def run(self):
-        
-        for query in self.queries:
-            user_agent = get_random_user_agent()
-            for sub in search(query,tld="com", num=10, stop=2, pause=10, user_agent=user_agent, verify_ssl=False):
-                
-                yield sub
-                
-            sleep(2)
+
+    def _process(self, query):
+        user_agent = get_random_user_agent()
+        for s in search(query,tld="com", num=10, stop=2, pause=10, user_agent=user_agent, verify_ssl=False):
+            yield s
         
