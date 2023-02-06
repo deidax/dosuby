@@ -1,9 +1,10 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
+from typing import List
 
 @dataclass
 class Target:
     
-    subdomains: list[str]
+    subdomains: List[str] = field(default_factory=lambda: [])
     
     def add_subdomain(self, subdomain: str):
         if subdomain not in self.subdomains:

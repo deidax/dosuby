@@ -1,18 +1,19 @@
 try:
-    from googlesearch import search, get_random_user_agent
+    from infrastructure.libs.Search_Engines_Scraper.search_engines import Google
 except ImportError:
-    print("No module named 'google' found")
+    print("No module named 'search_engines' found")
     
-from src.interfaces.dork import Dork
+from src.interfaces.subdomain_enumerator import SubdomainEnumerator
 from time import sleep
 
-class GoogleDorksAdapter(Dork):
+class GoogleDorksAdapter(SubdomainEnumerator):
     
     def __init__(self) -> None:
         """This class will manage the enumeration logic using the Google dorks
 
         """
         super().__init__()
+        self.engine = Google()
     
     @property
     def queries(self):
@@ -46,7 +47,7 @@ class GoogleDorksAdapter(Dork):
     
 
     def _process(self, query):
-        user_agent = get_random_user_agent()
-        for s in search(query,tld="com", num=10, stop=2, pause=10, user_agent=user_agent, verify_ssl=False):
-            yield s
+        for page in self.engine.search(query=query,pages=40):
+            for p in page:
+                yield p
         

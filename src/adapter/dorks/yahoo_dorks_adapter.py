@@ -3,10 +3,10 @@ try:
 except ImportError:
     print("No module named 'search_engines' found")
     
-from src.interfaces.dork import Dork
+from src.interfaces.subdomain_enumerator import SubdomainEnumerator
 from time import sleep
 
-class YahooDorksAdapter(Dork):
+class YahooDorksAdapter(SubdomainEnumerator):
     
     def __init__(self) -> None:
         """This class will manage the enumeration logic using the Yahoo dorks
@@ -43,6 +43,6 @@ class YahooDorksAdapter(Dork):
     
     
     def _process(self, query):
-        for page in self.engine.search(query=query,pages=10):
+        for page in self.engine.search(query=query,pages=40):
             for p in page:
                 yield p

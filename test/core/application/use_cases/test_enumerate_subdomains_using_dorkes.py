@@ -1,7 +1,7 @@
 import pytest
 from src.core.application.input_dtos.target_input_dto import TargetInputDTO
 from src.core.application.use_cases.dorks_enumeration_use_case import DorksEnumerationUseCase
-from src.interfaces.dork import Dork
+from src.interfaces.subdomain_enumerator import SubdomainEnumerator
 from src.adapter.dorks.google_dorks_adapter import GoogleDorksAdapter
 from unittest import mock
 

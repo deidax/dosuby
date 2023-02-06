@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
+from src.core.domain.target import Target
 
-class Dork(ABC):
+class SubdomainEnumerator(ABC):
     
     def __init__(self) -> None:
         """This class will manage the enumeration logic using an Adapter (ex: GoogleDorksAdapter) dorks
@@ -10,7 +11,7 @@ class Dork(ABC):
         self._queries = []
         self._target_uri = ''
         self._extra_params = {}
-        self._subdomains = []
+        self._target = Target()
         self._engine = None
     
     
@@ -32,11 +33,11 @@ class Dork(ABC):
     
     @property
     def subdomains(self):
-        return self._subdomains
+        return self._target
     
     @subdomains.setter
     def subdomains(self, value):
-        self._subdomains.append(value)
+        self._target.append(value)
     
     @property
     def engine(self):
