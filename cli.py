@@ -5,12 +5,12 @@ from src.services.dorks.cli.google_dork_cli_service import GoogleDorkCliService
 
 def main():
     
-    uri = 'uca-ma'
+    uri = 'uca.ma'
     
-    google = GoogleDorkHandler()
+    google = GoogleDorkHandler(uri=uri)
     yahoo = YahooDorkHandler()
     
-    google.set_next(handler=yahoo).handle()
+    google.handle().set_next(handler=yahoo).handle()
     
     # google.handle(uri=uri)
     # yahoo.handle(uri=uri)

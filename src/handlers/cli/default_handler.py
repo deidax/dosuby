@@ -6,6 +6,9 @@ class DefaultHandler(Handler):
     
     _next_handler: Handler = None
     
+    def __init__(self, uri: str='') -> None:
+        self._uri = uri
+    
     def set_next(self, handler: Handler) -> Handler:
         """Returning a handler from here will let us link handlers in a
             convenient way like this:\n
@@ -21,8 +24,8 @@ class DefaultHandler(Handler):
         return handler
 
     @abstractmethod
-    def handle(self, uri: str):
+    def handle(self):
         if self._next_handler:
-            return self._next_handler.handle(uri)
+            return self._next_handler.handle()
 
         return None
