@@ -16,6 +16,7 @@ class ResponseBuilder(ABC):
     @abstractmethod
     def set_value(value=None):
         pass
+    
         
     @staticmethod
     @abstractmethod

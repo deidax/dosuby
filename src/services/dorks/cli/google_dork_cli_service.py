@@ -21,13 +21,14 @@ class GoogleDorkCliService(SubdomainEnumeratorService):
             google_dork = GoogleDorksAdapter()
             target_google_dork_usecase = DorksEnumerationUseCase(dork=google_dork)
             result = target_google_dork_usecase.execute(target=target_input_dto)
-            
+            success_response_builder = SuccessResponseBuilder()
             for rs in result:
                 for r in rs:
-                    success_output = SuccessResponseBuilder().set_value(r.get('link'))\
+                    success_output = success_response_builder.set_value(r.get('link'))\
                                                             .set_response_message_and_build('Subdomain Found!')
                     print(success_output.get_response())
             
+            print(success_output.get_target_subdomains())
             return True
         
         except Exception as ex:

@@ -16,4 +16,6 @@ class SuccessResponse(SearchResponse):
                f"Subdomain: {response.get('subdomain')}\n"\
                f"{'-'*10}\n"
         
+    def get_target_subdomains(self):
+        return self.target.subdomains
         

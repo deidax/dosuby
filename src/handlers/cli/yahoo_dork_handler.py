@@ -5,7 +5,8 @@ class YahooDorkHandler(DefaultHandler):
     
     
     def handle(self, uri: str):
-        if not YahooDorkCliService().read(uri=uri):
+        try:
+            YahooDorkCliService().read(uri=uri)
             return super().handle(uri)
-        
-        return 'No Handler'
+        except Exception as e:
+            return e

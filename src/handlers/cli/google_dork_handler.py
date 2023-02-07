@@ -5,7 +5,9 @@ class GoogleDorkHandler(DefaultHandler):
     
     
     def handle(self, uri: str):
-        if not GoogleDorkCliService().read(uri=uri):
+        try:
+            GoogleDorkCliService().read(uri=uri)
             return super().handle(uri)
-        
-        return 'No Handler'
+        except Exception as e:
+            return e
+            

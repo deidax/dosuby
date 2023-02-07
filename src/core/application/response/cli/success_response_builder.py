@@ -19,6 +19,7 @@ class SuccessResponseBuilder(ResponseBuilder):
     
     def set_value(self, value):
         self._success_response.response_value = value
+        self._success_response.target = value
         return self
     
     def set_response_message(self, message_value):

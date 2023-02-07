@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from src.core.domain.target import Target
 
 class SearchResponse(ABC):
     
@@ -7,6 +8,7 @@ class SearchResponse(ABC):
         """
         self._res_type = None
         self._res_value = None
+        self._target = Target()
         self._res_message = ''
         self._status_code = None
     
@@ -25,6 +27,14 @@ class SearchResponse(ABC):
     @response_type.setter
     def response_type(self, value):
         self._res_type = value
+        
+    @property
+    def target(self):
+        return self._target
+    
+    @target.setter
+    def target(self, value):
+        self._target.add_subdomain(value)
     
     @property
     def response_message(self):

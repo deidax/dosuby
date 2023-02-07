@@ -11,7 +11,6 @@ class SubdomainEnumerator(ABC):
         self._queries = []
         self._target_uri = ''
         self._extra_params = {}
-        self._target = Target()
         self._engine = None
     
     
@@ -30,15 +29,7 @@ class SubdomainEnumerator(ABC):
     @queries.setter
     def queries(self, value):
         pass
-    
-    @property
-    def subdomains(self):
-        return self._target
-    
-    @subdomains.setter
-    def subdomains(self, value):
-        self._target.append(value)
-    
+        
     @property
     def engine(self):
         return self._engine
@@ -59,14 +50,6 @@ class SubdomainEnumerator(ABC):
         for query in self.queries:
             yield self._process(query=query)
     
-    @abstractmethod
-    def get_results(self) -> list:
-        """Get the result output of the enumerated subdomains
-
-        Returns:
-            dict: dictionary output of enumerated subdomains
-        """
-        return self.subdomains
     
     @abstractmethod
     def _process(self, query):

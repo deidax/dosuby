@@ -27,6 +27,7 @@ class InvalidTargetException(Exception):
     def errors(self):
         return self._errors
     
+    
     def __bool__(self):
         return len(self.errors) > 0
 

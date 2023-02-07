@@ -9,7 +9,7 @@ class DefaultHandler(Handler):
     def set_next(self, handler: Handler) -> Handler:
         """Returning a handler from here will let us link handlers in a
             convenient way like this:\n
-            google_dork_handler.set_next(yahoo_dork_handler)
+            google_dork_handler.set_next(yahoo_dork_service)
 
         Args:
             handler (Handler): Handler name
