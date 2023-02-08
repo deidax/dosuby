@@ -42,9 +42,6 @@ class GoogleDorksAdapter(SubdomainEnumerator):
         """
         return super().add_dork_queries(query)
     
-    def get_results(self) -> dict:
-        return super().get_results()
-    
 
     def _process(self, query):
         for page in self.engine.search(query=query,pages=1):

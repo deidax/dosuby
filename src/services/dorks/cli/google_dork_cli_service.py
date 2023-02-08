@@ -9,7 +9,7 @@ from src.core.application.response.cli.success_response_builder import SuccessRe
 class GoogleDorkCliService(SubdomainEnumeratorService):
     
     @classmethod
-    def read(cls, uri: str):
+    def read(cls, uri: str) -> bool:
         try:
             target_input_dto = TargetInputDTO(uri=uri)
         except InvalidTargetException as ex:
