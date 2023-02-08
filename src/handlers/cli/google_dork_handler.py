@@ -1,13 +1,13 @@
-from .default_handler import DefaultHandler
+from .handler import Handler
 from src.services.dorks.cli.google_dork_cli_service import GoogleDorkCliService
 
-class GoogleDorkHandler(DefaultHandler):
+class GoogleDorkHandler(Handler):
     
     
-    def handle(self):
+    def handle(self, uri):
         try:
-            GoogleDorkCliService().read(uri=self._uri)
-            return self
+            GoogleDorkCliService().read(uri=uri)
+            return super().handle(uri)
         except Exception as e:
             return e
             

@@ -8,7 +8,7 @@ class SuccessResponse(SearchResponse):
             'type': self.response_type,
             'status_code': self.status_code,
             'message': self.response_message,
-            'subdomain': self.response_value
+            'subdomain': self.target.subdomain
         }
         
         return f"Status:    {response.get('status_code')}\n"\

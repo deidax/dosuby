@@ -47,7 +47,7 @@ class GoogleDorksAdapter(SubdomainEnumerator):
     
 
     def _process(self, query):
-        for page in self.engine.search(query=query,pages=10):
+        for page in self.engine.search(query=query,pages=1):
             for p in page:
                 yield p
         

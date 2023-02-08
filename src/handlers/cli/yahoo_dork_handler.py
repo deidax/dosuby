@@ -1,12 +1,12 @@
-from .default_handler import DefaultHandler
+from .handler import Handler
 from src.services.dorks.cli.yahoo_dork_cli_service import YahooDorkCliService
 
-class YahooDorkHandler(DefaultHandler):
+class YahooDorkHandler(Handler):
     
     
-    def handle(self):
+    def handle(self, uri):
         try:
-            YahooDorkCliService().read(uri=self._uri)
-            return super().handle()
+            YahooDorkCliService().read(uri=uri)
+            return super().handle(uri)
         except Exception as e:
             return e

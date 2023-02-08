@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 from src.core.domain.target import Target
+from src.serializers.extract_domain_serializer import ExtractUriSerializer
 
 class SearchResponse(ABC):
     
@@ -8,7 +9,7 @@ class SearchResponse(ABC):
         """
         self._res_type = None
         self._res_value = None
-        self._target = Target()
+        self._target = Target(subdomain_serializer=ExtractUriSerializer())
         self._res_message = ''
         self._status_code = None
     
