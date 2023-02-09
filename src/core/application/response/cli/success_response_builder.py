@@ -10,8 +10,7 @@ class SuccessResponseBuilder(ResponseBuilder):
         which is used in further assembly
         """
         self._success_response = SuccessResponse()
-        self._success_response.status_code = CliResponseTypeEnums.SUCCESS['status_code']
-        self._success_response._res_type = CliResponseTypeEnums.SUCCESS
+        
     
     @property
     def success_response(self):

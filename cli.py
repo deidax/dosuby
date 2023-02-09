@@ -5,12 +5,12 @@ from src.handlers.cli.yahoo_dork_handler import YahooDorkHandler
 def main():
     
     
-    # yahoo = YahooDorkHandler()
-    google = GoogleDorkHandler()
+    yahoo = YahooDorkHandler()
+    # google = GoogleDorkHandler()
     
     uri = 'uca.ma'
     
-    google.handle(uri=uri)
+    yahoo.handle(uri=uri)
 
 
 if __name__ == "__main__":
