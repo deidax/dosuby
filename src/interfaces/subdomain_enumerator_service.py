@@ -7,7 +7,12 @@ class SubdomainEnumeratorService(ABC):
     """Abstract class that should be implemented for enumerators services
     """
     
-    def __init__(self, success_response: SuccessResponse) -> None:
+    def __init__(self, success_response: SuccessResponse=SuccessResponse()) -> None:
+        """Enumerator service
+
+        Args:
+            success_response (SuccessResponse, optional): this attributes will have the service success result. Defaults to SuccessResponse().
+        """
         super().__init__()
         self.success_response = success_response
     

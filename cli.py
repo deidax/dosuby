@@ -6,11 +6,11 @@ def main():
     
     
     yahoo = YahooDorkHandler()
-    # google = GoogleDorkHandler()
+    google = GoogleDorkHandler(next_handler=yahoo)
     
     uri = 'uca.ma'
     
-    yahoo.handle(uri=uri)
+    google.handle(uri=uri)
 
 
 if __name__ == "__main__":
