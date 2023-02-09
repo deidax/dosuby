@@ -21,8 +21,12 @@ class Target:
             self._subdomain = value
     
     
-    def add_subdomain(self, subdomain: str):
+    def add_subdomain(self, subdomain: str) -> bool:
+        print(subdomain)
         self.subdomain = subdomain
         if subdomain not in self.subdomains:
             self.subdomains.append(self._subdomain)
+            return True
+        
+        return False
     

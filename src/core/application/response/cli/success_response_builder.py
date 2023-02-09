@@ -13,6 +13,14 @@ class SuccessResponseBuilder(ResponseBuilder):
         self._success_response.status_code = CliResponseTypeEnums.SUCCESS['status_code']
         self._success_response._res_type = CliResponseTypeEnums.SUCCESS
     
+    @property
+    def success_response(self):
+        return self._success_response
+    
+    @success_response.setter
+    def success_response(self, value):
+        self._success_response = value
+    
     def set_type(self, value):
         """Success Response is set by default"""
         pass

@@ -29,4 +29,13 @@ class YahooDorkCliService(SubdomainEnumeratorService):
         
         except Exception as ex:
             print(ex)
-            return       
+            return
+    
+        
+
+    def build_enumerator(self, target_input_dto: TargetInputDTO):
+        pass
+    
+
+    def process_enumerator(self, result):
+        pass       

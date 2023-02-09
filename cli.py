@@ -5,8 +5,8 @@ from src.handlers.cli.yahoo_dork_handler import YahooDorkHandler
 def main():
     
     
-    yahoo = YahooDorkHandler()
-    google = GoogleDorkHandler(next_handler=yahoo)
+    # yahoo = YahooDorkHandler()
+    google = GoogleDorkHandler()
     
     uri = 'uca.ma'
     
