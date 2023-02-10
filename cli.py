@@ -4,6 +4,10 @@ from src.handlers.cli.yahoo_dork_handler import YahooDorkHandler
 
 def main():
     
+    with open('version.txt', 'r') as f:
+        version = f.read().strip()
+    
+    print('version:', version)
     
     yahoo = YahooDorkHandler()
     google = GoogleDorkHandler(next_handler=yahoo)
