@@ -16,8 +16,12 @@ class FailureResponseBuilder(ResponseBuilder):
         self._failure_response.response_value = value
         return self
     
+    def set_type(self, value=None):
+        self._failure_response.response_type = value
+        return self
+    
     def default_type(self):
-        self._failure_response.response_type = CliResponseTypeEnums.FAILURE
+        self._failure_response.response_type = CliResponseTypeEnums.ERROR
         return self
     
     def set_response_message(self, message_value):

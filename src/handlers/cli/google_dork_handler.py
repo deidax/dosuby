@@ -7,8 +7,11 @@ class GoogleDorkHandler(Handler):
     
     def handle(self, uri, success_response: SuccessResponse=SuccessResponse()):
         try:
-            GoogleDorkCliService(success_response=success_response).read(uri=uri)
-            return super().handle(uri,success_response)
+            service_response = GoogleDorkCliService(success_response=success_response).read(uri=uri)
+            # Check if service response is a SuccessResponse
+            if type(service_response) is SuccessResponse:
+                return super().handle(uri,success_response)
         except Exception as e:
-            return e
+            print(e)
+        
             

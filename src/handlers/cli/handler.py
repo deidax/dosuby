@@ -26,4 +26,5 @@ class Handler(EnumerationHandler):
         """
         if self._next_handler:
             return self._next_handler.handle(uri,success_response)
-        return uri
+        
+        return

@@ -1,3 +1,4 @@
+import sys, os
 from .search_response import SearchResponse
 
 class FailedResponse(SearchResponse):
@@ -26,7 +27,10 @@ class FailedResponse(SearchResponse):
     
     def _format_message(self, msg):
         if isinstance(msg, Exception):
-            return "{}: {}".format(msg.__class__.__name__, "{}".format(msg))
+            exc_type, exc_obj, exc_tb = sys.exc_info()
+            fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+            line_number = exc_tb.tb_lineno
+            return "{}: {} in '{}' line {}".format(msg.__class__.__name__, "{}".format(msg), "{}".format(fname), "{}".format(line_number))
         return msg
 
     
@@ -35,11 +39,12 @@ class FailedResponse(SearchResponse):
             'type': self.response_type,
             'status_code': self.status_code,
             'cause': self.cause_of_failure,
-            'message': self.response_message,
+            'message': self._format_message(self.response_message),
         }
         
-        return  f"Status:    {response.get('status_code')}\n"\
-                f"Type:    {response.get('type')}\n"\
-                f"Message:   {response.get('message')}\n"\
-                f"Cause: {response.get('cause')}\n"\
+        return  f"Status:   {response.get('status_code')}\n"\
+                f"{'-'*10}\n"\
+                f"Type:     {response.get('type')}\n"\
+                f"Message:  '{response.get('message')}'\n"\
+                f"Cause:    {response.get('cause')}\n"\
                 f"{'-'*10}\n"
