@@ -27,10 +27,9 @@ class SubdomainEnumeratorService(ABC):
         try:
             dto = cls()._get_target_method(uri=uri)
         except InvalidTargetException as ex:
-            failed_response = FailureResponseBuilder().build_invalid_request_exception_object(ex)
-                                                    
-            print(failed_response.get_response())
-            return False
+            raise ex
+                                    
+            # return failed_response
         
         try:
             result = cls().build_enumerator(target_input_dto=dto)
@@ -39,10 +38,7 @@ class SubdomainEnumeratorService(ABC):
             
         
         except Exception as ex:
-            failed_response = FailureResponseBuilder().build_system_error(ex)
-                                                    
-            print(failed_response.get_response())
-            return False
+            raise ex
         
     
     @abstractmethod

@@ -1,16 +1,20 @@
-from .handler import Handler
+from .handler_cli import HandlerCli
 from src.services.dorks.cli.yahoo_dork_cli_service import YahooDorkCliService
 from src.interfaces.success_response import SuccessResponse
+from src.core.application.response.cli.failed_response_builder import FailureResponseBuilder
 
-class YahooDorkHandler(Handler):
+
+class YahooDorkHandler(HandlerCli):
     
     
-    def handle(self, uri, success_response: SuccessResponse=SuccessResponse()):
+    def run_service(self, uri, success_response: SuccessResponse):
         try:
-            service_response = YahooDorkCliService(success_response=success_response).read(uri=uri)
-            # Check if service response is a SuccessResponse
-            if type(service_response) is SuccessResponse:
-                return super().handle(uri,success_response)
-        except Exception as e:
-            print(e)
-        
+            return YahooDorkCliService(success_response=success_response).read(uri=uri)
+        except Exception as ex:
+            failed_response = FailureResponseBuilder().build_invalid_request_exception_object(ex)
+            print(failed_response) 
+    
+    
+    def __str__(self) -> str:
+        return 'Using Yahoo Dork'
+    

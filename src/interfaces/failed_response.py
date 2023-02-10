@@ -50,5 +50,7 @@ class FailedResponse(SearchResponse):
                 f"{'-'*10}\n"\
                 f"Type:     {response.get('type')}\n"\
                 f"Message:  '{response.get('message')}'\n"\
-                f"Cause:    {response.get('cause')}\n"\
                 f"{'-'*10}\n"
+
+    def __str__(self) -> str:
+        return self.get_response()

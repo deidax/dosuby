@@ -7,14 +7,21 @@ def main():
     with open('version.txt', 'r') as f:
         version = f.read().strip()
     
-    print('version:', version)
-    
-    yahoo = YahooDorkHandler()
-    google = GoogleDorkHandler(next_handler=yahoo)
-    
+    print('dosuby version:', version)
+    print('\n')
     uri = 'uca.ma'
     
-    google.handle(uri=uri)
+    try:
+        
+        yahoo = YahooDorkHandler()
+        google = GoogleDorkHandler(next_handler=yahoo)
+    
+        google.handle(uri=uri)
+        
+    
+    except Exception as ex:
+        print(ex)
+    
 
 
 if __name__ == "__main__":
