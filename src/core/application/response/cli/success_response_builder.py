@@ -29,7 +29,7 @@ class SuccessResponseBuilder(ResponseBuilder):
         self._success_response.target.subdomain = value
         return self
     
-    def set_response_message(self, message_value):
+    def set_response_message(self, message_value: str):
         self._success_response.response_message = message_value
         return self
     

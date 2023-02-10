@@ -28,9 +28,13 @@ class FailedResponse(SearchResponse):
     def _format_message(self, msg):
         if isinstance(msg, Exception):
             exc_type, exc_obj, exc_tb = sys.exc_info()
-            fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
-            line_number = exc_tb.tb_lineno
-            return "{}: {} in '{}' line {}".format(msg.__class__.__name__, "{}".format(msg), "{}".format(fname), "{}".format(line_number))
+            if exc_tb is not None:
+                fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+                line_number = exc_tb.tb_lineno
+                return "{}: {} in '{}' line {}".format(msg.__class__.__name__, "{}".format(msg), "{}".format(fname), "{}".format(line_number))
+           
+            return "{}: {} ".format(msg.__class__.__name__, "{}".format(msg))
+
         return msg
 
     
