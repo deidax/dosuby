@@ -1,42 +1,43 @@
 try:
-    from infrastructure.libs.Search_Engines_Scraper.search_engines import Yahoo
+    from infrastructure.libs.Search_Engines_Scraper.search_engines import Duckduckgo
 except ImportError:
     print("No module named 'search_engines' found")
     
 from src.interfaces.subdomain_enumerator import SubdomainEnumerator
 from time import sleep
 
-class YahooDorksAdapter(SubdomainEnumerator):
+class DuckduckgoDorksAdapter(SubdomainEnumerator):
     
     def __init__(self) -> None:
-        """This class will manage the enumeration logic using the Yahoo dorks
+        """This class will manage the enumeration logic using the Duckduckgo dorks
 
         """
         super().__init__()
-        self.engine = Yahoo()
+        self.engine = Duckduckgo()
     
     @property
     def queries(self):
-        """Default YahooDorkAdapter queries
+        """Default DuckduckgoDorkAdapter queries
 
         Returns:
-            list: returns a list of Yahoo dorks queries to enumerate subdomains\n
+            list: returns a list of Duckduckgo dorks queries to enumerate subdomains\n
             for a given target uri
         """
         return [
-            f'site:{self.target_uri}'
+            f'site:{self.target_uri} -www.{self.target_uri}'
         ]
     
     def add_dork_queries(self, query: str) -> None:
-        """Add a new Yahoo dork query
+        """Add a new Duckduckgo dork query
 
         Args:
-            query (str): should be a Yahoo dork\nex: f'inurl:{target_uri}'
+            query (str): should be a Bing dork\n'
 
         Returns:
             _type_: None
         """
         return super().add_dork_queries(query)
+    
     
     
     def _process(self, query):
