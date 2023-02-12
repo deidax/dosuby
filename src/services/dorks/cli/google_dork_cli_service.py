@@ -5,6 +5,7 @@ from src.core.domain.target import Target
 from src.interfaces.success_response import SuccessResponse
 from src.core.application.dorks.cli.default_dork_cli_enumeration_strategy import DefaultDorkCliEnumerationStrategy
 
+
 class GoogleDorkCliService(SubdomainEnumeratorService):
     
     

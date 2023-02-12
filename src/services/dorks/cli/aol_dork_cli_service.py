@@ -1,33 +1,26 @@
 from src.interfaces.subdomain_enumerator_service import SubdomainEnumeratorService
 from src.core.application.use_cases.dorks_enumeration_use_case import DorksEnumerationUseCase
-from src.core.application.input_dtos.target_input_dto import TargetInputDTO
+from src.core.domain.target import Target
 from src.adapter.dorks.aol_dorks_adapter import AolDorksAdapter
 from src.interfaces.success_response import SuccessResponse
 from src.core.application.response.cli.success_response_builder import SuccessResponseBuilder
 
+from src.interfaces.success_response import SuccessResponse
+from src.core.application.dorks.cli.default_dork_cli_enumeration_strategy import DefaultDorkCliEnumerationStrategy
+
 class AolDorkCliService(SubdomainEnumeratorService):
     
  
-
+    def __init__(self, enumeration_strategy=DefaultDorkCliEnumerationStrategy(), success_response=SuccessResponse()) -> None:
+        super().__init__(enumeration_strategy, success_response)
     
     
-    def build_enumerator(self, target_input_dto: TargetInputDTO):
+    def build_enumerator(self, target: Target):
         aol_dork = AolDorksAdapter()
         target_aol_dork_usecase = DorksEnumerationUseCase(dork=aol_dork)
-        result = target_aol_dork_usecase.execute(target=target_input_dto)
+        result = target_aol_dork_usecase.execute(target=target)
         return result
     
     def process_enumerator(self, result) -> SuccessResponse:
-        success_response_builder = SuccessResponseBuilder()
-        success_response_builder.success_response = self.success_response
-        for rs in result:
-            for r in rs:
-                if self.success_response.target.add_subdomain(r.get('link')) is True:
-                    success_response = success_response_builder.set_response_message_and_build('Subdomain Found!')
-                    print(success_response.get_response())
-            
-        subdomains = success_response.get_target_subdomains()
-        print(subdomains)
-        
-        return success_response     
+        return self.enumeration_strategy.enumeration_process(subdomains_links=result, success_response=self.success_response)     
                                                             
