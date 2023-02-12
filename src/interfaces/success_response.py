@@ -1,8 +1,10 @@
 from .search_response import SearchResponse
 from src.core.application.enums.cli_response_type_enum import CliResponseTypeEnums
+from src.core.domain.target import Target
 
 class SuccessResponse(SearchResponse):
-    """Successful search result Interface"""
+    """Successful search result.
+    """
     
     def __init__(self) -> None:
         super().__init__()
@@ -23,5 +25,10 @@ class SuccessResponse(SearchResponse):
                f"{'-'*10}\n"
         
     def get_target_subdomains(self):
-        return self.target.subdomains
+        if self.target:
+            return self.target.subdomains
+        return []
+    
+    def set_target(self, target: Target):
+        return super().set_target(target)
         

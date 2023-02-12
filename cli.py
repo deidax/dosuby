@@ -17,11 +17,11 @@ def main():
         
         yahoo = YahooDorkHandler()
         google = GoogleDorkHandler(next_handler=yahoo)
-        duckduckgo = DuckduckgoDorkHandler(next_handler=google)
-        brave = BraveDorkHandler(next_handler=duckduckgo)
-        aol = AolDorkHandler(next_handler=brave)
+        # duckduckgo = DuckduckgoDorkHandler(next_handler=google)
+        # brave = BraveDorkHandler(next_handler=duckduckgo)
+        # aol = AolDorkHandler(next_handler=brave)
         
-        aol.handle(uri=uri)
+        google.handle(uri=uri)
         
     
     except Exception as ex:

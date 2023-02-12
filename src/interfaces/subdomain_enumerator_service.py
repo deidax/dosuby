@@ -1,14 +1,16 @@
 from abc import ABC, abstractmethod
-from src.core.application.input_dtos.target_input_dto import TargetInputDTO
+from src.core.domain.target import Target
+from src.serializers.extract_domain_serializer import ExtractUriSerializer
 from src.core.application.exceptions.invalid_target_input_exception import InvalidTargetException
 from src.interfaces.success_response import SuccessResponse
-from src.core.application.response.cli.failed_response_builder import FailureResponseBuilder
+from src.interfaces.enumeration_strategy import EnumerationStrategy
 
 class SubdomainEnumeratorService(ABC):
     """Abstract class that should be implemented for enumerators services
     """
     
-    def __init__(self, success_response: SuccessResponse=SuccessResponse()) -> None:
+    
+    def __init__(self,enumeration_strategy: EnumerationStrategy, success_response: SuccessResponse) -> None:
         """Enumerator service
 
         Args:
@@ -16,25 +18,30 @@ class SubdomainEnumeratorService(ABC):
         """
         super().__init__()
         self.success_response = success_response
+        self.enumeration_strategy = enumeration_strategy
     
-    @classmethod
-    def read(cls, uri: str):
+    def read(self, uri: str):
         """Read the dorks data to get the domain subdomains using dorks
 
         Args:
             uri (str): uri target
         """
         try:
-            dto = cls()._get_target_method(uri=uri)
+            # probably this should be a singletone
+            target = self._get_target_method(uri=uri)
         except InvalidTargetException as ex:
             raise ex
                                     
             # return failed_response
         
         try:
-            result = cls().build_enumerator(target_input_dto=dto)
             
-            return cls().process_enumerator(result)
+            
+            self.success_response.set_target(target=target)
+            
+            result = self.build_enumerator(target=target)
+            
+            return self.process_enumerator(result)
             
         
         except Exception as ex:
@@ -42,15 +49,15 @@ class SubdomainEnumeratorService(ABC):
         
     
     @abstractmethod
-    def build_enumerator(self, target_input_dto: TargetInputDTO):
+    def build_enumerator(self, target: Target):
         """This method will build the enumerator to use. example:\n
         google_dork = GoogleDorksAdapter()\n
         target_google_dork_usecase = DorksEnumerationUseCase(dork=google_dork)\n
-        result = target_google_dork_usecase.execute(target=target_input_dto)\n
+        result = target_google_dork_usecase.execute(target=target)\n
         return result\n
 
         Args:
-            target_input_dto (TargetInputDTO): target input dto that will validate the user input
+            target (Target): target to enumerate
 
         Raises:
             NotImplementedError: This method should be used for any enumerator service
@@ -70,15 +77,15 @@ class SubdomainEnumeratorService(ABC):
         """
         raise NotImplementedError
                     
-    def _get_target_method(self, uri: str) -> TargetInputDTO:
-        """private method to create a target DTO object
+    def _get_target_method(self, uri: str) -> Target:
+        """private method to create a target singleton object
 
         Args:
             uri (str): domain to enumerate
 
         Returns:
-            TargetInputDTO
+            Target
         """
-        return TargetInputDTO(uri=uri)
+        return Target(target_uri=uri, subdomain_serializer=ExtractUriSerializer)
     
     

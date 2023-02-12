@@ -1,5 +1,6 @@
 import sys, os
 from .search_response import SearchResponse
+from src.core.domain.target import Target
 
 class FailedResponse(SearchResponse):
     def __init__(self) -> None:
@@ -54,3 +55,6 @@ class FailedResponse(SearchResponse):
 
     def __str__(self) -> str:
         return self.get_response()
+    
+    def set_target(self, target: Target):
+        return super().set_target(target)

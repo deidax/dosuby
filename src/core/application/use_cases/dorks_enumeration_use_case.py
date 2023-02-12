@@ -1,4 +1,4 @@
-from src.core.application.input_dtos.target_input_dto import TargetInputDTO
+from src.core.domain.target import Target
 from src.interfaces.subdomain_enumerator import SubdomainEnumerator
 
 class DorksEnumerationUseCase:
@@ -18,17 +18,17 @@ class DorksEnumerationUseCase:
         
         self._dork = dork
     
-    def execute(self, target: TargetInputDTO):
+    def execute(self, target: Target):
         """Execute method will run the enumeration process
 
         Args:
-            target (TargetInputDTO): url or domain to enumerate
+            target (Target): url or domain to enumerate
         """
         
-        if not isinstance(target, TargetInputDTO):
-            raise ValueError(f'target param should be a TargetInputDTO instance, not a {type(target)}.')
+        if not isinstance(target, Target):
+            raise ValueError(f'target param should be a Target instance, not a {type(target)}.')
         
-        self._dork.target_uri = target.uri
+        self._dork.target_uri = target.target_uri.uri
         
         return self._dork.run()
     

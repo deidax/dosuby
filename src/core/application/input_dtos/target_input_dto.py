@@ -13,3 +13,13 @@ class TargetInputDTO:
         self.uri = ValidateTargetInput.extract_domain(target_uri=self.uri)
         if self.uri is False:
             raise InvalidTargetException(error={'parameter': 'uri', 'message': 'Invalid target uri'})
+    
+    def check_if_result_is_accurate(self, subdomain: str):
+        """This method will check if the subdomain found is really belongs to the target domain or not
+        
+
+        Args:
+            subdomain (str): the enumerated subdomain
+        """
+        return self.uri in subdomain
+        

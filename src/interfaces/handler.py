@@ -48,8 +48,8 @@ class Handler(EnumerationHandler):
         pass
     
     
-    def _handler_process(self, uri: str, success_response: SuccessResponse=SuccessResponse()):
+    def _handler_process(self, uri: str, success_response: SuccessResponse):
         service_response = self.run_service(uri=uri, success_response=success_response)
         if type(service_response) is SuccessResponse and self._next_handler:
-            return self._next_handler.handle(uri,success_response)
+            return self._next_handler.handle(uri,service_response)
         

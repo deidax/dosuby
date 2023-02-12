@@ -25,10 +25,10 @@ class GoogleDorksAdapter(SubdomainEnumerator):
         """
         return [
             f'site:{self.target_uri} -www',
-            f'site:{self.target_uri}',
-            f'site:*.{self.target_uri}',
-            f'site:*.*.{self.target_uri}',
-            f'site:*.*.*{self.target_uri}',
+            f'site:{self.target_uri} -www',
+            f'site:*.{self.target_uri}  -www',
+            f'site:*.*.{self.target_uri}  -www',
+            f'site:*.*.*{self.target_uri}  -www',
         ]
     
     def add_dork_queries(self, query: str) -> None:

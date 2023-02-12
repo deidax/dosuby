@@ -1,14 +1,30 @@
 import pytest
-from src.core.application.response.cli.success_response_builder import SuccessResponseBuilder
+from src.interfaces.success_response import SuccessResponse
+from src.core.domain.target import Target
+from src.serializers.extract_domain_serializer import ExtractUriSerializer
 
-# def test_cli_success_response_builder():
+
+
+def test_success_response_has_global_final_result():
     
-#     cli_success_response = SuccessResponseBuilder().set_value('sub.domain.test')\
-#                                                    .set_response_message('Subdomain Found!')\
-#                                                    .build_response()
+    target_1 = Target(target_uri='domain.com', subdomain_serializer=ExtractUriSerializer)
+    success_response_1 = SuccessResponse()
+    success_response_1.set_target(target=target_1)
+    
+    success_response_1.target.add_subdomain('sub1.domain.com')
+    success_response_1.target.add_subdomain('sub2.domain.com')
     
     
-#     assert cli_success_response.get_response() == f"Status:    OK\n"\
-#                                                   f"Message:   Subdomain Found!\n"\
-#                                                   f"Subdomain: sub.domain.test\n"\
-#                                                   f"{'-'*10}\n"
+    target_2 = Target(target_uri='domain.com', subdomain_serializer=ExtractUriSerializer)
+    success_response_2 = SuccessResponse()
+    success_response_2.set_target(target=target_2)
+    
+    success_response_2.target.add_subdomain('sub3.domain.com')
+    success_response_2.target.add_subdomain('sub4.domain.com')
+    
+    subdomains = success_response_2.get_target_subdomains()
+    
+    
+    assert target_1 is target_2
+    
+    assert subdomains == ['sub1.domain.com','sub2.domain.com','sub3.domain.com','sub4.domain.com']

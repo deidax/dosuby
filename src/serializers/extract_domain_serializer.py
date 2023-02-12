@@ -7,6 +7,9 @@ from src.interfaces.domain_serializer import DomainSerializer
 
 class ExtractUriSerializer(DomainSerializer):
     
-    def serialize(self, uri: str=''):
+    def serialize(uri: str=''):
         parsed_uri = urlparse(uri)
-        return parsed_uri.netloc
+        parsed_uri = parsed_uri.netloc 
+        if parsed_uri == '':
+            return uri
+        return parsed_uri
