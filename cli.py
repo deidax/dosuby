@@ -3,6 +3,7 @@ from src.handlers.cli.yahoo_dork_handler import YahooDorkHandler
 from src.handlers.cli.duckduckgo_dork_handler import DuckduckgoDorkHandler
 from src.handlers.cli.brave_dork_handler import BraveDorkHandler
 from src.handlers.cli.aol_dork_handler import AolDorkHandler
+from src.handlers.cli.crt_search_handler import CrtSearchHandler
 
 def main():
     
@@ -20,8 +21,9 @@ def main():
         duckduckgo = DuckduckgoDorkHandler(next_handler=google)
         brave = BraveDorkHandler(next_handler=duckduckgo)
         aol = AolDorkHandler(next_handler=brave)
+        crt = CrtSearchHandler(next_handler=aol)
         
-        aol.handle(uri=uri)
+        crt.handle(uri=uri)
         
     
     except Exception as ex:
