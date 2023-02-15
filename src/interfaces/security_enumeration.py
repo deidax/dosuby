@@ -25,7 +25,7 @@ class SecurityEnumeration(ABC):
 
         """
         for query in self.queries:
-            yield self._process(query=query)
+            yield self._process(query=self.target_uri)
     
     
     @abstractmethod

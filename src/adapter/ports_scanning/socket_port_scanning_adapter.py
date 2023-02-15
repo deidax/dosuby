@@ -4,7 +4,6 @@ except ImportError:
     print("No module named 'socket' found")
     
 from src.interfaces.security_enumeration import SecurityEnumeration
-from src.core.domain.target import Target
 
 class SocketPortScanningAdapter(SecurityEnumeration):
     
@@ -26,13 +25,12 @@ class SocketPortScanningAdapter(SecurityEnumeration):
     
 
     def _process(self, **kwargs):
-        if kwargs.get('target'):
-            target = kwargs.get('target')
-            if isinstance(target, Target):
-                for port in self.ports:
-                    result = self.engine.connect_ex(target.target_uri, port)
-                    yield result
-                self.engine.close()
-            else:
-                raise ValueError('target must be a Instance of Target')
+        if kwargs.get('target_uri'):
+            target_uri = kwargs.get('target_uri')
+            for port in self.ports:
+                result = self.engine.connect_ex(target_uri, port)
+                yield result
+            self.engine.close()
+        else:
+            raise ValueError('attribute is not supported')
         
