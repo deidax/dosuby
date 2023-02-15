@@ -6,7 +6,7 @@ class CrtSearch():
     
     
     def search(self, query: str):
-        base_url="https://crt.sh/?q=uca.ma"
+        base_url="https://crt.sh/?q={}".format(query)
         response = requests.get(base_url)
         html_content = response.content
 

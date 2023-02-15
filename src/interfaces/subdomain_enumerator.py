@@ -52,7 +52,7 @@ class SubdomainEnumerator(ABC):
     
     
     @abstractmethod
-    def _process(self, query):
+    def _process(self, **kwargs):
         """This will run the dork enumeration logic
 
         Args:
