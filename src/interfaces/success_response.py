@@ -16,7 +16,7 @@ class SuccessResponse(SearchResponse):
             'type': self.response_type,
             'status_code': self.status_code,
             'message': self.response_message,
-            'subdomain': self.target.subdomain
+            'subdomain': self.target.subdomain.subdomain_uri
         }
         
         return f"Status:    {response.get('status_code')}\n"\
@@ -26,7 +26,7 @@ class SuccessResponse(SearchResponse):
         
     def get_target_subdomains(self):
         if self.target:
-            return self.target.subdomains
+            return self.target.get_target_intel()
         return []
     
     def set_target(self, target: Target):

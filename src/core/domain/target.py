@@ -2,6 +2,7 @@ from dataclasses import dataclass, field
 from src.interfaces.singleton import Singleton
 from src.interfaces.domain_serializer import DomainSerializer
 from src.core.application.input_dtos.target_input_dto import TargetInputDTO
+from .subdomain import Subdomain
 from typing import List
 
 @dataclass
@@ -14,20 +15,20 @@ class Target(metaclass=Singleton):
     """
     
     target_uri: str
-    _subdomain: str = field(init=False)
-    _subdomains: List[str] = field(default_factory=list, init=False)
+    _subdomain: Subdomain = field(init=False)
+    _subdomains: List[Subdomain] = field(init=False,default_factory=list)
     subdomain_serializer: DomainSerializer = None
     
     @property
-    def subdomain(self) -> str:
+    def subdomain(self) -> Subdomain:
         return self._subdomain
     
     @subdomain.setter
     def subdomain(self, value: str) -> None:
-        if self.subdomain_serializer:
-            self._subdomain = self.subdomain_serializer.serialize(value)
-        else:
-            self._subdomain = value
+        self._subdomain = Subdomain(
+                                subdomain_uri=value, 
+                                subdomain_serializer=self.subdomain_serializer
+                            )
     
     @property
     def subdomains(self) -> list:
@@ -43,9 +44,14 @@ class Target(metaclass=Singleton):
     
     def add_subdomain(self, subdomain: str) -> bool:
         self.subdomain = subdomain
-        if self.subdomain not in self.subdomains and self.target_uri.check_if_result_is_accurate(self.subdomain):
+        if not any(sub == self.subdomain for sub in self.subdomains) and self.target_uri.check_if_result_is_accurate(self.subdomain.subdomain_uri):
             self.subdomains = self._subdomain
             return True
         
         return False
+    
+    def get_target_intel(self):
+       
+       sub_dict = lambda s: {'subdomain_uri': s.subdomain_uri}
+       return [(sub_dict)(sub) for sub in self.subdomains]
     

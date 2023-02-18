@@ -11,6 +11,7 @@ class SecurityEnumeration(ABC):
         self._target_uri = ''
         self.engine = None
     
+    
     @property
     def target_uri(self):
         return self._target_uri
@@ -20,12 +21,12 @@ class SecurityEnumeration(ABC):
         self._target_uri = value
         
     
+    @abstractmethod
     def run(self):
         """This method will run the dork enumeration process
 
         """
-        for query in self.queries:
-            yield self._process(query=self.target_uri)
+        pass
     
     
     @abstractmethod

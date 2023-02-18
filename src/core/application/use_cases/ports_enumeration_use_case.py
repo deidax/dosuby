@@ -24,10 +24,8 @@ class PortsEnumerationUseCase:
         Args:
             target (Target): url or domain to enumerate
         """
-        
         if not isinstance(target, Target):
             raise ValueError(f'target param should be a Target instance, not a {type(target)}.')
-        
         self._security_enumerator.target_uri = target.target_uri.uri
         
         return self._security_enumerator.run()

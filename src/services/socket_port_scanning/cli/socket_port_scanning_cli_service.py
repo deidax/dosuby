@@ -21,5 +21,5 @@ class SocketPortScanningCliService(SecurityEnumeratorService):
         return result
     
     def process_enumerator(self, result) -> SuccessResponse:
-        return self.enumeration_strategy.enumeration_process(rows=result, success_response=self.success_response)     
+        return self.enumeration_strategy.enumeration_process(ports=result, success_response=self.success_response)     
                                                             

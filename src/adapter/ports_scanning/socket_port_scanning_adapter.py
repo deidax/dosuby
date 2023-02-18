@@ -1,36 +1,44 @@
 try:
-    import socket
+    from socket import *
 except ImportError:
-    print("No module named 'socket' found")
-    
-from src.interfaces.security_enumeration import SecurityEnumeration
+    print("SocketPortScanningAdapter: No module named 'socket' found")
 
-class SocketPortScanningAdapter(SecurityEnumeration):
+try:
+    from threading import *
+except ImportError:
+    print("SocketPortScanningAdapter: No module named 'threading' found")
+
+    
+from src.interfaces.ports_enumeration_adapter import PortEnumerationAdapter
+
+class SocketPortScanningAdapter(PortEnumerationAdapter):
     
     def __init__(self) -> None:
         """This class will manage the port enumeration logic using the Sockets
 
         """
         super().__init__()
-        self._ports = []
-        self.engine = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.engine = socket(AF_INET, SOCK_STREAM)
     
-    @property
-    def ports(self):
-        return self._ports
     
-    @ports.setter
-    def ports(self, value):
-        self._ports.append(value)
+    def run(self):
+        ip_address = gethostbyname(self.target_uri)
+        for port in self.ports:
+            t = Thread(target=self._process, args=(ip_address, port))
+            t.start()
     
 
-    def _process(self, **kwargs):
-        if kwargs.get('target_uri'):
-            target_uri = kwargs.get('target_uri')
-            for port in self.ports:
-                result = self.engine.connect_ex(target_uri, port)
-                yield result
-            self.engine.close()
-        else:
-            raise ValueError('attribute is not supported')
-        
+    def _process(self, ip, port):
+        # try:
+        #     print('[+] -->'.format(ip))
+        #     self.engine.settimeout(5)
+        #     result = self.engine.connect((ip, port))
+        #     print('[+] {}/tcp open'.format(port))
+        # except:
+        #     return
+        # finally:
+        #     self.engine.close()
+        print("Thread started")
+        print('---->')
+        print("Thread finished")
+    

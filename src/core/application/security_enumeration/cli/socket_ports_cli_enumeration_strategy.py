@@ -14,11 +14,26 @@ class SocketPortsCliEnumerationStrategy(EnumerationStrategy):
         Returns:
             list: results list
         """
-        # success_response = kwargs.get('success_response')
-        # success_response_builder = SuccessResponseBuilder()
-        # success_response_builder.success_response = success_response
-        # # success response for each handler
-        # tmp_success_response = SuccessResponse()
+        success_response = kwargs.get('success_response')
+        success_response_builder = SuccessResponseBuilder()
+        success_response_builder.success_response = success_response
+        # success response for each handler
+        tmp_success_response = SuccessResponse()
+        ports = kwargs.get('ports')
+        # for port in list(next(ports)):
+        #     print(port)
+        #     print(next(port))
+        #     print(next(port))
+
+        #         print(p)
+        # for port in ports:
+        #     while True:
+        #         try:
+        #             p = next(port)
+        #             print(p)
+        #         except StopIteration:
+        #             break
+        
         # for row in rows:
         #     for cell in row:
         #         if len(cell) >= 5:
@@ -29,5 +44,6 @@ class SocketPortsCliEnumerationStrategy(EnumerationStrategy):
             
         # subdomains = tmp_success_response.get_target_subdomains()
         # print(subdomains)
-        
-        # return tmp_success_response
+        if ports:
+            return [port for port in list(next(ports))]
+        return 'NOTHING'
