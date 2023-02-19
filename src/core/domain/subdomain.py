@@ -30,7 +30,6 @@ class Subdomain:
     
     
     @property
-    @cache_results
     @get_ip
     def subdomain_ip(self) -> str:
         return self._subdomain_ip
