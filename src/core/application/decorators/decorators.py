@@ -70,8 +70,8 @@ def cache_results(func):
         
         try:
             cache_singleton = Cache()
-            cache_singleton.cache_subdomais.append(value)
-            cache_singleton.cache_subdomais = list(set(cache_singleton.cache_subdomais))
+            cache_singleton.cache_subdomais = value
+            # cache_singleton.cache_subdomais = cache_singleton.cache_subdomais
         except:
             pass
         

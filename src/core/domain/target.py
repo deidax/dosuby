@@ -4,6 +4,7 @@ from src.interfaces.domain_serializer import DomainSerializer
 from src.core.application.input_dtos.target_input_dto import TargetInputDTO
 from .subdomain import Subdomain
 from typing import List
+from src.core.application.decorators.decorators import *
 
 @dataclass
 class Target(metaclass=Singleton):
@@ -50,6 +51,7 @@ class Target(metaclass=Singleton):
         
         return False
     
+    @cache_results
     def get_target_intel(self):
        
        sub_dict = lambda s: {

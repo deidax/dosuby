@@ -19,14 +19,14 @@ def main():
     try:
         
         # yahoo = YahooDorkHandler()
-        # google = GoogleDorkHandler(next_handler=yahoo)
         # duckduckgo = DuckduckgoDorkHandler(next_handler=google)
         # brave = BraveDorkHandler(next_handler=duckduckgo)
         # aol = AolDorkHandler(next_handler=brave)
         # crt = CrtSearchHandler(next_handler=aol)
         
         yahoo = YahooDorkHandler()
-        crt = CrtSearchHandler(next_handler=yahoo)
+        google = GoogleDorkHandler(next_handler=yahoo)
+        crt = CrtSearchHandler(next_handler=google)
         
         crt.handle(uri=uri)
         
