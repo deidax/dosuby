@@ -8,7 +8,9 @@ class Cache(metaclass=Singleton):
     """Cache results to use in real time execution
     """
     
-    _cache_subdomais: list = field(init=False, default_factory=list)
+    cache_subdomais: list = field(init=False, default_factory=list)
     
     
+    # def check_if_ip_already_found(self):
+        
         
