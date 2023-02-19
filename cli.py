@@ -12,7 +12,7 @@ def main():
     
     print('dosuby version:', version)
     print('\n')
-    uri = 'uca.ma'
+    uri = 'algerac.dz'
     
     try:
         

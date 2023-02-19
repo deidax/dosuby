@@ -52,6 +52,11 @@ class Target(metaclass=Singleton):
     
     def get_target_intel(self):
        
-       sub_dict = lambda s: {'subdomain_uri': s.subdomain_uri}
+       sub_dict = lambda s: {
+                            'subdomain_uri': s.subdomain_uri,
+                            'subdomain_ip': s.subdomain_ip,
+                            'subdomain_hostname': s.subdomain_hostname
+                        }
+       
        return [(sub_dict)(sub) for sub in self.subdomains]
     

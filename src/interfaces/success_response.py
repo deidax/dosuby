@@ -16,7 +16,7 @@ class SuccessResponse(SearchResponse):
             'type': self.response_type,
             'status_code': self.status_code,
             'message': self.response_message,
-            'subdomain': self.target.subdomain.subdomain_uri
+            'subdomain': self.target.subdomain.subdomain_uri,
         }
         
         return f"Status:    {response.get('status_code')}\n"\
