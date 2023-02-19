@@ -12,6 +12,8 @@ class Subdomain:
     _subdomain_hostname: str = field(init=False, default='')
     _subdomain_open_ports_from_uri: str = field(init=False, default='')
     
+    
+    
     @property
     def subdomain_uri(self) -> str:
         return self._subdomain_uri
@@ -28,6 +30,7 @@ class Subdomain:
     
     
     @property
+    @cache_results
     @get_ip
     def subdomain_ip(self) -> str:
         return self._subdomain_ip
@@ -41,7 +44,7 @@ class Subdomain:
     
     
     @property
-    @save_open_port('open_ports')
+    @add_to_list('open_ports')
     @get_open_ports
     def subdomain_open_ports_from_uri(self) -> list:
         """Scan for open ports

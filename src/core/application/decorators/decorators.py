@@ -1,5 +1,6 @@
 import socket
 from src.adapter.ports_scanning.socket_port_scanning_adapter import SocketPortScanningAdapter
+from src.core.domain.cache import Cache
 
 def get_ip(func):
     def wrapper(*args, **kwargs):
@@ -8,7 +9,7 @@ def get_ip(func):
         try:
             value = socket.gethostbyname(value)
         except:
-            pass
+            value = None
         
         return value
     return wrapper
@@ -44,8 +45,8 @@ def get_open_ports(func):
         return []
     return wrapper
 
-def save_open_port(attr_name):
-    """Store open ports in a list
+def add_to_list(attr_name):
+    """values in a list
 
     Args:
         attr_name (list): list attribute to append to
@@ -57,3 +58,22 @@ def save_open_port(attr_name):
             return result
         return wrapper
     return decorator
+
+def cache_results(result):
+    cache_singleton = Cache()
+    cache_singleton.cache_subdomains = result
+    return result
+
+def cache_results(func):
+    def wrapper(*args, **kwargs):
+        value = func(*args, **kwargs)
+        
+        try:
+            cache_singleton = Cache()
+            cache_singleton.cache_subdomais.append(value)
+            cache_singleton.cache_subdomais = list(set(cache_singleton.cache_subdomais))
+        except:
+            pass
+        
+        return value
+    return wrapper

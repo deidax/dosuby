@@ -4,6 +4,7 @@ from src.handlers.cli.duckduckgo_dork_handler import DuckduckgoDorkHandler
 from src.handlers.cli.brave_dork_handler import BraveDorkHandler
 from src.handlers.cli.aol_dork_handler import AolDorkHandler
 from src.handlers.cli.crt_search_handler import CrtSearchHandler
+from src.core.domain.cache import Cache
 
 def main():
     
@@ -12,20 +13,27 @@ def main():
     
     print('dosuby version:', version)
     print('\n')
-    uri = 'uca.ma'
+    uri = 'algerac.dz'
+    # uri = 'uca.ma'
     
     try:
         
+        # yahoo = YahooDorkHandler()
+        # google = GoogleDorkHandler(next_handler=yahoo)
+        # duckduckgo = DuckduckgoDorkHandler(next_handler=google)
+        # brave = BraveDorkHandler(next_handler=duckduckgo)
+        # aol = AolDorkHandler(next_handler=brave)
+        # crt = CrtSearchHandler(next_handler=aol)
+        
         yahoo = YahooDorkHandler()
-        google = GoogleDorkHandler(next_handler=yahoo)
-        duckduckgo = DuckduckgoDorkHandler(next_handler=google)
-        brave = BraveDorkHandler(next_handler=duckduckgo)
-        aol = AolDorkHandler(next_handler=brave)
-        crt = CrtSearchHandler(next_handler=aol)
+        crt = CrtSearchHandler(next_handler=yahoo)
         
         crt.handle(uri=uri)
         
-    
+        print('cache--->')
+        c = Cache()
+        print(c.cache_subdomais)
+
     except Exception as ex:
         print(ex)
     
