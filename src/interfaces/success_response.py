@@ -17,12 +17,16 @@ class SuccessResponse(SearchResponse):
             'status_code': self.status_code,
             'message': self.response_message,
             'subdomain': self.target.subdomain.subdomain_uri,
+            'subdomain_ip': self.target.subdomain.subdomain_ip,
+            'subdomain_ports': self.target.subdomain.subdomain_open_ports_from_uri,
         }
         
         return f"Status:    {response.get('status_code')}\n"\
                f"Message:   {response.get('message')}\n"\
                f"Subdomain: {response.get('subdomain')}\n"\
-               f"{'-'*10}\n"
+               f"Subdomain IP: {response.get('subdomain_ip')}\n"\
+               f"Subdomain Ports: {response.get('subdomain_ports')}\n"\
+               f"{'-'*20}\n"
         
     def get_target_subdomains(self):
         if self.target:

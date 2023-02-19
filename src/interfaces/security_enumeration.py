@@ -1,5 +1,4 @@
 from abc import ABC, abstractmethod
-from src.core.domain.target import Target
 
 class SecurityEnumeration(ABC):
     

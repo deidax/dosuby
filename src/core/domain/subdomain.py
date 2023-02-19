@@ -7,8 +7,10 @@ class Subdomain:
     
     subdomain_serializer: DomainSerializer
     subdomain_uri: str = field(init=True)
+    open_ports: list = field(init=False, default_factory=list)
     _subdomain_ip: str = field(init=False, default='')
     _subdomain_hostname: str = field(init=False, default='')
+    _subdomain_open_ports_from_uri: str = field(init=False, default='')
     
     @property
     def subdomain_uri(self) -> str:
@@ -18,7 +20,9 @@ class Subdomain:
     def subdomain_uri(self, value: str) -> None:
         if self.subdomain_serializer:
             self._subdomain_uri = self.subdomain_serializer.serialize(value)
+            # assign subdomain_uri to get ip and open ports for the asseigned subdomain uri
             self._subdomain_ip = self.subdomain_uri
+            self._subdomain_open_ports_from_uri = self.subdomain_uri
         else:
             self._subdomain_uri = value
     
@@ -35,6 +39,20 @@ class Subdomain:
     def subdomain_hostname(self) -> str:
         return self._subdomain_hostname
     
+    
+    @property
+    @save_open_port('open_ports')
+    @get_open_ports
+    def subdomain_open_ports_from_uri(self) -> list:
+        """Scan for open ports
+
+        Returns:
+            list: open ports list
+        """
+        return self._subdomain_open_ports_from_uri
+    
+    
+
     
     
     

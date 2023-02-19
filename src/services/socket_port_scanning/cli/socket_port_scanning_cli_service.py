@@ -14,7 +14,7 @@ class SocketPortScanningCliService(SecurityEnumeratorService):
         super().__init__(enumeration_strategy, success_response)
     
     
-    def build_enumerator(self, target: Target):
+    def build_enumerator(self, target: Target) -> list:
         socket_port_scanning_adapter = SocketPortScanningAdapter()
         socket_port_scanning_usecase = PortsEnumerationUseCase(security_enumerator=socket_port_scanning_adapter)
         result = socket_port_scanning_usecase.execute(target=target)
