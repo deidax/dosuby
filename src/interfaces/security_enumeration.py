@@ -9,7 +9,6 @@ class SecurityEnumeration(ABC):
         """
         super().__init__()
         self._target_uri = ''
-        self.engine = None
     
     
     @property
@@ -23,7 +22,7 @@ class SecurityEnumeration(ABC):
     
     @abstractmethod
     def run(self):
-        """This method will run the dork enumeration process
+        """This method will run the security enumeration process
 
         """
         pass

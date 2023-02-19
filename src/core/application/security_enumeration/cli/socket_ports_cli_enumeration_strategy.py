@@ -20,6 +20,7 @@ class SocketPortsCliEnumerationStrategy(EnumerationStrategy):
         # success response for each handler
         tmp_success_response = SuccessResponse()
         ports = kwargs.get('ports')
+       
         # for port in list(next(ports)):
         #     print(port)
         #     print(next(port))
@@ -45,5 +46,5 @@ class SocketPortsCliEnumerationStrategy(EnumerationStrategy):
         # subdomains = tmp_success_response.get_target_subdomains()
         # print(subdomains)
         if ports:
-            return [port for port in list(next(ports))]
-        return 'NOTHING'
+            return ports
+        return []

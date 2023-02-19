@@ -7,7 +7,7 @@ class PortEnumerationAdapter(SecurityEnumeration):
 
         """
         super().__init__()
-        self._ports = [21, 22, 23, 25, 53, 80, 110, 119, 123, 143, 161, 194, 443, 465, 587, 993, 995, 3306, 5432, 8080]
+        self._ports = [21, 22, 23, 25, 53, 80, 110, 135, 139, 443]
     
     @property
     def ports(self):
