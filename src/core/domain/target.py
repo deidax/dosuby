@@ -43,6 +43,7 @@ class Target(metaclass=Singleton):
     def __post_init__(self):
          self.target_uri = TargetInputDTO(uri=self.target_uri)
     
+    @cache_results
     def add_subdomain(self, subdomain: str) -> bool:
         self.subdomain = subdomain
         if not any(sub == self.subdomain for sub in self.subdomains) and self.target_uri.check_if_result_is_accurate(self.subdomain.subdomain_uri):
@@ -51,7 +52,7 @@ class Target(metaclass=Singleton):
         
         return False
     
-    @cache_results
+    @save_enumeration_report
     def get_target_intel(self):
        
        sub_dict = lambda s: {

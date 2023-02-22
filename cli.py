@@ -4,7 +4,7 @@ from src.handlers.cli.duckduckgo_dork_handler import DuckduckgoDorkHandler
 from src.handlers.cli.brave_dork_handler import BraveDorkHandler
 from src.handlers.cli.aol_dork_handler import AolDorkHandler
 from src.handlers.cli.crt_search_handler import CrtSearchHandler
-from src.core.domain.cache import Cache
+from src.core.domain.enumeration_reporte import EnumerationReporte
 
 def main():
     
@@ -16,7 +16,7 @@ def main():
     uri = 'algerac.dz'
     # uri = 'uca.ma'
     
-    try:
+    # try:
         
         # yahoo = YahooDorkHandler()
         # duckduckgo = DuckduckgoDorkHandler(next_handler=google)
@@ -24,18 +24,18 @@ def main():
         # aol = AolDorkHandler(next_handler=brave)
         # crt = CrtSearchHandler(next_handler=aol)
         
-        yahoo = YahooDorkHandler()
-        google = GoogleDorkHandler(next_handler=yahoo)
-        crt = CrtSearchHandler(next_handler=google)
-        
-        crt.handle(uri=uri)
-        
-        print('cache--->')
-        c = Cache()
-        print(c.cache_subdomais)
+    yahoo = YahooDorkHandler()
+    google = GoogleDorkHandler(next_handler=yahoo)
+    crt = CrtSearchHandler(next_handler=google)
+    
+    crt.handle(uri=uri)
+    
+    print('cache--->')
+    report = EnumerationReporte()
+    print(report.report_subdomains)
 
-    except Exception as ex:
-        print(ex)
+    # except Exception as ex:
+    #     print(ex)
     
 
 

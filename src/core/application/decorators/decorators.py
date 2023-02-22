@@ -1,6 +1,7 @@
 import socket
 from src.adapter.ports_scanning.socket_port_scanning_adapter import SocketPortScanningAdapter
 from src.core.domain.cache import Cache
+from src.core.domain.enumeration_reporte import EnumerationReporte
 
 def get_ip(func):
     def wrapper(*args, **kwargs):
@@ -34,10 +35,16 @@ def get_open_ports(func):
     """
     def wrapper(*args, **kwargs):
         value = func(*args, **kwargs)
+        # check if the ip address is already in the cache
+        cache = Cache()
+        print('USING CACHE--->', cache.cache_subdomais)
+        if cache.check_if_ip_already_found(ip=value.get('ip')):
+            return cache.search_for_ip_port(ip=value)
+        
         
         try:
             port_scanning = SocketPortScanningAdapter()
-            port_scanning.target_uri = value
+            port_scanning.target_uri = value.get('uri')
             return port_scanning.run()
         except:
             pass
@@ -59,10 +66,10 @@ def add_to_list(attr_name):
         return wrapper
     return decorator
 
-def cache_results(result):
-    cache_singleton = Cache()
-    cache_singleton.cache_subdomains = result
-    return result
+# def cache_results(result):
+#     cache_singleton = Cache()
+#     cache_singleton.cache_subdomains = result
+#     return result
 
 def cache_results(func):
     def wrapper(*args, **kwargs):
@@ -72,6 +79,19 @@ def cache_results(func):
             cache_singleton = Cache()
             cache_singleton.cache_subdomais = value
             # cache_singleton.cache_subdomais = cache_singleton.cache_subdomais
+        except:
+            pass
+        
+        return value
+    return wrapper
+
+def save_enumeration_report(func):
+    def wrapper(*args, **kwargs):
+        value = func(*args, **kwargs)
+        
+        try:
+            report_singleton = EnumerationReporte()
+            report_singleton.report_subdomains = value
         except:
             pass
         

@@ -24,7 +24,7 @@ class Subdomain:
             self._subdomain_uri = self.subdomain_serializer.serialize(value)
             # assign subdomain_uri to get ip and open ports for the asseigned subdomain uri
             self._subdomain_ip = self.subdomain_uri
-            self._subdomain_open_ports_from_uri = self.subdomain_uri
+            self._subdomain_open_ports_from_uri = {'ip':self.subdomain_ip,'uri': self.subdomain_uri}
         else:
             self._subdomain_uri = value
     
