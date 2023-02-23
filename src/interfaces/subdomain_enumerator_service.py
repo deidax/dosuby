@@ -22,7 +22,7 @@ class SubdomainEnumeratorService(ABC):
     
     def read(self, uri: str):
         """Read the dorks data to get the domain subdomains using dorks
-
+        
         Args:
             uri (str): uri target
         """
