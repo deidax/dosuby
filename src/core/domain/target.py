@@ -5,6 +5,7 @@ from src.core.application.input_dtos.target_input_dto import TargetInputDTO
 from .subdomain import Subdomain
 from typing import List
 from src.core.application.decorators.decorators import *
+from src.core.domain.cache import Cache
 
 @dataclass
 class Target(metaclass=Singleton):
@@ -36,6 +37,7 @@ class Target(metaclass=Singleton):
         return self._subdomains
     
     @subdomains.setter
+    @cache_subdomain
     def subdomains(self, value):
         self._subdomains.append(value)
     
@@ -43,7 +45,6 @@ class Target(metaclass=Singleton):
     def __post_init__(self):
          self.target_uri = TargetInputDTO(uri=self.target_uri)
     
-    @cache_results
     def add_subdomain(self, subdomain: str) -> bool:
         self.subdomain = subdomain
         if not any(sub == self.subdomain for sub in self.subdomains) and self.target_uri.check_if_result_is_accurate(self.subdomain.subdomain_uri):

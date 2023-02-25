@@ -13,8 +13,9 @@ def main():
     
     print('dosuby version:', version)
     print('\n')
-    uri = 'algerac.dz'
+    # uri = 'algerac.dz'
     # uri = 'uca.ma'
+    uri = 'univ-alger.dz'
     
     # try:
         
@@ -30,7 +31,7 @@ def main():
     
     crt.handle(uri=uri)
     
-    print('cache--->')
+    print('report--->')
     report = EnumerationReporte()
     print(report.report_subdomains)
 

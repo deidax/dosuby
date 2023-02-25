@@ -37,9 +37,9 @@ def get_open_ports(func):
         value = func(*args, **kwargs)
         # check if the ip address is already in the cache
         cache = Cache()
-        # print('USING CACHE--->', cache.cache_subdomais)
-        # if cache.check_if_ip_already_found(ip=value.get('ip')):
-        #     return cache.search_for_ip_port(ip=value)
+        cached_result = cache.check_if_ip_already_found_and_return_result(ip=value.get('ip'))
+        if cached_result:
+            return cached_result.get('open_ports')
         
         
         try:
@@ -66,22 +66,15 @@ def add_to_list(attr_name):
         return wrapper
     return decorator
 
-# def cache_results(result):
-#     cache_singleton = Cache()
-#     cache_singleton.cache_subdomains = result
-#     return result
-
-def cache_results(func):
-    def wrapper(*args, **kwargs):
-        value = func(*args, **kwargs)
-        
+def cache_subdomain(func):
+    def wrapper(self, value):
         try:
             cache_singleton = Cache()
-            cache_singleton.cache_subdomais = value
-        except:
-            pass
+            cache_singleton.add(value.get_cached_data())
+        except Exception as exc:
+            raise exc
         
-        return value
+        func(self, value)
     return wrapper
 
 def save_enumeration_report(func):
@@ -90,7 +83,7 @@ def save_enumeration_report(func):
         
         try:
             report_singleton = EnumerationReporte()
-            report_singleton.report_subdomains = value
+            report_singleton.add(value)
         except:
             pass
         

@@ -62,6 +62,15 @@ class Subdomain:
         return self.subdomain_uri == __o.subdomain_uri
     
     
+    def get_cached_data(self) -> dict:
+        """Get the subdomain cached data
+
+        Returns:
+            dict: cached subdomain data
+        """
+        return {
+            'ip': self.subdomain_ip,
+            'open_ports': self.subdomain_open_ports_from_uri
+        }
     
-  
     
