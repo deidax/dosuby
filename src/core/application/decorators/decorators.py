@@ -1,5 +1,6 @@
 import socket
 from src.adapter.ports_scanning.socket_port_scanning_adapter import SocketPortScanningAdapter
+from src.adapter.webserver_scanning.http_client_webserver_scanning_adapter import HttpClientWebserverScanningAdapter
 from src.core.domain.cache import Cache
 from src.core.domain.enumeration_reporte import EnumerationReporte
 
@@ -88,4 +89,29 @@ def save_enumeration_report(func):
             pass
         
         return value
+    return wrapper
+
+def get_webserver(func):
+    """Scan for webserver
+
+    Args:
+        func (Any): function that raturn a subdomain
+    """
+    def wrapper(*args, **kwargs):
+        value = func(*args, **kwargs)
+        # check if the ip address is already in the cache
+        # cache = Cache()
+        # cached_result = cache.check_if_ip_already_found_and_return_result(ip=value.get('ip'))
+        # if cached_result:
+        #     return cached_result.get('open_ports')
+        
+        
+        try:
+            webserver_scanning = HttpClientWebserverScanningAdapter()
+            webserver_scanning.target_uri = value.get('ip')
+            return webserver_scanning.run()
+        except:
+            pass
+        
+        return []
     return wrapper

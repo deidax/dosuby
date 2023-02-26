@@ -11,6 +11,7 @@ class Subdomain:
     _subdomain_ip: str = field(init=False, default='')
     _subdomain_hostname: str = field(init=False, default='')
     _subdomain_open_ports_from_uri: str = field(init=False, default='')
+    _subdomain_webserver_from_ip: str = field(init=False, default='')
     
     
     
@@ -25,6 +26,7 @@ class Subdomain:
             # assign subdomain_uri to get ip and open ports for the asseigned subdomain uri
             self._subdomain_ip = self.subdomain_uri
             self._subdomain_open_ports_from_uri = {'ip':self.subdomain_ip,'uri': self.subdomain_uri}
+            self._subdomain_webserver_from_ip = {'ip':self.subdomain_ip,'uri': self.subdomain_uri}
         else:
             self._subdomain_uri = value
     
@@ -54,6 +56,15 @@ class Subdomain:
         return self._subdomain_open_ports_from_uri
     
     
+    @property
+    @get_webserver
+    def subdomain_webserver(self) -> str:
+        """Scan for webserver
+
+        Returns:
+            list: webserver list
+        """
+        return self._subdomain_webserver_from_ip
 
     
     

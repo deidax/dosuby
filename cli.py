@@ -17,26 +17,27 @@ def main():
     # uri = 'uca.ma'
     uri = 'univ-alger.dz'
     
-    # try:
+    try:
         
-        # yahoo = YahooDorkHandler()
-        # duckduckgo = DuckduckgoDorkHandler(next_handler=google)
-        # brave = BraveDorkHandler(next_handler=duckduckgo)
-        # aol = AolDorkHandler(next_handler=brave)
-        # crt = CrtSearchHandler(next_handler=aol)
+        yahoo = YahooDorkHandler()
+        duckduckgo = DuckduckgoDorkHandler(next_handler=yahoo)
+        google = GoogleDorkHandler(next_handler=duckduckgo)
+        brave = BraveDorkHandler(next_handler=google)
+        aol = AolDorkHandler(next_handler=brave)
+        crt = CrtSearchHandler(next_handler=aol)
         
-    yahoo = YahooDorkHandler()
-    google = GoogleDorkHandler(next_handler=yahoo)
-    crt = CrtSearchHandler(next_handler=google)
+    # yahoo = YahooDorkHandler()
+    # google = GoogleDorkHandler(next_handler=yahoo)
+    # crt = CrtSearchHandler(next_handler=google)
     
-    crt.handle(uri=uri)
-    
-    print('report--->')
-    report = EnumerationReporte()
-    print(report.report_subdomains)
+        crt.handle(uri=uri)
+        
+        print('report--->')
+        report = EnumerationReporte()
+        print(report.report_subdomains)
 
-    # except Exception as ex:
-    #     print(ex)
+    except Exception as ex:
+        print(ex)
     
 
 
