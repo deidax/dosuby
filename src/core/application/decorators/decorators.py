@@ -1,5 +1,6 @@
 import socket
 from src.adapter.ports_scanning.socket_port_scanning_adapter import SocketPortScanningAdapter
+from src.adapter.cms_scanning.wordpress_scanning_adapter import WordPressScanningAdapter
 from src.core.domain.cache import Cache
 from src.core.domain.enumeration_reporte import EnumerationReporte
 try:
@@ -56,19 +57,7 @@ def get_open_ports(func):
         return []
     return wrapper
 
-def add_to_list(attr_name):
-    """values in a list
 
-    Args:
-        attr_name (list): list attribute to append to
-    """
-    def decorator(func):
-        def wrapper(*args, **kwargs):
-            result = func(*args, **kwargs)
-            setattr(args[0], attr_name, result)
-            return result
-        return wrapper
-    return decorator
 
 def cache_subdomain(func):
     def wrapper(self, value):
@@ -94,11 +83,35 @@ def save_enumeration_report(func):
         return value
     return wrapper
 
-def get_subdomain_link(func):
+
+def add_to_list(attr_name):
+    """values in a list
+
+    Args:
+        attr_name (list): list attribute to append to
+    """
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            result = func(*args, **kwargs)
+            setattr(args[0], attr_name, result)
+            return result
+        return wrapper
+    return decorator
+
+
+
+def scan_for_cms(func):
     def wrapper(*args, **kwargs):
-        value = func(*args, **kwargs)
-        url = urlparse(value.subdomain_uri)
-        link = '{uri.scheme}://{uri.netloc}/'.format(uri=url)
-        value.subdomain_link = value.subdomain_uri
-        return value
+        ip = func(*args, **kwargs)
+        
+        # try:
+        #     cms_scanning_adapter = WordPressScanningAdapter()
+        #     cms_scanning_adapter.subdomain_ip = ip
+        #     cms = cms_scanning_adapter.run()
+        # except:
+        #     cms = None
+        cms_scanning_adapter = WordPressScanningAdapter()
+        cms_scanning_adapter.subdomain_ip = ip
+        cms = cms_scanning_adapter.run()
+        return cms
     return wrapper

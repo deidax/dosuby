@@ -48,7 +48,6 @@ class Target(metaclass=Singleton):
     
     def add_subdomain(self, subdomain: str) -> bool:
         self.subdomain = subdomain
-        self.subdomain.subdomain_link = subdomain
         if not any(sub == self.subdomain for sub in self.subdomains) and self.target_uri.check_if_result_is_accurate(self.subdomain.subdomain_uri):
             self.subdomains = self._subdomain
             return True
@@ -62,7 +61,7 @@ class Target(metaclass=Singleton):
                             'subdomain_uri': s.subdomain_uri,
                             'subdomain_ip': s.subdomain_ip,
                             'subdomain_hostname': s.subdomain_hostname,
-                            'subdomain_link': s.subdomain_link,
+                            'subdomian_cms': s.subdomain_cms,
                             'subdomain_open_ports': s.open_ports
                         }
        
