@@ -6,6 +6,7 @@ from .subdomain import Subdomain
 from typing import List
 from src.core.application.decorators.decorators import *
 from src.core.domain.cache import Cache
+from src.core.application.decorators.decorators import *
 
 @dataclass
 class Target(metaclass=Singleton):
@@ -47,6 +48,7 @@ class Target(metaclass=Singleton):
     
     def add_subdomain(self, subdomain: str) -> bool:
         self.subdomain = subdomain
+        self.subdomain.subdomain_link = subdomain
         if not any(sub == self.subdomain for sub in self.subdomains) and self.target_uri.check_if_result_is_accurate(self.subdomain.subdomain_uri):
             self.subdomains = self._subdomain
             return True
@@ -60,6 +62,7 @@ class Target(metaclass=Singleton):
                             'subdomain_uri': s.subdomain_uri,
                             'subdomain_ip': s.subdomain_ip,
                             'subdomain_hostname': s.subdomain_hostname,
+                            'subdomain_link': s.subdomain_link,
                             'subdomain_open_ports': s.open_ports
                         }
        

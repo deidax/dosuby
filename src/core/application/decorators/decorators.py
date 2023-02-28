@@ -2,6 +2,10 @@ import socket
 from src.adapter.ports_scanning.socket_port_scanning_adapter import SocketPortScanningAdapter
 from src.core.domain.cache import Cache
 from src.core.domain.enumeration_reporte import EnumerationReporte
+try:
+    from urllib.parse import urlparse
+except ImportError:
+    print("No module named 'urllib' found")
 
 def get_ip(func):
     def wrapper(*args, **kwargs):
@@ -87,5 +91,14 @@ def save_enumeration_report(func):
         except:
             pass
         
+        return value
+    return wrapper
+
+def get_subdomain_link(func):
+    def wrapper(*args, **kwargs):
+        value = func(*args, **kwargs)
+        url = urlparse(value.subdomain_uri)
+        link = '{uri.scheme}://{uri.netloc}/'.format(uri=url)
+        value.subdomain_link = value.subdomain_uri
         return value
     return wrapper
