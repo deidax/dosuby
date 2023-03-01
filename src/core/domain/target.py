@@ -61,7 +61,7 @@ class Target(metaclass=Singleton):
                             'subdomain_uri': s.subdomain_uri,
                             'subdomain_ip': s.subdomain_ip,
                             'subdomain_hostname': s.subdomain_hostname,
-                            'subdomian_cms': s.subdomain_cms,
+                            'subdomian_cms': s.cms,
                             'subdomain_open_ports': s.open_ports
                         }
        

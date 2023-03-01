@@ -117,3 +117,17 @@ def scan_for_cms(func):
         
         return cms
     return wrapper
+
+def save_cms(attr_name):
+    """values in a list
+
+    Args:
+        attr_name (list): list attribute to append to
+    """
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            cms = func(*args, **kwargs)
+            setattr(args[0], attr_name, cms)
+            return cms
+        return wrapper
+    return decorator

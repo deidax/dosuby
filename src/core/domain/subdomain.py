@@ -65,6 +65,7 @@ class Subdomain:
     
     
     @property
+    @save_cms('cms')
     @scan_for_cms
     def subdomain_cms(self):
         return self._subdomain_cms
