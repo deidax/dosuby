@@ -102,16 +102,18 @@ def add_to_list(attr_name):
 
 def scan_for_cms(func):
     def wrapper(*args, **kwargs):
-        ip = func(*args, **kwargs)
+        value = func(*args, **kwargs)
         
-        # try:
-        #     cms_scanning_adapter = WordPressScanningAdapter()
-        #     cms_scanning_adapter.subdomain_ip = ip
-        #     cms = cms_scanning_adapter.run()
-        # except:
-        #     cms = None
-        cms_scanning_adapter = WordPressScanningAdapter()
-        cms_scanning_adapter.subdomain_ip = ip
-        cms = cms_scanning_adapter.run()
+        try:
+            cms = None
+            cache_singleton = Cache()
+            cached_result = cache_singleton.check_if_ip_already_found_and_return_result(ip=value.get('ip'))
+            if 80 in cached_result.get('open_ports'):
+                cms_scanning_adapter = WordPressScanningAdapter()
+                cms_scanning_adapter.subdomain_uri = value.get('uri')
+                cms = cms_scanning_adapter.run()
+        except:
+            cms = None
+        
         return cms
     return wrapper

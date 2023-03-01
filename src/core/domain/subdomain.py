@@ -1,6 +1,7 @@
 from dataclasses import dataclass, field
 from src.interfaces.domain_serializer import DomainSerializer
 from src.core.application.decorators.decorators import *
+from typing import Any
 
 @dataclass
 class Subdomain:
@@ -8,6 +9,7 @@ class Subdomain:
     subdomain_serializer: DomainSerializer
     subdomain_uri: str = field(init=True)
     open_ports: list = field(init=False, default_factory=list)
+    cms: Any = field(init=False)
     _subdomain_cms: str = field(init=False, default='')
     _subdomain_uri: str = field(init=False, default='')
     _subdomain_ip: str = field(init=False, default='')
@@ -31,7 +33,7 @@ class Subdomain:
             
             # assign subdomain_uri to get ip and open ports for the asseigned subdomain uri
             self._subdomain_ip = self.subdomain_uri
-            self._subdomain_cms = self.subdomain_ip
+            self._subdomain_cms = {'ip':self.subdomain_ip,'uri': self.subdomain_uri}
             self._subdomain_open_ports_from_uri = {'ip':self.subdomain_ip,'uri': self.subdomain_uri}
         else:
             self._subdomain_uri = value
