@@ -3,6 +3,7 @@ from src.adapter.ports_scanning.socket_port_scanning_adapter import SocketPortSc
 from src.adapter.cms_scanning.wordpress_scanning_adapter import WordPressScanningAdapter
 from src.core.domain.cache import Cache
 from src.core.domain.enumeration_reporte import EnumerationReporte
+import logging
 try:
     from urllib.parse import urlparse
 except ImportError:

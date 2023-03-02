@@ -22,12 +22,11 @@ class SuccessResponse(SearchResponse):
             'subdomain_ports': self.target.subdomain.subdomain_open_ports_from_uri,
         }
         
-        return f"Status:    {response.get('status_code')}\n"\
-               f"Message:   {response.get('message')}\n"\
+        return f"{'-'*20}\n"\
                f"Subdomain: {response.get('subdomain')}\n"\
-               f"Subdomain IP: {response.get('subdomain_ip')}\n"\
-               f"Subdomain CMS: {response.get('subdomain_cms')}\n"\
-               f"Subdomain Ports: {response.get('subdomain_ports')}\n"\
+               f"[+] IP: {response.get('subdomain_ip')}\n"\
+               f"[+] CMS: {response.get('subdomain_cms')}\n"\
+               f"[+] Ports: {response.get('subdomain_ports')}\n"\
                f"{'-'*20}\n"
         
     def get_target_subdomains(self):

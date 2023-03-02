@@ -5,11 +5,18 @@ from src.handlers.cli.brave_dork_handler import BraveDorkHandler
 from src.handlers.cli.aol_dork_handler import AolDorkHandler
 from src.handlers.cli.crt_search_handler import CrtSearchHandler
 from src.core.domain.enumeration_reporte import EnumerationReporte
+import logging
 
 def main():
     
     with open('version.txt', 'r') as f:
         version = f.read().strip()
+    
+    logging.basicConfig(
+                level=logging.INFO, 
+                format="%(asctime)s %(levelname)s %(message)s",
+                datefmt="%Y-%m-%d %H:%M:%S"
+            )
     
     print('dosuby version:', version)
     print('\n')

@@ -8,6 +8,7 @@ class SecurityEnumeration(ABC):
         """
         super().__init__()
         self._target_uri = ''
+        self.logger_message = 'SecurityEnumeration'
     
     
     @property

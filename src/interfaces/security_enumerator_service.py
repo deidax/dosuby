@@ -21,7 +21,7 @@ class SecurityEnumeratorService(ABC):
         self.enumeration_strategy = enumeration_strategy
     
     def read(self, uri: str):
-        """Read the dorks data to get the domain subdomains using dorks
+        """Read the security enumerator
 
         Args:
             uri (str): uri target

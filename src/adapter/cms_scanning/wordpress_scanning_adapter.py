@@ -38,5 +38,4 @@ class WordPressScanningAdapter(CMSEnumerationAdapter):
         return None
 
     def scann_for_cms_by_url(self, uri, index):
-        print(f"http://{uri}{index}")
         return requests.get(f"http://{uri}{index}", allow_redirects=False, headers=self.user_agent, verify=False)

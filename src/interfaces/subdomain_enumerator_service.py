@@ -5,6 +5,7 @@ from src.core.application.exceptions.invalid_target_input_exception import Inval
 from src.interfaces.success_response import SuccessResponse
 from src.interfaces.enumeration_strategy import EnumerationStrategy
 
+
 class SubdomainEnumeratorService(ABC):
     """Abstract class that should be implemented for enumerators services
     """
@@ -19,6 +20,7 @@ class SubdomainEnumeratorService(ABC):
         super().__init__()
         self.success_response = success_response
         self.enumeration_strategy = enumeration_strategy
+    
     
     def read(self, uri: str):
         """Read the dorks data to get the domain subdomains using dorks

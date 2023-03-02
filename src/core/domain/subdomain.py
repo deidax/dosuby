@@ -1,6 +1,7 @@
 from dataclasses import dataclass, field
 from src.interfaces.domain_serializer import DomainSerializer
-from src.core.application.decorators.decorators import *
+from src.core.application.decorators.enumeration_decorators import *
+from src.core.application.decorators.loggers_decorators import *
 from typing import Any
 
 @dataclass
@@ -40,6 +41,7 @@ class Subdomain:
     
     
     @property
+    @info_ip_found
     @get_ip
     def subdomain_ip(self) -> str:
         return self._subdomain_ip
@@ -67,6 +69,7 @@ class Subdomain:
     @property
     @save_cms('cms')
     @scan_for_cms
+    @info_logger('Scanning for CMS')
     def subdomain_cms(self):
         return self._subdomain_cms
     
@@ -84,7 +87,8 @@ class Subdomain:
         """
         return {
             'ip': self.subdomain_ip,
-            'open_ports': self.subdomain_open_ports_from_uri
+            'open_ports': self.subdomain_open_ports_from_uri,
+            'subdomain_hostname': self.subdomain_hostname
         }
     
     

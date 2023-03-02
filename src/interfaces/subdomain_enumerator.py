@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from src.core.domain.target import Target
+from src.core.application.decorators.loggers_decorators import info_logger
 
 class SubdomainEnumerator(ABC):
     
@@ -43,6 +43,7 @@ class SubdomainEnumerator(ABC):
     def add_dork_queries(self, query: str) -> None:
         self.queries.append(query)
     
+    @info_logger("Reading dork crawler")
     def run(self):
         """This method will run the dork enumeration process
 
