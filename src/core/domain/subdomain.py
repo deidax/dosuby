@@ -89,10 +89,16 @@ class Subdomain:
         Returns:
             dict: cached subdomain data
         """
-        return {
+        self.skip_logging = True
+        
+        cached_data = {
             'ip': self.subdomain_ip,
             'open_ports': self.subdomain_open_ports_from_uri,
             'subdomain_hostname': self.subdomain_hostname
         }
+        
+        self.skip_logging = False
+        
+        return cached_data
     
     

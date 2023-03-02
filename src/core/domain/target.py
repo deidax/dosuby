@@ -20,6 +20,7 @@ class Target(metaclass=Singleton):
     _subdomain: Subdomain = field(init=False)
     _subdomains: List[Subdomain] = field(init=False,default_factory=list)
     subdomain_serializer: DomainSerializer = None
+    skip_logging: bool = field(init=False, default=False)
     
     @property
     def subdomain(self) -> Subdomain:
@@ -46,7 +47,7 @@ class Target(metaclass=Singleton):
          self.target_uri = TargetInputDTO(uri=self.target_uri)
     
     
-    @info_subdomain_found
+    @info_subdomain_found('skip_logging')
     def add_subdomain(self, subdomain: str) -> bool:
         self.subdomain = subdomain
         if not any(sub == self.subdomain for sub in self.subdomains) and self.target_uri.check_if_result_is_accurate(self.subdomain.subdomain_uri):
