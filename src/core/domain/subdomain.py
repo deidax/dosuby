@@ -11,6 +11,7 @@ class Subdomain:
     subdomain_uri: str = field(init=True)
     open_ports: list = field(init=False, default_factory=list)
     cms: Any = field(init=False)
+    skip_logging: bool = field(init=False)
     _subdomain_cms: str = field(init=False, default='')
     _subdomain_uri: str = field(init=False, default='')
     _subdomain_ip: str = field(init=False, default='')
@@ -26,6 +27,7 @@ class Subdomain:
     @subdomain_uri.setter
     def subdomain_uri(self, value: str) -> None:
         
+        self.skip_logging = True
         
         if self.subdomain_serializer:
             
@@ -38,10 +40,12 @@ class Subdomain:
             self._subdomain_open_ports_from_uri = {'ip':self.subdomain_ip,'uri': self.subdomain_uri}
         else:
             self._subdomain_uri = value
-    
+
+        self.skip_logging = False
+        
     
     @property
-    @info_ip_found
+    @info_ip_found('skip_logging')
     @get_ip
     def subdomain_ip(self) -> str:
         return self._subdomain_ip
