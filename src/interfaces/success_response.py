@@ -19,14 +19,24 @@ class SuccessResponse(SearchResponse):
             'subdomain': self.target.subdomain.subdomain_uri,
             'subdomain_ip': self.target.subdomain.subdomain_ip,
             'subdomain_ports': self.target.subdomain.subdomain_open_ports_from_uri,
+<<<<<<< HEAD
             'subdomain_cms': self.target.subdomain.subdomain_cms,
+=======
+            'subdomain_webserver': self.target.subdomain.subdomain_webserver,
+>>>>>>> ff1ae39 (setting up webserver scanning)
         }
         
         return f"{'-'*20}\n"\
                f"Subdomain: {response.get('subdomain')}\n"\
+<<<<<<< HEAD
                f"[+] IP: {response.get('subdomain_ip')}\n"\
                f"[+] CMS: {response.get('subdomain_cms')}\n"\
                f"[+] Ports: {response.get('subdomain_ports')}\n"\
+=======
+               f"Subdomain IP: {response.get('subdomain_ip')}\n"\
+               f"Subdomain Ports: {response.get('subdomain_ports')}\n"\
+               f"Subdomain Webserver: {response.get('subdomain_webserver')}\n"\
+>>>>>>> ff1ae39 (setting up webserver scanning)
                f"{'-'*20}\n"
         
     def get_target_subdomains(self):

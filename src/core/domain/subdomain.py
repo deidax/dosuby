@@ -17,6 +17,7 @@ class Subdomain:
     _subdomain_ip: str = field(init=False, default='')
     _subdomain_hostname: str = field(init=False, default='')
     _subdomain_open_ports_from_uri: str = field(init=False, default='')
+    _subdomain_webserver_from_ip: str = field(init=False, default='')
     
     
     
@@ -37,7 +38,11 @@ class Subdomain:
             # assign subdomain_uri to get ip and open ports for the asseigned subdomain uri
             self._subdomain_ip = self.subdomain_uri
             self._subdomain_open_ports_from_uri = {'ip':self.subdomain_ip,'uri': self.subdomain_uri}
+<<<<<<< HEAD
             self._subdomain_cms = {'ip':self.subdomain_ip,'uri': self.subdomain_uri}
+=======
+            self._subdomain_webserver_from_ip = {'ip':self.subdomain_ip,'uri': self.subdomain_uri}
+>>>>>>> ff1ae39 (setting up webserver scanning)
         else:
             self._subdomain_uri = value
 
@@ -72,11 +77,23 @@ class Subdomain:
     
     
     @property
+<<<<<<< HEAD
     @save_cms('cms')
     @scan_for_cms
     @info_cms_scanning('skip_logging')
     def subdomain_cms(self):
         return self._subdomain_cms
+=======
+    @get_webserver
+    def subdomain_webserver(self) -> str:
+        """Scan for webserver
+
+        Returns:
+            list: webserver list
+        """
+        return self._subdomain_webserver_from_ip
+
+>>>>>>> ff1ae39 (setting up webserver scanning)
     
     
     
