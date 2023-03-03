@@ -64,11 +64,8 @@ class Target(metaclass=Singleton):
                             'subdomain_ip': s.subdomain_ip,
                             'subdomain_hostname': s.subdomain_hostname,
                             'subdomain_open_ports': s.open_ports,
-<<<<<<< HEAD
                             'subdomian_cms': s.cms,
-=======
                             'subdomain_webserver': s.subdomain_webserver
->>>>>>> ff1ae39 (setting up webserver scanning)
                         }
        
        return [(sub_dict)(sub) for sub in self.subdomains]

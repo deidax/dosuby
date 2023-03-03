@@ -27,14 +27,6 @@ def main():
         
         yahoo = YahooDorkHandler()
         duckduckgo = DuckduckgoDorkHandler(next_handler=yahoo)
-<<<<<<< HEAD
-        brave = BraveDorkHandler(next_handler=duckduckgo)
-        aol = AolDorkHandler(next_handler=brave)
-        
-        google = GoogleDorkHandler(next_handler=aol)
-        crt = CrtSearchHandler(next_handler=google)
-        
-=======
         google = GoogleDorkHandler(next_handler=duckduckgo)
         brave = BraveDorkHandler(next_handler=google)
         aol = AolDorkHandler(next_handler=brave)
@@ -44,7 +36,6 @@ def main():
     # google = GoogleDorkHandler(next_handler=yahoo)
     # crt = CrtSearchHandler(next_handler=google)
     
->>>>>>> ff1ae39 (setting up webserver scanning)
         crt.handle(uri=uri)
         
         print('report--->')

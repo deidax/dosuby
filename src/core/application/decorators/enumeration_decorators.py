@@ -1,10 +1,7 @@
 import socket
 from src.adapter.ports_scanning.socket_port_scanning_adapter import SocketPortScanningAdapter
-<<<<<<< HEAD:src/core/application/decorators/enumeration_decorators.py
 from src.adapter.cms_scanning.wordpress_scanning_adapter import WordPressScanningAdapter
-=======
 from src.adapter.webserver_scanning.http_client_webserver_scanning_adapter import HttpClientWebserverScanningAdapter
->>>>>>> ff1ae39 (setting up webserver scanning):src/core/application/decorators/decorators.py
 from src.core.domain.cache import Cache
 from src.core.domain.enumeration_reporte import EnumerationReporte
 import logging
@@ -88,7 +85,6 @@ def save_enumeration_report(func):
         return value
     return wrapper
 
-<<<<<<< HEAD:src/core/application/decorators/enumeration_decorators.py
 
 def add_to_list(attr_name):
     """values in a list
@@ -137,7 +133,6 @@ def save_cms(attr_name):
             return cms
         return wrapper
     return decorator
-=======
 def get_webserver(func):
     """Scan for webserver
 
@@ -162,4 +157,3 @@ def get_webserver(func):
         
         return []
     return wrapper
->>>>>>> ff1ae39 (setting up webserver scanning):src/core/application/decorators/decorators.py
