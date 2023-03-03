@@ -36,8 +36,8 @@ class Subdomain:
             
             # assign subdomain_uri to get ip and open ports for the asseigned subdomain uri
             self._subdomain_ip = self.subdomain_uri
-            self._subdomain_cms = {'ip':self.subdomain_ip,'uri': self.subdomain_uri}
             self._subdomain_open_ports_from_uri = {'ip':self.subdomain_ip,'uri': self.subdomain_uri}
+            self._subdomain_cms = {'ip':self.subdomain_ip,'uri': self.subdomain_uri}
         else:
             self._subdomain_uri = value
 
@@ -61,6 +61,7 @@ class Subdomain:
     @property
     @add_to_list('open_ports')
     @get_open_ports
+    @info_port_scanning('skip_logging')
     def subdomain_open_ports_from_uri(self) -> list:
         """Scan for open ports
 
@@ -73,7 +74,7 @@ class Subdomain:
     @property
     @save_cms('cms')
     @scan_for_cms
-    @info_logger('Scanning for CMS')
+    @info_cms_scanning('skip_logging')
     def subdomain_cms(self):
         return self._subdomain_cms
     
@@ -94,7 +95,6 @@ class Subdomain:
         cached_data = {
             'ip': self.subdomain_ip,
             'open_ports': self.subdomain_open_ports_from_uri,
-            'subdomain_hostname': self.subdomain_hostname
         }
         
         self.skip_logging = False

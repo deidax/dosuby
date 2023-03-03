@@ -38,10 +38,36 @@ def info_subdomain_found(attr_name):
     def decorator(func):
         def wrapper(*args, **kwargs):
             skip = getattr(args[0], attr_name)
+            value = func(*args, **kwargs)
             if not skip:
-                value = func(*args, **kwargs)
                 if value:
                     logging.info(f"[*]  Subdomain found {args[1]}")
+            return value
+        
+        return wrapper
+    return decorator
+
+def info_port_scanning(attr_name):
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            skip = getattr(args[0], attr_name)
+            value = func(*args, **kwargs)
+            if not skip:
+                if value:
+                    logging.info(f"[*]  Scanning ports")
+            return value
+        
+        return wrapper
+    return decorator
+
+def info_cms_scanning(attr_name):
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            skip = getattr(args[0], attr_name)
+            value = func(*args, **kwargs)
+            if not skip:
+                if value:
+                    logging.info(f"[*]  Scanning for CMS")
             return value
         
         return wrapper

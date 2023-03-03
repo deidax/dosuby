@@ -63,8 +63,8 @@ class Target(metaclass=Singleton):
                             'subdomain_uri': s.subdomain_uri,
                             'subdomain_ip': s.subdomain_ip,
                             'subdomain_hostname': s.subdomain_hostname,
+                            'subdomain_open_ports': s.open_ports,
                             'subdomian_cms': s.cms,
-                            'subdomain_open_ports': s.open_ports
                         }
        
        return [(sub_dict)(sub) for sub in self.subdomains]

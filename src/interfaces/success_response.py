@@ -18,8 +18,8 @@ class SuccessResponse(SearchResponse):
             'message': self.response_message,
             'subdomain': self.target.subdomain.subdomain_uri,
             'subdomain_ip': self.target.subdomain.subdomain_ip,
-            'subdomain_cms': self.target.subdomain.subdomain_cms,
             'subdomain_ports': self.target.subdomain.subdomain_open_ports_from_uri,
+            'subdomain_cms': self.target.subdomain.subdomain_cms,
         }
         
         return f"{'-'*20}\n"\
