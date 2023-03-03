@@ -74,11 +74,14 @@ class Subdomain:
     
     
     @property
+<<<<<<< HEAD
     @save_cms('cms')
     @scan_for_cms
     @info_cms_scanning('skip_logging')
     def subdomain_cms(self):
         return self._subdomain_cms
+=======
+>>>>>>> origin/main
     @get_webserver
     def subdomain_webserver(self) -> str:
         """Scan for webserver
