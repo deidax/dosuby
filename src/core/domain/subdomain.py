@@ -59,6 +59,13 @@ class Subdomain:
     def subdomain_hostname(self) -> str:
         return self._subdomain_hostname
     
+    @property
+    @save_cms('cms')
+    @scan_for_cms
+    @info_logger('Scanning for CMS')
+    def subdomain_cms(self):
+        return self._subdomain_cms
+    
     
     @property
     @add_to_list('open_ports')
@@ -74,7 +81,7 @@ class Subdomain:
     
     
     @property
-    # @get_webserver
+    @get_webserver
     def subdomain_webserver(self) -> str:
         """Scan for webserver
 
