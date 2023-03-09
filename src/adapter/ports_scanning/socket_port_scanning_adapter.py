@@ -10,7 +10,6 @@ except ImportError:
 
     
 from src.interfaces.ports_enumeration_adapter import PortEnumerationAdapter
-from src.core.application.decorators.loggers_decorators import info_logger_attribute
 
 class SocketPortScanningAdapter(PortEnumerationAdapter):
     

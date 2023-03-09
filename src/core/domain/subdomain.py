@@ -47,7 +47,6 @@ class Subdomain:
         
     
     @property
-    @info_ip_found('skip_logging')
     @get_ip
     def subdomain_ip(self) -> str:
         return self._subdomain_ip

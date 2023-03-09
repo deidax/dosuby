@@ -24,13 +24,11 @@ class SuccessResponse(SearchResponse):
         }
         
         return f"{'-'*20}\n"\
-               f"Subdomain: {response.get('subdomain')}\n"\
-               f"[+] IP: {response.get('subdomain_ip')}\n"\
-               f"[+] CMS: {response.get('subdomain_cms')}\n"\
-               f"[+] Ports: {response.get('subdomain_ports')}\n"\
-               f"Subdomain IP: {response.get('subdomain_ip')}\n"\
-               f"Subdomain Ports: {response.get('subdomain_ports')}\n"\
-               f"Subdomain Webserver: {response.get('subdomain_webserver')}\n"\
+               f"--> {response.get('subdomain')}\n"\
+               f"   [+] IP: {response.get('subdomain_ip')}\n"\
+               f"   [+] CMS: {response.get('subdomain_cms')}\n"\
+               f"   [+] Ports: {response.get('subdomain_ports')}\n"\
+               f"   [+] Webserver: {response.get('subdomain_webserver')}\n"\
                f"{'-'*20}\n"
         
     def get_target_subdomains(self):
