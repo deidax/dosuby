@@ -4,6 +4,7 @@ from src.handlers.cli.duckduckgo_dork_handler import DuckduckgoDorkHandler
 from src.handlers.cli.brave_dork_handler import BraveDorkHandler
 from src.handlers.cli.aol_dork_handler import AolDorkHandler
 from src.handlers.cli.crt_search_handler import CrtSearchHandler
+from src.handlers.cli.bing_dork_handler import BingDorkHandler
 from src.core.domain.enumeration_reporte import EnumerationReporte
 import logging
 
@@ -13,7 +14,7 @@ def main():
         version = f.read().strip()
     
     logging.basicConfig(
-                level=logging.INFO, 
+                level=logging.DEBUG, 
                 format="%(asctime)s %(levelname)s %(message)s",
                 datefmt="%Y-%m-%d %H:%M:%S"
             )
@@ -25,18 +26,19 @@ def main():
     
     try:
         
-        yahoo = YahooDorkHandler()
-        duckduckgo = DuckduckgoDorkHandler(next_handler=yahoo)
-        google = GoogleDorkHandler(next_handler=duckduckgo)
-        brave = BraveDorkHandler(next_handler=google)
-        aol = AolDorkHandler(next_handler=brave)
-        crt = CrtSearchHandler(next_handler=aol)
+        bing = BingDorkHandler()
+        # yahoo = YahooDorkHandler()
+        # duckduckgo = DuckduckgoDorkHandler(next_handler=yahoo)
+        # google = GoogleDorkHandler(next_handler=duckduckgo)
+        # brave = BraveDorkHandler(next_handler=google)
+        # aol = AolDorkHandler(next_handler=brave)
+        # crt = CrtSearchHandler(next_handler=aol)
         
     # yahoo = YahooDorkHandler()
     # google = GoogleDorkHandler(next_handler=yahoo)
     # crt = CrtSearchHandler(next_handler=google)
     
-        crt.handle(uri=uri)
+        bing.handle(uri=uri)
         
         print('report--->')
         report = EnumerationReporte()
