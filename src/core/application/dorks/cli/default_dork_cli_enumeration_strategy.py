@@ -6,7 +6,7 @@ class DefaultDorkCliEnumerationStrategy(EnumerationStrategy):
     
     
     def enumeration_process(self, subdomains_links, **kwargs) -> list:
-        """This method is used to define what to do with each result found and how to handle it in the CLI
+        """_summary_
 
         Args:
             subdomains_links (generator): subdomains links to process

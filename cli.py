@@ -14,7 +14,7 @@ def main():
         version = f.read().strip()
     
     logging.basicConfig(
-                level=logging.DEBUG, 
+                level=logging.INFO, 
                 format="%(asctime)s %(levelname)s %(message)s",
                 datefmt="%Y-%m-%d %H:%M:%S"
             )
@@ -27,8 +27,8 @@ def main():
     try:
         
         bing = BingDorkHandler()
-        # yahoo = YahooDorkHandler()
-        # duckduckgo = DuckduckgoDorkHandler(next_handler=yahoo)
+        yahoo = YahooDorkHandler(next_handler=bing)
+        duckduckgo = DuckduckgoDorkHandler(next_handler=yahoo)
         # google = GoogleDorkHandler(next_handler=duckduckgo)
         # brave = BraveDorkHandler(next_handler=google)
         # aol = AolDorkHandler(next_handler=brave)
@@ -38,7 +38,7 @@ def main():
     # google = GoogleDorkHandler(next_handler=yahoo)
     # crt = CrtSearchHandler(next_handler=google)
     
-        bing.handle(uri=uri)
+        duckduckgo.handle(uri=uri)
         
         print('report--->')
         report = EnumerationReporte()
