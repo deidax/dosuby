@@ -1,5 +1,8 @@
 import logging
 
+def simple_logging_display(message: str):
+    logging.info(f"[*]  {message}")
+
 def info_logger(message: str):
     def decorator(func):
         def wrapper(*args, **kwargs):

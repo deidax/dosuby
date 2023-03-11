@@ -3,10 +3,10 @@ from src.interfaces.success_response import SuccessResponse
 from src.core.application.response.cli.success_response_builder import SuccessResponseBuilder
 from src.core.application.decorators.loggers_decorators import simple_logging_display
 
-class CrtSearchCliEnumerationStrategy(EnumerationStrategy):
+class AnubisCliEnumerationStrategy(EnumerationStrategy):
     
     
-    def enumeration_process(self, rows, **kwargs) -> list:
+    def enumeration_process(self, subdomains_links, **kwargs) -> list:
         """_summary_
 
         Args:
@@ -20,13 +20,12 @@ class CrtSearchCliEnumerationStrategy(EnumerationStrategy):
         success_response_builder.success_response = success_response
         # success response for each handler
         tmp_success_response = SuccessResponse()
-        for row in rows:
-            for cell in row:
-                if len(cell) >= 5:
-                    sub = cell[4]
-                    if success_response.target.add_subdomain(sub.text) is True:
-                        tmp_success_response = success_response_builder.set_response_message_and_build('Subdomain Found!')
-                        print(tmp_success_response.get_response())
+        for subdomain in subdomains_links:
+            for sub in subdomain:
+                simple_logging_display(f'subdomain: {sub}. scanning...')
+                if success_response.target.add_subdomain(sub) is True:
+                    tmp_success_response = success_response_builder.set_response_message_and_build('Subdomain Found!')
+                    print(tmp_success_response.get_response())
             
         subdomains = tmp_success_response.get_target_subdomains()
         print(subdomains)

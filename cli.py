@@ -6,6 +6,7 @@ from src.handlers.cli.aol_dork_handler import AolDorkHandler
 from src.handlers.cli.crt_search_handler import CrtSearchHandler
 from src.handlers.cli.bing_dork_handler import BingDorkHandler
 from src.core.domain.enumeration_reporte import EnumerationReporte
+from  src.handlers.cli.anubis_dork_handler import AnubisHandler
 import logging
 
 def main():
@@ -14,18 +15,19 @@ def main():
         version = f.read().strip()
     
     logging.basicConfig(
-                level=logging.INFO, 
+                level=logging.DEBUG, 
                 format="%(asctime)s %(levelname)s %(message)s",
                 datefmt="%Y-%m-%d %H:%M:%S"
             )
     
     print('dosuby version:', version)
     print('\n')
-    uri = 'algerac.dz'
-    # uri = 'uca.ma'
+    # uri = 'algerac.dz'
+    uri = 'uca.ma'
     
     try:
         
+        anubis = AnubisHandler()
         bing = BingDorkHandler()
         yahoo = YahooDorkHandler(next_handler=bing)
         duckduckgo = DuckduckgoDorkHandler(next_handler=yahoo)
@@ -38,7 +40,7 @@ def main():
     # google = GoogleDorkHandler(next_handler=yahoo)
     # crt = CrtSearchHandler(next_handler=google)
     
-        duckduckgo.handle(uri=uri)
+        anubis.handle(uri=uri)
         
         print('report--->')
         report = EnumerationReporte()
