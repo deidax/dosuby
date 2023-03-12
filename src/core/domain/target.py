@@ -6,6 +6,7 @@ from .subdomain import Subdomain
 from typing import List
 from src.core.application.decorators.enumeration_decorators import *
 from src.core.application.decorators.loggers_decorators import *
+from .config import Config
 
 @dataclass
 class Target(metaclass=Singleton):
@@ -19,6 +20,7 @@ class Target(metaclass=Singleton):
     target_uri: str
     _subdomain: Subdomain = field(init=False)
     _subdomains: List[Subdomain] = field(init=False,default_factory=list)
+    config: Config = field(init=False)
     subdomain_serializer: DomainSerializer = None
     skip_logging: bool = field(init=False, default=False)
     
@@ -45,6 +47,7 @@ class Target(metaclass=Singleton):
     
     def __post_init__(self):
          self.target_uri = TargetInputDTO(uri=self.target_uri)
+         self.config = Config()
     
     
     @info_subdomain_found('skip_logging')
@@ -59,14 +62,20 @@ class Target(metaclass=Singleton):
     @save_enumeration_report
     def get_target_intel(self):
        
-       sub_dict = lambda s: {
-                            'subdomain_uri': s.subdomain_uri,
-                            'subdomain_ip': s.subdomain_ip,
-                            'subdomain_hostname': s.subdomain_hostname,
-                            'subdomain_open_ports': s.open_ports,
-                            'subdomian_cms': s.cms,
-                            'subdomain_webserver': s.subdomain_webserver
-                        }
+       if self.config.scanning_modules:
+           sub_dict = lambda s: {
+                                    'subdomain_uri': s.subdomain_uri,
+                                    'subdomain_ip': s.subdomain_ip,
+                                    'subdomain_hostname': s.subdomain_hostname,
+                                    'subdomain_open_ports': s.open_ports,
+                                    'subdomian_cms': s.cms,
+                                    'subdomain_webserver': s.subdomain_webserver
+                                }
+       else:
+           sub_dict = lambda s: {
+                                    'subdomain_uri': s.subdomain_uri,
+                                }
+           
        
        return [(sub_dict)(sub) for sub in self.subdomains]
     

@@ -1,14 +1,19 @@
 import socket
 from src.adapter.ports_scanning.socket_port_scanning_adapter import SocketPortScanningAdapter
 from src.core.domain.cache import Cache
+from src.core.domain.config import Config
+from src.core.application.enums.modules_status import ModuleStatus
 from src.core.domain.enumeration_reporte import EnumerationReporte
 from src.adapter.cms_scanning.wordpress_scanning_adapter import WordPressScanningAdapter
 from src.adapter.webserver_scanning.http_client_webserver_scanning_adapter import HttpClientWebserverScanningAdapter
 
+config = Config()
+
 def get_ip(func):
     def wrapper(*args, **kwargs):
         value = func(*args, **kwargs)
-        
+        if not config.scanning_modules:
+            return ModuleStatus.ABORT
         try:
             value = socket.gethostbyname(value)
         except:
@@ -20,7 +25,8 @@ def get_ip(func):
 def get_hostname(func):
     def wrapper(*args, **kwargs):
         value = func(*args, **kwargs)
-        
+        if not config.scanning_modules:
+            return ModuleStatus.ABORT
         try:
             value = socket.gethostbyaddr(value)[0]
         except socket.error:
@@ -37,6 +43,8 @@ def get_open_ports(func):
     """
     def wrapper(*args, **kwargs):
         value = func(*args, **kwargs)
+        if not config.scanning_modules:
+            return ModuleStatus.ABORT
         # check if the ip address is already in the cache
         cache = Cache()
         cached_result = cache.check_if_ip_already_found_and_return_result(ip=value.get('ip'))
@@ -95,7 +103,8 @@ def save_enumeration_report(func):
 def scan_for_cms(func):
     def wrapper(*args, **kwargs):
         value = func(*args, **kwargs)
-        
+        if not config.scanning_modules:
+            return ModuleStatus.ABORT
         try:
             cms = None
             cache_singleton = Cache()
@@ -118,6 +127,8 @@ def save_cms(attr_name):
     """
     def decorator(func):
         def wrapper(*args, **kwargs):
+            if not config.scanning_modules:
+                return ModuleStatus.ABORT
             cms = func(*args, **kwargs)
             setattr(args[0], attr_name, cms)
             return cms
@@ -132,13 +143,8 @@ def get_webserver(func):
     """
     def wrapper(*args, **kwargs):
         value = func(*args, **kwargs)
-        # check if the ip address is already in the cache
-        # cache = Cache()
-        # cached_result = cache.check_if_ip_already_found_and_return_result(ip=value.get('ip'))
-        # if cached_result:
-        #     return cached_result.get('open_ports')
-        
-        
+        if not config.scanning_modules:
+            return ModuleStatus.ABORT
         try:
             webserver_scanning = HttpClientWebserverScanningAdapter()
             webserver_scanning.target_uri = value.get('ip')

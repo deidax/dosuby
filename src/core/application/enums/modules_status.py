@@ -1,0 +1,3 @@
+
+class ModuleStatus:
+    ABORT = 'ABORT'
