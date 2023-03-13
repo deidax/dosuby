@@ -17,13 +17,13 @@ def main():
     
     
     logging.basicConfig(
-                level=logging.DEBUG, 
+                level=logging.INFO, 
                 format="%(asctime)s %(levelname)s %(message)s",
                 datefmt="%Y-%m-%d %H:%M:%S"
             )
     
     config = Config()
-    config.scanning_modules = False
+    config.scanning_modules = True
     
     print('dosuby version:', version)
     print('\n')
@@ -32,11 +32,11 @@ def main():
     
     try:
         
-        anubis = AnubisHandler()
+        # anubis = AnubisHandler()
         bing = BingDorkHandler()
         yahoo = YahooDorkHandler(next_handler=bing)
         duckduckgo = DuckduckgoDorkHandler(next_handler=yahoo)
-        # google = GoogleDorkHandler(next_handler=duckduckgo)
+        google = GoogleDorkHandler(next_handler=duckduckgo)
         # brave = BraveDorkHandler(next_handler=google)
         # aol = AolDorkHandler(next_handler=brave)
         # crt = CrtSearchHandler(next_handler=aol)
@@ -45,7 +45,7 @@ def main():
     # google = GoogleDorkHandler(next_handler=yahoo)
     # crt = CrtSearchHandler(next_handler=google)
     
-        anubis.handle(uri=uri)
+        google.handle(uri=uri)
         
         print('report--->')
         report = EnumerationReporte()

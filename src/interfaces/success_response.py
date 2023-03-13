@@ -17,7 +17,8 @@ class SuccessResponse(SearchResponse):
         if self.config.scanning_modules is True:
             return self._get_response_with_scanning_modules()
         
-        return self._get_response_without_scanning_modules()
+        return ''
+        # return self._get_response_without_scanning_modules()
             
             
     def get_target_subdomains(self):

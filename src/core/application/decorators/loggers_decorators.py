@@ -1,4 +1,6 @@
 import logging
+from src.core.domain.config import Config
+from src.serializers.extract_domain_serializer import ExtractUriSerializer
 
 def simple_logging_display(message: str):
     logging.info(f"[*]  {message}")
@@ -44,11 +46,17 @@ def info_subdomain_found(attr_name):
             value = func(*args, **kwargs)
             if not skip:
                 if value:
-                    logging.info(f"[*]  Subdomain found {args[1]}")
+                    config = Config()
+                    sub_ser = ExtractUriSerializer.serialize(uri=args[1])
+                    if not config.scanning_modules:
+                        logging.info(f"[*]  Subdomain found {sub_ser}")
+                    else:
+                        logging.info(f"[*]  Subdomain found {sub_ser}. Scanning for [open ports, CMS, WebServer]")
             return value
         
         return wrapper
     return decorator
+
 
 def info_port_scanning(attr_name):
     def decorator(func):

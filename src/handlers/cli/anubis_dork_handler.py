@@ -14,6 +14,6 @@ class AnubisHandler(HandlerCli):
             print(failed_response) 
     
     def __str__(self) -> str:
-        return 'Using Aol Dork'
+        return 'Using Anubis Dork'
         
             
