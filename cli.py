@@ -22,7 +22,8 @@ def main():
                 datefmt="%Y-%m-%d %H:%M:%S"
             )
     
-    config = Config(scanning_modules=True)
+    config = Config()
+    config.scanning_modules = False
     
     print('dosuby version:', version)
     print('\n')

@@ -7,11 +7,12 @@ from src.core.domain.enumeration_reporte import EnumerationReporte
 from src.adapter.cms_scanning.wordpress_scanning_adapter import WordPressScanningAdapter
 from src.adapter.webserver_scanning.http_client_webserver_scanning_adapter import HttpClientWebserverScanningAdapter
 
-config = Config()
+
 
 def get_ip(func):
     def wrapper(*args, **kwargs):
         value = func(*args, **kwargs)
+        config = Config()
         if not config.scanning_modules:
             return ModuleStatus.ABORT
         try:
@@ -25,6 +26,7 @@ def get_ip(func):
 def get_hostname(func):
     def wrapper(*args, **kwargs):
         value = func(*args, **kwargs)
+        config = Config()
         if not config.scanning_modules:
             return ModuleStatus.ABORT
         try:
@@ -43,6 +45,7 @@ def get_open_ports(func):
     """
     def wrapper(*args, **kwargs):
         value = func(*args, **kwargs)
+        config = Config()
         if not config.scanning_modules:
             return ModuleStatus.ABORT
         # check if the ip address is already in the cache
@@ -103,6 +106,7 @@ def save_enumeration_report(func):
 def scan_for_cms(func):
     def wrapper(*args, **kwargs):
         value = func(*args, **kwargs)
+        config = Config()
         if not config.scanning_modules:
             return ModuleStatus.ABORT
         try:
@@ -127,6 +131,7 @@ def save_cms(attr_name):
     """
     def decorator(func):
         def wrapper(*args, **kwargs):
+            config = Config()
             if not config.scanning_modules:
                 return ModuleStatus.ABORT
             cms = func(*args, **kwargs)
@@ -143,6 +148,7 @@ def get_webserver(func):
     """
     def wrapper(*args, **kwargs):
         value = func(*args, **kwargs)
+        config = Config()
         if not config.scanning_modules:
             return ModuleStatus.ABORT
         try:
