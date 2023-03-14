@@ -22,30 +22,30 @@ def main():
                 datefmt="%Y-%m-%d %H:%M:%S"
             )
     
+    
     config = Config()
     config.scanning_modules = False
     
     print('dosuby version:', version)
     print('\n')
-    # uri = 'algerac.dz'
     uri = 'uca.ma'
     
     try:
         
-        # anubis = AnubisHandler()
-        bing = BingDorkHandler()
+        crt = CrtSearchHandler()
+        anubis = AnubisHandler(next_handler=crt)
+        bing = BingDorkHandler(next_handler=anubis)
         yahoo = YahooDorkHandler(next_handler=bing)
         duckduckgo = DuckduckgoDorkHandler(next_handler=yahoo)
         google = GoogleDorkHandler(next_handler=duckduckgo)
-        # brave = BraveDorkHandler(next_handler=google)
-        # aol = AolDorkHandler(next_handler=brave)
-        # crt = CrtSearchHandler(next_handler=aol)
+        brave = BraveDorkHandler(next_handler=google)
+        aol = AolDorkHandler(next_handler=brave)
         
     # yahoo = YahooDorkHandler()
     # google = GoogleDorkHandler(next_handler=yahoo)
     # crt = CrtSearchHandler(next_handler=google)
     
-        google.handle(uri=uri)
+        aol.handle(uri=uri)
         
         print('report--->')
         report = EnumerationReporte()

@@ -2,6 +2,7 @@ import logging
 from src.core.domain.config import Config
 from src.core.domain.cache import Cache
 from src.serializers.extract_domain_serializer import ExtractUriSerializer
+import socket
 
 def simple_logging_display(message: str):
     logging.info(f"[*]  {message}")
@@ -51,7 +52,19 @@ def info_subdomain_found(attr_name):
                     cache = Cache()
                     sub_ser = ExtractUriSerializer.serialize(uri=args[1])
                     if not config.scanning_modules:
-                        logging.info(f"[+]  {sub_ser}")
+                        
+                        ip = None
+                        
+                        try:
+                            ip = socket.gethostbyname(sub_ser)
+                        except:
+                            pass
+                        
+                        if ip:
+                            logging.info(f"[+]  {sub_ser} --> {ip}")
+                        else:
+                            logging.warning(f"[!]  {sub_ser} [Could not find IP address]")
+                            
                     else:
                         logging.info(f"[*]  Subdomain found {sub_ser}. Scanning for [open ports, CMS, WebServer]...")
                     
