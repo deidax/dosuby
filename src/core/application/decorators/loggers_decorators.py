@@ -49,9 +49,9 @@ def info_subdomain_found(attr_name):
                     config = Config()
                     sub_ser = ExtractUriSerializer.serialize(uri=args[1])
                     if not config.scanning_modules:
-                        logging.info(f"[*]  Subdomain found {sub_ser}")
+                        logging.info(f"[+]  {sub_ser}")
                     else:
-                        logging.info(f"[*]  Subdomain found {sub_ser}. Scanning for [open ports, CMS, WebServer]")
+                        logging.info(f"[*]  Subdomain found {sub_ser}. Scanning for [open ports, CMS, WebServer]...")
             return value
         
         return wrapper

@@ -152,9 +152,12 @@ def get_webserver(func):
         if not config.scanning_modules:
             return ModuleStatus.ABORT
         try:
-            webserver_scanning = HttpClientWebserverScanningAdapter()
-            webserver_scanning.target_uri = value.get('ip')
-            return webserver_scanning.run()
+            cache_singleton = Cache()
+            cached_result = cache_singleton.check_if_ip_already_found_and_return_result(ip=value.get('ip'))
+            if 80 in cached_result.get('open_ports'):
+                webserver_scanning = HttpClientWebserverScanningAdapter()
+                webserver_scanning.target_uri = value.get('ip')
+                return webserver_scanning.run()
         except:
             pass
         

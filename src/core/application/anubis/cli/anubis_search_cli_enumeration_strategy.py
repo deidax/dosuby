@@ -24,7 +24,7 @@ class AnubisCliEnumerationStrategy(EnumerationStrategy):
             for sub in subdomain:
                 if success_response.target.add_subdomain(sub) is True:
                     tmp_success_response = success_response_builder.set_response_message_and_build('Subdomain Found!')
-                    print(tmp_success_response.get_response())
+                    self.display_result(tmp_success_response.get_response())
             
         subdomains = tmp_success_response.get_target_subdomains()
         print(subdomains)
