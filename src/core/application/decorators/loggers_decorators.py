@@ -52,9 +52,10 @@ def info_subdomain_found(attr_name):
                     sub_ser = ExtractUriSerializer.serialize(uri=args[1])
                     if not config.scanning_modules:
                         logging.info(f"[+]  {sub_ser}")
-                        cache.cached_enumeration_result_count = cache.cached_enumeration_result_count + 1
                     else:
                         logging.info(f"[*]  Subdomain found {sub_ser}. Scanning for [open ports, CMS, WebServer]...")
+                    
+                    cache.cached_enumeration_result_count = cache.cached_enumeration_result_count + 1
             return value
         
         return wrapper
