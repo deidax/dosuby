@@ -28,6 +28,7 @@ def main():
     
     print('dosuby version:', version)
     print('\n')
+    # uri = 'ufc.dz'
     uri = 'uca.ma'
     
     try:

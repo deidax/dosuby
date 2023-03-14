@@ -9,4 +9,4 @@ class EnumerationReporte(metaclass=Singleton):
     report_subdomains: list = field(init=False, default_factory=list)
     
     def add(self, subdomain) -> None:
-        self.report_subdomains.append(subdomain)
+        self.report_subdomains.extend(subdomain)
