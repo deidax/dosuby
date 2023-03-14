@@ -7,6 +7,7 @@ class Cache(metaclass=Singleton):
     """
     
     cached_subdomains: list = field(init=False, default_factory=list)
+    cached_enumeration_result_count: int = field(init=False, default=0)
     
     def add(self, subdomain: str) -> None:
         """Add a subdomain to the cache"""

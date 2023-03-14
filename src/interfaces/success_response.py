@@ -26,6 +26,11 @@ class SuccessResponse(SearchResponse):
             return self.target.get_target_intel()
         return []
     
+    def get_target_subdomains_count(self) -> int:
+        if self.target:
+            return self.target.subdomains_count
+        return 0
+    
     def set_target(self, target: Target):
         return super().set_target(target)
     

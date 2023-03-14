@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 from src.interfaces.enumeration_handler import EnumerationHandler
 from src.interfaces.success_response import SuccessResponse
 from src.core.application.response.cli.failed_response_builder import FailureResponseBuilder
+from src.core.domain.cache import Cache
 
 
 class Handler(EnumerationHandler):
@@ -14,6 +15,7 @@ class Handler(EnumerationHandler):
 
     def __init__(self, next_handler: EnumerationHandler=None) -> None:
         self._next_handler = next_handler
+        self.cache = Cache()
 
     
     def handle(self, uri: str, success_response: SuccessResponse=SuccessResponse()):
@@ -49,6 +51,7 @@ class Handler(EnumerationHandler):
     
     
     def _handler_process(self, uri: str, success_response: SuccessResponse):
+        self.cache.cached_enumeration_result_count = 0
         service_response = self.run_service(uri=uri, success_response=success_response)
         if type(service_response) is SuccessResponse and self._next_handler:
             return self._next_handler.handle(uri,service_response)

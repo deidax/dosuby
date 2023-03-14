@@ -23,6 +23,12 @@ class Target(metaclass=Singleton):
     config: Config = field(init=False)
     subdomain_serializer: DomainSerializer = None
     skip_logging: bool = field(init=False, default=False)
+    _subdomain_count: int = field(init=False, default=0)
+    
+    
+    def __post_init__(self):
+        self.target_uri = TargetInputDTO(uri=self.target_uri)
+        self.config = Config()
     
     @property
     def subdomain(self) -> Subdomain:
@@ -45,9 +51,7 @@ class Target(metaclass=Singleton):
         self._subdomains.append(value)
     
     
-    def __post_init__(self):
-         self.target_uri = TargetInputDTO(uri=self.target_uri)
-         self.config = Config()
+   
     
     
     @info_subdomain_found('skip_logging')
@@ -55,9 +59,19 @@ class Target(metaclass=Singleton):
         self.subdomain = subdomain
         if not any(sub == self.subdomain for sub in self.subdomains) and self.target_uri.check_if_result_is_accurate(self.subdomain.subdomain_uri):
             self.subdomains = self._subdomain
+            self._subdomain_count = self._subdomain_count + 1
             return True
         
         return False
+    
+    @property
+    def subdomains_count(self):
+        return self._subdomain_count
+    
+    def subdomain_count_init(self):
+        self._subdomain_count = 0
+        
+    
     
     @save_enumeration_report
     def get_target_intel(self):

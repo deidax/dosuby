@@ -28,7 +28,6 @@ class CrtSearchCliEnumerationStrategy(EnumerationStrategy):
                         tmp_success_response = success_response_builder.set_response_message_and_build('Subdomain Found!')
                         self.display_result(tmp_success_response.get_response())
             
-        subdomains = tmp_success_response.get_target_subdomains()
-        print(subdomains)
+        self.display_result_count()
         
         return tmp_success_response
