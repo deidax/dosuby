@@ -21,5 +21,12 @@ class TargetInputDTO:
         Args:
             subdomain (str): the enumerated subdomain
         """
-        return self.uri in subdomain and '*' not in subdomain and f"www.{self.uri}" != subdomain and self.uri != subdomain
+        return (
+            self.uri
+            in subdomain
+            and '*' not in subdomain
+            and f"www.{self.uri}" != subdomain
+            and self.uri != subdomain
+            and subdomain.endswith(f".{self.uri}")
+        )
         

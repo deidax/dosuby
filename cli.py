@@ -8,6 +8,7 @@ from src.handlers.cli.crt_search_handler import CrtSearchHandler
 from src.handlers.cli.bing_dork_handler import BingDorkHandler
 from src.core.domain.enumeration_reporte import EnumerationReporte
 from src.handlers.cli.anubis_dork_handler import AnubisHandler
+from src.handlers.cli.ask_dork_handler import AskDorkHandler
 import logging
 
 def main():
@@ -17,14 +18,14 @@ def main():
     
     
     logging.basicConfig(
-                level=logging.DEBUG, 
+                level=logging.INFO, 
                 format="%(asctime)s %(levelname)s %(message)s",
                 datefmt="%Y-%m-%d %H:%M:%S"
             )
     
     
     config = Config()
-    config.scanning_modules = False
+    config.scanning_modules = True
     
     print('dosuby version:', version)
     print('\n')
@@ -33,20 +34,22 @@ def main():
     
     try:
         
-        crt = CrtSearchHandler()
+        aol = AolDorkHandler()
+        crt = CrtSearchHandler(next_handler=aol)
         anubis = AnubisHandler(next_handler=crt)
         bing = BingDorkHandler(next_handler=anubis)
         yahoo = YahooDorkHandler(next_handler=bing)
         duckduckgo = DuckduckgoDorkHandler(next_handler=yahoo)
         google = GoogleDorkHandler(next_handler=duckduckgo)
         brave = BraveDorkHandler(next_handler=google)
-        aol = AolDorkHandler(next_handler=brave)
+        ask = AskDorkHandler(next_handler=brave)
+
         
     # yahoo = YahooDorkHandler()
     # google = GoogleDorkHandler(next_handler=yahoo)
     # crt = CrtSearchHandler(next_handler=google)
     
-        aol.handle(uri=uri)
+        ask.handle(uri=uri)
         
         print('report--->')
         report = EnumerationReporte()

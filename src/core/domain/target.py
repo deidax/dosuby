@@ -57,7 +57,11 @@ class Target(metaclass=Singleton):
     @info_subdomain_found('skip_logging')
     def add_subdomain(self, subdomain: str) -> bool:
         self.subdomain = subdomain
-        if not any(sub == self.subdomain for sub in self.subdomains) and self.target_uri.check_if_result_is_accurate(self.subdomain.subdomain_uri):
+        
+        if (
+            not any(sub == self.subdomain for sub in self.subdomains) 
+            and self.target_uri.check_if_result_is_accurate(self.subdomain.subdomain_uri)
+        ):
             self.subdomains = self._subdomain
             self._subdomain_count = self._subdomain_count + 1
             return True
