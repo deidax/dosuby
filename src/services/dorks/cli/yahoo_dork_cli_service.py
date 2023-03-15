@@ -3,7 +3,7 @@ from src.core.application.use_cases.dorks_enumeration_use_case import DorksEnume
 from src.adapter.dorks.yahoo_dorks_adapter import YahooDorksAdapter
 from src.interfaces.success_response import SuccessResponse
 from src.core.domain.target import Target
-from src.core.application.dorks.cli.default_dork_cli_enumeration_strategy import DefaultDorkCliEnumerationStrategy
+from src.core.application.strategies.dorks.cli.default_dork_cli_enumeration_strategy import DefaultDorkCliEnumerationStrategy
 
 
 class YahooDorkCliService(SubdomainEnumeratorService):

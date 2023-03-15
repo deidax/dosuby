@@ -4,7 +4,7 @@ from src.core.domain.target import Target
 from src.adapter.dorks.duckduckgo_dorks_adapter import DuckduckgoDorksAdapter
 from src.core.application.response.cli.success_response_builder import SuccessResponseBuilder
 from src.interfaces.success_response import SuccessResponse
-from src.core.application.dorks.cli.default_dork_cli_enumeration_strategy import DefaultDorkCliEnumerationStrategy
+from src.core.application.strategies.dorks.cli.default_dork_cli_enumeration_strategy import DefaultDorkCliEnumerationStrategy
 
 class DuckduckgoDorkCliService(SubdomainEnumeratorService):
     

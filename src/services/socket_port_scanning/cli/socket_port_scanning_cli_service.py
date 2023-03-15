@@ -5,7 +5,7 @@ from src.adapter.ports_scanning.socket_port_scanning_adapter import SocketPortSc
 from src.interfaces.success_response import SuccessResponse
 
 from src.interfaces.success_response import SuccessResponse
-from src.core.application.security_enumeration.cli.socket_ports_cli_enumeration_strategy import SocketPortsCliEnumerationStrategy
+from src.core.application.strategies.security_enumeration.cli.socket_ports_cli_enumeration_strategy import SocketPortsCliEnumerationStrategy
 
 class SocketPortScanningCliService(SecurityEnumeratorService):
     

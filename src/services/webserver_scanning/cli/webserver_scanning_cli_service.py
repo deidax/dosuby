@@ -5,7 +5,7 @@ from src.adapter.webserver_scanning.http_client_webserver_scanning_adapter impor
 from src.interfaces.success_response import SuccessResponse
 
 from src.interfaces.success_response import SuccessResponse
-from src.core.application.security_enumeration.cli.webserver_cli_enumeration_strategy import WebserverCliEnumerationStrategy
+from src.core.application.strategies.security_enumeration.cli.webserver_cli_enumeration_strategy import WebserverCliEnumerationStrategy
 
 class WebServerScanningCliService(SecurityEnumeratorService):
     

@@ -5,7 +5,7 @@ from src.adapter.anubis.anubis_dorks_adapter import AnubisAdapter
 from src.interfaces.success_response import SuccessResponse
 
 from src.interfaces.success_response import SuccessResponse
-from src.core.application.anubis.cli.anubis_search_cli_enumeration_strategy import AnubisCliEnumerationStrategy
+from src.core.application.strategies.anubis.cli.anubis_search_cli_enumeration_strategy import AnubisCliEnumerationStrategy
 
 class AnubisCliService(SubdomainEnumeratorService):
     

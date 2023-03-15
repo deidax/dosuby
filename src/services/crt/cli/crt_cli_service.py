@@ -5,7 +5,7 @@ from src.adapter.crt.crt_adapter import CrtAdapter
 from src.interfaces.success_response import SuccessResponse
 
 from src.interfaces.success_response import SuccessResponse
-from src.core.application.crt.cli.crt_search_cli_enumeration_strategy import CrtSearchCliEnumerationStrategy
+from src.core.application.strategies.crt.cli.crt_search_cli_enumeration_strategy import CrtSearchCliEnumerationStrategy
 
 class CrtCliService(SubdomainEnumeratorService):
     
