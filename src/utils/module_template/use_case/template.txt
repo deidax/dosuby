@@ -1,0 +1,34 @@
+from src.core.domain.target import Target
+from src.interfaces.subdomain_enumerator import SubdomainEnumerator
+
+class {{Class}}EnumerationUseCase:
+    """This is the {{Class}} Enumeration Use Case.\n
+    it will be used to enumerate subdomains using {{class}}
+    """
+    
+    def __init__(self, {{class}}: SubdomainEnumerator) -> None:
+        """Inject an enumerator module
+
+        Args:
+            {{class}} (SubdomainEnumerator): subdomain enumerator
+        """
+        
+        if not isinstance({{class}}, SubdomainEnumerator):
+            raise ValueError(f'{{class}} param should be a SubdomainEnumerator instance, not a {type({{class}})}')
+        
+        self._{{class}} = {{class}}
+    
+    def execute(self, target: Target):
+        """Execute method will run the enumeration process
+
+        Args:
+            target (Target): url or domain to enumerate
+        """
+        
+        if not isinstance(target, Target):
+            raise ValueError(f'target param should be a Target instance, not a {type(target)}.')
+        
+        self._{{class}}.target_uri = target.target_uri.uri
+        
+        return self._{{class}}.run()
+    
