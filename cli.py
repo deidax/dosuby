@@ -9,6 +9,7 @@ from src.handlers.cli.bing_dork_handler import BingDorkHandler
 from src.core.domain.enumeration_reporte import EnumerationReporte
 from src.handlers.cli.anubis_dork_handler import AnubisHandler
 from src.handlers.cli.ask_dork_handler import AskDorkHandler
+from src.handlers.cli.alientvault_handler import AlientvaultHandler
 import logging
 
 def main():
@@ -25,7 +26,7 @@ def main():
     
     
     config = Config()
-    config.scanning_modules = False
+    config.scanning_modules = True
     
     print('dosuby version:', version)
     print('\n')
@@ -34,22 +35,24 @@ def main():
     
     try:
         
-        aol = AolDorkHandler()
-        crt = CrtSearchHandler(next_handler=aol)
-        anubis = AnubisHandler(next_handler=crt)
-        bing = BingDorkHandler(next_handler=anubis)
-        yahoo = YahooDorkHandler(next_handler=bing)
-        duckduckgo = DuckduckgoDorkHandler(next_handler=yahoo)
-        google = GoogleDorkHandler(next_handler=duckduckgo)
-        brave = BraveDorkHandler(next_handler=google)
-        ask = AskDorkHandler(next_handler=brave)
+        ask = AskDorkHandler()
+        alient_vault = AlientvaultHandler(next_handler=ask)
+        # aol = AolDorkHandler()
+        # crt = CrtSearchHandler(next_handler=aol)
+        # anubis = AnubisHandler(next_handler=crt)
+        # bing = BingDorkHandler(next_handler=anubis)
+        # yahoo = YahooDorkHandler(next_handler=bing)
+        # duckduckgo = DuckduckgoDorkHandler(next_handler=yahoo)
+        # google = GoogleDorkHandler(next_handler=duckduckgo)
+        # brave = BraveDorkHandler(next_handler=google)
+        # ask = AskDorkHandler(next_handler=brave)
 
         
     # yahoo = YahooDorkHandler()
     # google = GoogleDorkHandler(next_handler=yahoo)
     # crt = CrtSearchHandler(next_handler=google)
     
-        ask.handle(uri=uri)
+        alient_vault.handle(uri=uri)
         
         print('report--->')
         report = EnumerationReporte()
