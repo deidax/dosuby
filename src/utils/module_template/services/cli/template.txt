@@ -1,23 +1,23 @@
 from src.interfaces.subdomain_enumerator_service import SubdomainEnumeratorService
-from src.core.application.use_cases.class_enumeration_use_case import ClassEnumerationUseCase
+from src.core.application.use_cases.{{class}}_enumeration_use_case import {{Class}}EnumerationUseCase
 from src.core.domain.target import Target
-from src.adapter.class.class_adapter import ClassAdapter
+from src.adapter.{{class}}.{{class}}_adapter import {{Class}}Adapter
 from src.interfaces.success_response import SuccessResponse
 
 from src.interfaces.success_response import SuccessResponse
-from src.core.application.strategies.class.cli.class_cli_enumeration_strategy import ClassCliEnumerationStrategy
+from src.core.application.strategies.{{class}}.cli.{{class}}_cli_enumeration_strategy import {{Class}}CliEnumerationStrategy
 
-class ClassCliService(SubdomainEnumeratorService):
+class {{Class}}CliService(SubdomainEnumeratorService):
     
  
-    def __init__(self, enumeration_strategy=ClassCliEnumerationStrategy(), success_response=SuccessResponse()) -> None:
+    def __init__(self, enumeration_strategy={{Class}}CliEnumerationStrategy(), success_response=SuccessResponse()) -> None:
         super().__init__(enumeration_strategy, success_response)
     
     
     def build_enumerator(self, target: Target):
-        class_adapter = ClassAdapter()
-        target_class_usecase = ClassEnumerationUseCase(class=class_adapter)
-        result = target_class_usecase.execute(target=target)
+        {{class}}_adapter = {{Class}}Adapter()
+        target_{{class}}_usecase = {{Class}}EnumerationUseCase({{class}}={{class}}_adapter)
+        result = target_{{class}}_usecase.execute(target=target)
         return result
     
     def process_enumerator(self, result) -> SuccessResponse:
