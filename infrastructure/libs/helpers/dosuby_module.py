@@ -1,4 +1,4 @@
-import sys
+import shutil
 import os
 
 """This will create a new enumeration module object
@@ -7,7 +7,7 @@ class DosubyModule:
 
 
     def __init__(self,class_name: str):
-        self.class_name = class_name
+        self.class_name = class_name.lower()
         self.USE_CASE_TEMPLATE = "src/utils/module_template/use_case/template.txt"
         self.USE_CASE_PATH = "src/core/application/use_cases/"
         
@@ -30,8 +30,6 @@ class DosubyModule:
         if not class_name.isalpha():
             print(f"[x] Invalid class name '{class_name}'")
             return False
-
-        class_name = class_name.lower()
 
         # Start by creating a new UseCase
         with open(self.USE_CASE_TEMPLATE, 'r') as f:
@@ -103,6 +101,35 @@ class DosubyModule:
             f.write(handler)
             print(f"[+] Creating '{path}' -> Handler")
 
-    def create_init(sefl, path: str):
+    def create_init(self, path: str):
         with open(f"{path}__init__.py", 'w') as f:
             f.write('')
+    
+    
+    def delete(self):
+        
+        try:
+            use_case_path = f'{self.USE_CASE_PATH}{self.class_name}_enumeration_use_case.py'
+            strategy_path = f'src/core/application/strategies/{self.class_name}/'
+            adapter_path = self.ADAPTER_PATH
+            handler_path = f'{self.HANDLER_PATH}{self.class_name}_handler.py'
+            service_path = f'src/services/{self.class_name}/'
+
+            os.remove(use_case_path)
+            print(f"[-] {use_case_path} -> Use case removed")
+            
+            shutil.rmtree(strategy_path)
+            print(f"[-] {strategy_path} -> Strategy removed")
+            
+            shutil.rmtree(adapter_path)
+            print(f"[-] {adapter_path} -> Adapter removed")
+            
+            os.remove(handler_path)
+            print(f"[-] {handler_path} -> Handler removed")
+            
+            shutil.rmtree(service_path)
+            print(f"[-] {service_path} -> Service removed")
+            
+        except Exception as e:
+            print("[x] Error: {e}".format(e=e))
+            print(f"[!] Probably the module '{self.class_name}' doesn't exist")
