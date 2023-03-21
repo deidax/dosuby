@@ -10,6 +10,7 @@ from src.core.domain.enumeration_reporte import EnumerationReporte
 from src.handlers.cli.anubis_dork_handler import AnubisHandler
 from src.handlers.cli.ask_dork_handler import AskDorkHandler
 from src.handlers.cli.alientvault_handler import AlientvaultHandler
+from src.handlers.cli.hackertarget_handler import HackertargetHandler
 import logging
 
 def main():
@@ -26,7 +27,7 @@ def main():
     
     
     config = Config()
-    config.scanning_modules = True
+    config.scanning_modules = False
     
     print('dosuby version:', version)
     print('\n')
@@ -35,8 +36,9 @@ def main():
     
     try:
         
-        ask = AskDorkHandler()
-        alient_vault = AlientvaultHandler(next_handler=ask)
+        hacker_target = HackertargetHandler()
+        # ask = AskDorkHandler()
+        # alient_vault = AlientvaultHandler(next_handler=ask)
         # aol = AolDorkHandler()
         # crt = CrtSearchHandler(next_handler=aol)
         # anubis = AnubisHandler(next_handler=crt)
@@ -52,7 +54,7 @@ def main():
     # google = GoogleDorkHandler(next_handler=yahoo)
     # crt = CrtSearchHandler(next_handler=google)
     
-        alient_vault.handle(uri=uri)
+        hacker_target.handle(uri=uri)
         
         print('report--->')
         report = EnumerationReporte()
