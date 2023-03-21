@@ -11,6 +11,7 @@ from src.handlers.cli.anubis_dork_handler import AnubisHandler
 from src.handlers.cli.ask_dork_handler import AskDorkHandler
 from src.handlers.cli.alientvault_handler import AlientvaultHandler
 from src.handlers.cli.hackertarget_handler import HackertargetHandler
+from src.handlers.cli.waybackmachine_handler import WaybackmachineHandler
 import logging
 
 def main():
@@ -36,7 +37,8 @@ def main():
     
     try:
         
-        hacker_target = HackertargetHandler()
+        waybackmachine = WaybackmachineHandler()
+        # hacker_target = HackertargetHandler()
         # ask = AskDorkHandler()
         # alient_vault = AlientvaultHandler(next_handler=ask)
         # aol = AolDorkHandler()
@@ -54,7 +56,7 @@ def main():
     # google = GoogleDorkHandler(next_handler=yahoo)
     # crt = CrtSearchHandler(next_handler=google)
     
-        hacker_target.handle(uri=uri)
+        waybackmachine.handle(uri=uri)
         
         print('report--->')
         report = EnumerationReporte()
