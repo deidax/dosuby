@@ -133,3 +133,17 @@ class DosubyModule:
         except Exception as e:
             print("[x] Error: {e}".format(e=e))
             print(f"[!] Probably the module '{self.class_name}' doesn't exist")
+    
+    
+    @staticmethod
+    def list_modules():
+        path = 'src/handlers/cli/'
+        files = os.listdir(path)
+        i = 0
+        for file in files:
+            file = file.replace('_handler.py','')
+            if file not in ['__init__.py', '__pycache__', 'handler_cli.py']:
+                i = i + 1
+                print(f"-> {file}")
+                
+        print(f"[Total: {i}]")
