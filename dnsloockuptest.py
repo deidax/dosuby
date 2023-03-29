@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+# #!/usr/bin/env python3
 
 import dnslib
 
@@ -67,37 +67,4 @@ if __name__ == "__main__":
 
 
 ########
-from dnslib import DNSRecord, DNSHeader, QTYPE, RR, A
-import socket
 
-def resolve_dns(domain_name, qtype):
-    # create a DNS query message for the given domain name and query type
-    query = DNSRecord.question(domain_name, qtype)
-    # send the DNS query to the local resolver
-    response = query.send("127.0.0.1", 53, timeout=5)
-    # parse the DNS response message
-    response_msg = DNSRecord.parse(response)
-    # extract the list of answers from the response
-    answers = response_msg.rr
-
-    # iterate over the answers and extract the subdomains
-    subdomains = set()
-    for answer in answers:
-        if answer.rtype == QTYPE.CNAME:
-            # if the answer is a CNAME record, extract the domain name from it
-            subdomain = str(answer.rdata.label)
-            subdomains.add(subdomain)
-        elif answer.rtype == QTYPE.A:
-            # if the answer is an A record, extract the IP address and hostname from it
-            ip_address = socket.inet_ntoa(answer.rdata)
-            hostname = str(answer.get_rname(response_msg))
-            subdomain = hostname[:-1]  # remove trailing period from hostname
-            subdomains.add(subdomain)
-
-    return subdomains
-
-# example usage
-domain_name = "example.com"
-qtype = QTYPE.ANY  # query for all record types
-subdomains = resolve_dns(domain_name, qtype)
-print(subdomains)

@@ -4,18 +4,21 @@ from src.core.application.response.cli.success_response_builder import SuccessRe
 from src.core.application.decorators.loggers_decorators import info_logger
 
 
-class ThreatMinerCliEnumerationStrategy(EnumerationStrategy):
+class VirustotalCliEnumerationStrategy(EnumerationStrategy):
     
     @info_logger("Enumerating ...")
     def enumeration_process(self, subdomains_links, **kwargs) -> list:
-        """_summary_
+        """Enumeration strategy that will handle each subdomain found\n
+        the purpose of this it that each strategy will can handle the results differently.
 
         Args:
-            rows(generator): crt row  to process
+            subdomains_links(generator): subdomains results
             success_response (SuccessResponse): this will be used to get the final success response
         Returns:
             list: results list
         """
+        # This is the default strategy.
+        
         success_response = kwargs.get('success_response')
         success_response_builder = SuccessResponseBuilder()
         success_response_builder.success_response = success_response

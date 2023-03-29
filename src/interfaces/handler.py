@@ -32,7 +32,6 @@ class Handler(EnumerationHandler):
             
             # process to put before the handler
             self.pre_handler_process()
-            
             self._handler_process(uri=uri, success_response=success_response)
             
         except Exception as ex:

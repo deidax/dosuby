@@ -1,7 +1,6 @@
 from src.interfaces.enumeration_strategy import EnumerationStrategy
 from src.interfaces.success_response import SuccessResponse
 from src.core.application.response.cli.success_response_builder import SuccessResponseBuilder
-from src.core.application.decorators.loggers_decorators import simple_logging_display
 
 class CrtSearchCliEnumerationStrategy(EnumerationStrategy):
     

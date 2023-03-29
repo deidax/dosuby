@@ -12,6 +12,7 @@ from src.handlers.cli.ask_dork_handler import AskDorkHandler
 from src.handlers.cli.alientvault_handler import AlientvaultHandler
 from src.handlers.cli.hackertarget_handler import HackertargetHandler
 from src.handlers.cli.waybackmachine_handler import WaybackmachineHandler
+from src.handlers.cli.virustotal_handler import VirustotalHandler
 import logging
 
 def main():
@@ -22,21 +23,22 @@ def main():
     
     logging.basicConfig(
                 level=logging.INFO, 
-                format="%(asctime)s %(levelname)s %(message)s",
+                format="%(message)s",
                 datefmt="%Y-%m-%d %H:%M:%S"
             )
     
     
     config = Config()
-    config.scanning_modules = False
+    config.scanning_modules = True
     
     print('dosuby version:', version)
     print('\n')
     uri = 'californiacolleges.edu'
-    #uri = 'uca.ma'
+    uri = 'uca.ma'
     
     try:
         
+        # virustotal = VirustotalHandler()
         waybackmachine = WaybackmachineHandler()
         # hacker_target = HackertargetHandler()
         # ask = AskDorkHandler()

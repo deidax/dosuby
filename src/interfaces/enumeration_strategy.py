@@ -3,12 +3,14 @@ from src.core.domain.config import Config
 from src.core.domain.cache import Cache
 from src.interfaces.success_response import SuccessResponse
 import logging
+from src.core.application.decorators.loggers_decorators import info_logger
 
 class EnumerationStrategy(ABC):
     
     def __init__(self) -> None:
         super().__init__()
         self.config = Config()
+    
     
     @abstractmethod
     def enumeration_process(self, subdomains_links) -> list:

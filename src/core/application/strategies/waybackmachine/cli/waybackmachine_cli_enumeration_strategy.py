@@ -1,8 +1,7 @@
 from src.interfaces.enumeration_strategy import EnumerationStrategy
 from src.interfaces.success_response import SuccessResponse
 from src.core.application.response.cli.success_response_builder import SuccessResponseBuilder
-from src.core.application.decorators.loggers_decorators import simple_logging_display
-
+from src.core.application.decorators.loggers_decorators import enumerating
 
 class WaybackmachineCliEnumerationStrategy(EnumerationStrategy):
     
@@ -29,7 +28,7 @@ class WaybackmachineCliEnumerationStrategy(EnumerationStrategy):
                 if success_response.target.add_subdomain(sub) is True:
                     tmp_success_response = success_response_builder.set_response_message_and_build('Subdomain Found!')
                     self.display_result(tmp_success_response.get_response())
-            
+        
         self.display_result_count(succes_response=tmp_success_response)
         
         return tmp_success_response

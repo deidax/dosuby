@@ -1,10 +1,12 @@
 from src.interfaces.enumeration_strategy import EnumerationStrategy
 from src.interfaces.success_response import SuccessResponse
 from src.core.application.response.cli.success_response_builder import SuccessResponseBuilder
+from src.core.application.decorators.loggers_decorators import info_logger
 
 class CMSCliEnumerationStrategy(EnumerationStrategy):
     
     
+    @info_logger('CMS Scanning')
     def enumeration_process(self, **kwargs) -> list:
         """_summary_
 
