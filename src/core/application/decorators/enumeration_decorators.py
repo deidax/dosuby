@@ -60,7 +60,7 @@ def get_open_ports(func):
             return c_r
         
         if display_sub_info:
-            log_subdomain_info(f"--> {value.get('ip')}")
+            logging.info(f"[*]{C}  ==> {value.get('uri')}{C}")
         
         loader = Loader("Ports Scanning...").start()
         loader.end = "Ports Scanning -> [DONE]"
