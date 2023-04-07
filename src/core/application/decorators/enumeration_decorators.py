@@ -53,8 +53,14 @@ def get_open_ports(func):
         # check if the ip address is already in the cache
         cache = Cache()
         cached_result = cache.check_if_ip_already_found_and_return_result(ip=value.get('ip'))
+        display_sub_info = True
         if cached_result:
-            return cached_result.get('open_ports')
+            c_r = cached_result.get('open_ports')
+            display_sub_info = True
+            return c_r
+        
+        if display_sub_info:
+            log_subdomain_info(f"--> {value.get('ip')}")
         
         loader = Loader("Ports Scanning...").start()
         loader.end = "Ports Scanning -> [DONE]"

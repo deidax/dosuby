@@ -92,14 +92,14 @@ def info_subdomain_found(attr_name):
                             info = f"{Y}[!]  {sub_ser} [Could not find IP address]{Y}"
                             logging.info(info)
                             
-                    else:
+                    # else:
                         # global LOADER
                         # LOADER.stop()
                         
                         # info = f"[*]{C}  Subdomain found {sub_ser}. Scanning for [open ports, CMS, WebServer]...{C}"
                         # LOADER = Loader(info, end=f"{info} ->{W} [Done] {W}")
                         # LOADER.start()
-                        logging.info(f"[*]{C}  Subdomain found {sub_ser}{C}")
+                        # logging.info(f"[*]{C}  Subdomain found {sub_ser}{C}")
                     
                     cache.cached_enumeration_result_count = cache.cached_enumeration_result_count + 1
             return value
@@ -140,8 +140,9 @@ def info_subdomain_found(attr_name):
 
 def log_subdomain_info(subdomain_uri):
     config = Config()
-    if config.scanning_modules:
-        cache_singleton = Cache()
-        if subdomain_uri not in cache_singleton.tmp_subdomains:
-            cache_singleton.add_subdomain_uri(subdomain_uri)
-            logging.info(f"[*]{C}  Subdomain found {subdomain_uri}{C}")
+    logging.info(f"[*]{C}  ==> {subdomain_uri}{C}")
+    # if config.scanning_modules:
+    #     cache_singleton = Cache()
+    #     if subdomain_uri not in cache_singleton.tmp_subdomains:
+    #         cache_singleton.add_subdomain_uri(subdomain_uri)
+    #         logging.info(f"[*]{C}  Subdomain found {subdomain_uri}{C}")

@@ -38,7 +38,7 @@ class Subdomain:
             self._subdomain_uri = self.subdomain_serializer.serialize(value)
             # assign subdomain_uri to get ip and open ports for the asseigned subdomain uri
             self._tmp_s_uri = self.subdomain_uri
-            log_subdomain_info(self._tmp_s_uri)
+            # log_subdomain_info(self._tmp_s_uri)
             self._subdomain_ip = self._tmp_s_uri
             self._tmp_s_ip = self.subdomain_ip
             
