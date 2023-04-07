@@ -79,7 +79,6 @@ class Target(metaclass=Singleton):
     
     @save_enumeration_report
     def get_target_intel(self):
-       
        if self.config.scanning_modules:
            sub_dict = lambda s: {
                                     'subdomain_uri': s.subdomain_uri,
@@ -96,4 +95,5 @@ class Target(metaclass=Singleton):
            
        
        return [(sub_dict)(sub) for sub in self.subdomains]
+    
     

@@ -21,7 +21,6 @@ class WaybackmachineCliService(SubdomainEnumeratorService):
         result = target_waybackmachine_usecase.execute(target=target)
         return result
     
-    @enumerating
     def process_enumerator(self, result) -> SuccessResponse:
         return self.enumeration_strategy.enumeration_process(subdomains_links=result, success_response=self.success_response)     
                                                             

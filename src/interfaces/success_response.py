@@ -3,6 +3,17 @@ from src.core.application.enums.cli_response_type_enum import CliResponseTypeEnu
 from src.core.domain.target import Target
 from src.core.domain.config import Config
 from src.core.application.decorators.loggers_decorators import *
+from src.core.application.decorators.loggers_decorators import Loader
+
+class TmpResponse:
+    
+    def __init__(self, subdomain=None, subdomain_ip=None, subdomain_ports=None, subdomain_cms=None, subdomain_webserver=None) -> None:
+        self.subdomain = subdomain
+        self.subdomain_ip = subdomain_ip
+        self.subdomain_ports = subdomain_ports
+        self.subdomain_cms = subdomain_cms
+        self.subdomain_webserver = subdomain_webserver
+    
 
 class SuccessResponse(SearchResponse):
     """Successful search result.
@@ -13,6 +24,7 @@ class SuccessResponse(SearchResponse):
         self.status_code = CliResponseTypeEnums.SUCCESS['status_code']
         self.response_type = CliResponseTypeEnums.SUCCESS
         self.config = Config()
+        self.loader = Loader()
     
     def get_response(self):
         if self.config.scanning_modules is True:
@@ -67,3 +79,5 @@ class SuccessResponse(SearchResponse):
         return f"\n{'-'*20}\n"\
             f"{C}--> {response.get('subdomain')}{C}\n"\
             f"{'-'*20}\n"
+    
+    

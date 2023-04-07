@@ -39,7 +39,8 @@ def main():
     try:
         
         # virustotal = VirustotalHandler()
-        waybackmachine = WaybackmachineHandler()
+        # waybackmachine = WaybackmachineHandler()
+        alient_vault = AlientvaultHandler()
         # hacker_target = HackertargetHandler()
         # ask = AskDorkHandler()
         # alient_vault = AlientvaultHandler(next_handler=ask)
@@ -58,7 +59,7 @@ def main():
     # google = GoogleDorkHandler(next_handler=yahoo)
     # crt = CrtSearchHandler(next_handler=google)
     
-        waybackmachine.handle(uri=uri)
+        alient_vault.handle(uri=uri)
         
         print('report--->')
         report = EnumerationReporte()

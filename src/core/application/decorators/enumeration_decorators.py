@@ -6,6 +6,7 @@ from src.core.application.enums.modules_status import ModuleStatus
 from src.core.domain.enumeration_reporte import EnumerationReporte
 from src.adapter.cms_scanning.wordpress_scanning_adapter import WordPressScanningAdapter
 from src.adapter.webserver_scanning.http_client_webserver_scanning_adapter import HttpClientWebserverScanningAdapter
+from .loggers_decorators import *
 
 
 
@@ -15,6 +16,7 @@ def get_ip(func):
         config = Config()
         if not config.scanning_modules:
             return ModuleStatus.ABORT
+
         try:
             value = socket.gethostbyname(value)
         except:
@@ -54,14 +56,19 @@ def get_open_ports(func):
         if cached_result:
             return cached_result.get('open_ports')
         
+        loader = Loader("Ports Scanning...").start()
+        loader.end = "Ports Scanning -> [DONE]"
         
         try:
             port_scanning = SocketPortScanningAdapter()
             port_scanning.target_uri = value.get('uri')
-            return port_scanning.run()
+            ports = port_scanning.run()
+            loader.stop()
+            return ports
         except:
             pass
         
+        loader.stop()
         return []
     return wrapper
 
@@ -109,6 +116,9 @@ def scan_for_cms(func):
         config = Config()
         if not config.scanning_modules:
             return ModuleStatus.ABORT
+        
+        loader = Loader("CMS Scanning...").start()
+        loader.end = "CMS Scanning -> [DONE]"
         try:
             cms = None
             cache_singleton = Cache()
@@ -120,6 +130,7 @@ def scan_for_cms(func):
         except:
             cms = None
         
+        loader.stop()
         return cms
     return wrapper
 
@@ -151,15 +162,21 @@ def get_webserver(func):
         config = Config()
         if not config.scanning_modules:
             return ModuleStatus.ABORT
+        
+        loader = Loader("Webserver Scanning...").start()
+        loader.end = "Webserver Scanning -> [DONE]"
         try:
             cache_singleton = Cache()
             cached_result = cache_singleton.check_if_ip_already_found_and_return_result(ip=value.get('ip'))
             if 80 in cached_result.get('open_ports'):
                 webserver_scanning = HttpClientWebserverScanningAdapter()
                 webserver_scanning.target_uri = value.get('ip')
-                return webserver_scanning.run()
+                w_s = webserver_scanning.run()
+                loader.stop()
+                return w_s
         except:
             pass
         
+        loader.stop()
         return []
     return wrapper

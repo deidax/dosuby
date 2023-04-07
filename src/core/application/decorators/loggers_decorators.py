@@ -30,11 +30,12 @@ def info_logger(message: str):
         def wrapper(*args, **kwargs):
             # logging.info(f"{C}[*]  {message}{C}")
             
-            global LOADER
-            LOADER.stop()
+            # global LOADER
+            # LOADER.stop()
             info = f"{C}[*]  {message}{C}"
-            LOADER = Loader(info, end=f"{info} ->{W} [Done] {W}")
-            LOADER.start()
+            # LOADER = Loader(info, end=f"{info} ->{W} [Done] {W}")
+            # LOADER.start()
+            logging.info(info)
             return func(*args, **kwargs)
         return wrapper
     return decorator
@@ -80,29 +81,25 @@ def info_subdomain_found(attr_name):
                         ip = None
                         
                         try:
-                            loader = Loader('Getting IP...')
-                            loader.start()
                             ip = socket.gethostbyname(sub_ser)
                         except:
                             pass
                         
                         if ip:
-                            end = f"{G}[+]  {sub_ser} --> {ip}{G}"
-                            loader.end = end
-                            loader.stop()
+                            info = f"{G}[+]  {sub_ser} --> {ip}{G}"
+                            logging.info(info)
                         else:
-                            end = f"{Y}[!]  {sub_ser} [Could not find IP address]{Y}"
-                            loader.end = end
-                            loader.stop()
+                            info = f"{Y}[!]  {sub_ser} [Could not find IP address]{Y}"
+                            logging.info(info)
                             
                     else:
-                        global LOADER
-                        LOADER.stop()
+                        # global LOADER
+                        # LOADER.stop()
                         
-                        info = f"[*]{C}  Subdomain found {sub_ser}. Scanning for [open ports, CMS, WebServer]...{C}"
-                        LOADER = Loader(info, end=f"{info} ->{W} [Done] {W}")
-                        LOADER.start()
-                        # logging.info(f"[*]{C}  Subdomain found {sub_ser}. Scanning for [open ports, CMS, WebServer]...{C}")
+                        # info = f"[*]{C}  Subdomain found {sub_ser}. Scanning for [open ports, CMS, WebServer]...{C}"
+                        # LOADER = Loader(info, end=f"{info} ->{W} [Done] {W}")
+                        # LOADER.start()
+                        logging.info(f"[*]{C}  Subdomain found {sub_ser}{C}")
                     
                     cache.cached_enumeration_result_count = cache.cached_enumeration_result_count + 1
             return value
@@ -111,36 +108,40 @@ def info_subdomain_found(attr_name):
     return decorator
 
 
-def info_port_scanning(attr_name):
-    def decorator(func):
-        def wrapper(*args, **kwargs):
-            skip = getattr(args[0], attr_name)
-            value = func(*args, **kwargs)
-            if not skip:
-                if value:
-                    global LOADER
-                    LOADER.stop()
-                    info = f"{C}[*]  Scanning ports{C}"
-                    LOADER = Loader(info, end=f"{info} ->{W} [Done] {W}")
-                    LOADER.start()
-            return value
+# def info_port_scanning(ports):
+#     global LOADER
+#     LOADER.stop()
+#     while ports == 'EMPTY':
+#         info = f"{C}[*]  Start port scanning{C}"
+#         LOADER = Loader(info)
+#         LOADER.start()
         
-        return wrapper
-    return decorator
+#     LOADER.end = f"{C}[*]  Port scanning{C} -> {G} [Done] {G}"
+#     LOADER.stop()
+    
+#     return ports
 
-def info_cms_scanning(attr_name):
-    def decorator(func):
-        def wrapper(*args, **kwargs):
-            skip = getattr(args[0], attr_name)
-            value = func(*args, **kwargs)
-            if not skip:
-                if value:
-                    global LOADER
-                    LOADER.stop()
-                    info = f"{C}[*]  Scanning for CMS{C}"
-                    LOADER = Loader(info, end=f"{info} ->{W} [Done] {W}")
-                    LOADER.start()
-            return value
+# def info_cms_scanning(attr_name):
+#     def decorator(func):
+#         def wrapper(*args, **kwargs):
+#             skip = getattr(args[0], attr_name)
+#             value = func(*args, **kwargs)
+#             if not skip:
+#                 if value:
+#                     global LOADER
+#                     LOADER.stop()
+#                     info = f"{C}[*]  Scanning for CMS{C}"
+#                     LOADER = Loader(info, end=f"{info} ->{W} [Done] {W}")
+#                     LOADER.start()
+#             return value
         
-        return wrapper
-    return decorator
+#         return wrapper
+#     return decorator
+
+def log_subdomain_info(subdomain_uri):
+    config = Config()
+    if config.scanning_modules:
+        cache_singleton = Cache()
+        if subdomain_uri not in cache_singleton.tmp_subdomains:
+            cache_singleton.add_subdomain_uri(subdomain_uri)
+            logging.info(f"[*]{C}  Subdomain found {subdomain_uri}{C}")

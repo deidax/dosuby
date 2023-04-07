@@ -12,13 +12,15 @@ class Subdomain:
     open_ports: list = field(init=False, default_factory=list)
     cms: Any = field(init=False)
     skip_logging: bool = field(init=False)
-    _subdomain_cms: str = field(init=False, default='')
+    skip_subdomain_login: bool = field(init=False, default=False)
+    _subdomain_cms: Any = field(init=False, default='')
     _subdomain_uri: str = field(init=False, default='')
     _subdomain_ip: str = field(init=False, default='')
     _subdomain_hostname: str = field(init=False, default='')
-    _subdomain_open_ports_from_uri: str = field(init=False, default='')
-    _subdomain_webserver_from_ip: str = field(init=False, default='')
-    
+    _subdomain_open_ports_from_uri: Any = field(init=False, default='')
+    _subdomain_webserver_from_ip: Any = field(init=False, default='')
+    _tmp_s_uri: str = field(init=False, default='')
+    _tmp_s_ip: str = field(init=False, default='')
     
     
     @property
@@ -34,12 +36,17 @@ class Subdomain:
             
             
             self._subdomain_uri = self.subdomain_serializer.serialize(value)
-            
             # assign subdomain_uri to get ip and open ports for the asseigned subdomain uri
-            self._subdomain_ip = self.subdomain_uri
-            self._subdomain_open_ports_from_uri = {'ip':self.subdomain_ip,'uri': self.subdomain_uri}
-            self._subdomain_cms = {'ip':self.subdomain_ip,'uri': self.subdomain_uri}
-            self._subdomain_webserver_from_ip = {'ip':self.subdomain_ip,'uri': self.subdomain_uri}
+            self._tmp_s_uri = self.subdomain_uri
+            log_subdomain_info(self._tmp_s_uri)
+            self._subdomain_ip = self._tmp_s_uri
+            self._tmp_s_ip = self.subdomain_ip
+            
+            self._subdomain_open_ports_from_uri = {'ip':self._tmp_s_ip,'uri': self._tmp_s_uri}
+            
+            
+            self._subdomain_cms = {'ip':self._tmp_s_ip,'uri': self._tmp_s_uri}
+            self._subdomain_webserver_from_ip = {'ip':self._tmp_s_ip,'uri': self._tmp_s_uri}
         else:
             self._subdomain_uri = value
 
@@ -61,7 +68,7 @@ class Subdomain:
     @property
     @save_cms('cms')
     @scan_for_cms
-    @info_logger('Scanning for CMS')
+    # @info_logger('Scanning for CMS')
     def subdomain_cms(self):
         return self._subdomain_cms
     
@@ -69,7 +76,7 @@ class Subdomain:
     @property
     @add_to_list('open_ports')
     @get_open_ports
-    @info_port_scanning('skip_logging')
+    # @info_port_scanning('skip_logging')
     def subdomain_open_ports_from_uri(self) -> list:
         """Scan for open ports
 
@@ -105,7 +112,8 @@ class Subdomain:
         self.skip_logging = True
         
         cached_data = {
-            'ip': self.subdomain_ip,
+            'ip': self._tmp_s_ip,
+            'uri': self._tmp_s_uri,
             'open_ports': self.subdomain_open_ports_from_uri,
         }
         
