@@ -8,7 +8,7 @@ from src.adapter.cms_scanning.wordpress_scanning_adapter import WordPressScannin
 from src.adapter.webserver_scanning.http_client_webserver_scanning_adapter import HttpClientWebserverScanningAdapter
 from .loggers_decorators import *
 
-
+SKIP_LOADING = False
 
 def get_ip(func):
     def wrapper(*args, **kwargs):
@@ -59,11 +59,13 @@ def get_open_ports(func):
             display_sub_info = True
             return c_r
         
+        cache.add_subdomain_uri(value.get('uri'))
         if display_sub_info:
-            logging.info(f"[*]{C}  ==> {value.get('uri')}{C}")
+            logging.info(f"{G}[*]  ==> {value.get('uri')}{G}")
         
-        loader = Loader("Ports Scanning...").start()
-        loader.end = "Ports Scanning -> [DONE]"
+        loader = Loader(f"{Y}       [->] Ports Scanning...{Y}").start()
+        loader.end = f"{Y}       [*] Ports Scanning{Y}{G} [DONE]{G}"
+    
         
         try:
             port_scanning = SocketPortScanningAdapter()
@@ -123,20 +125,27 @@ def scan_for_cms(func):
         if not config.scanning_modules:
             return ModuleStatus.ABORT
         
-        loader = Loader("CMS Scanning...").start()
-        loader.end = "CMS Scanning -> [DONE]"
         try:
             cms = None
+            loader = None
             cache_singleton = Cache()
             cached_result = cache_singleton.check_if_ip_already_found_and_return_result(ip=value.get('ip'))
+            cached_uri = cache_singleton.check_if_uri_already_found_and_return_result(value.get('uri'))
             if 80 in cached_result.get('open_ports'):
+                if cached_uri:
+                    loader = Loader(f"{Y}       [->] CMS Scanning...{Y}").start()
+                    loader.end = f"{Y}       [*] CMS Scanning{Y}{G} [DONE]{G}"
                 cms_scanning_adapter = WordPressScanningAdapter()
                 cms_scanning_adapter.subdomain_uri = value.get('uri')
                 cms = cms_scanning_adapter.run()
+            elif cached_uri:
+                loader = Loader('').start()
+                loader.end = f"{Y}       [*] CMS Scanning (No port 80){Y}{G} [SKIPED]{G}"
         except:
             cms = None
-        
-        loader.stop()
+            
+        if loader:
+            loader.stop()
         return cms
     return wrapper
 
@@ -169,20 +178,28 @@ def get_webserver(func):
         if not config.scanning_modules:
             return ModuleStatus.ABORT
         
-        loader = Loader("Webserver Scanning...").start()
-        loader.end = "Webserver Scanning -> [DONE]"
+        
         try:
             cache_singleton = Cache()
             cached_result = cache_singleton.check_if_ip_already_found_and_return_result(ip=value.get('ip'))
+            cached_uri = cache_singleton.check_if_uri_already_found_and_return_result(value.get('uri'))
             if 80 in cached_result.get('open_ports'):
+                if cached_uri:
+                    loader = Loader(f"{Y}       [->] Webserver Scanning...{Y}").start()
+                    loader.end = f"{Y}       [*] Webserver Scanning{Y}{G} [DONE]{G}"
+                else:
+                    cache_singleton.add_subdomain_uri(value.get('uri'))
                 webserver_scanning = HttpClientWebserverScanningAdapter()
                 webserver_scanning.target_uri = value.get('ip')
                 w_s = webserver_scanning.run()
                 loader.stop()
                 return w_s
+            elif cached_uri:
+                loader = Loader('').start()
+                loader.end = f"{Y}       [*] Webserver Scanning (No port 80){Y}{G} [SKIPED]{G}"
+                loader.stop()
         except:
             pass
         
-        loader.stop()
         return []
     return wrapper

@@ -4,16 +4,9 @@ from src.core.domain.target import Target
 from src.core.domain.config import Config
 from src.core.application.decorators.loggers_decorators import *
 from src.core.application.decorators.loggers_decorators import Loader
+from rich.console import Console
+from rich.table import Table
 
-class TmpResponse:
-    
-    def __init__(self, subdomain=None, subdomain_ip=None, subdomain_ports=None, subdomain_cms=None, subdomain_webserver=None) -> None:
-        self.subdomain = subdomain
-        self.subdomain_ip = subdomain_ip
-        self.subdomain_ports = subdomain_ports
-        self.subdomain_cms = subdomain_cms
-        self.subdomain_webserver = subdomain_webserver
-    
 
 class SuccessResponse(SearchResponse):
     """Successful search result.
@@ -59,14 +52,51 @@ class SuccessResponse(SearchResponse):
             'subdomain_cms': self.target.subdomain.subdomain_cms,
             'subdomain_webserver': self.target.subdomain.subdomain_webserver,
         }
-    
-        return f"\n{'-'*20}\n"\
-            f"{G}--> {response.get('subdomain')}{G}\n"\
-            f"{W}   [+] IP: {response.get('subdomain_ip')}{W}\n"\
-            f"{W}   [+] Ports: {response.get('subdomain_ports')}{W}\n"\
-            f"{W}   [+] CMS: {response.get('subdomain_cms')}{W}\n"\
-            f"{W}   [+] Webserver: {response.get('subdomain_webserver')}{W}\n"\
-            f"{'-'*20}\n"
+        
+        open_ports_str = ", ".join([str(num) for num in response.get('subdomain_ports')])
+        if not response.get('subdomain_ip'):
+            ip_str = 'N/A'
+        else:
+            ip_str = response.get('subdomain_ip')
+        
+        if not response.get('subdomain_ports'):
+            open_ports_str = 'N/A'
+        else:
+            open_ports_str = ", ".join([str(num) for num in response.get('subdomain_ports')])
+        
+        if not response.get('subdomain_cms'):
+            cms_str = 'N/A'
+        else:
+            cms_str = response.get('subdomain_cms')
+        
+        if not response.get('subdomain_webserver'):
+            webserver_str = 'N/A'
+        else:
+            webserver_str = response.get('subdomain_webserver')
+            
+        
+        columns = ["Subdomain", "IP", "Open Ports", "CMS", "Web Server"]
+        row = [
+            [
+                response.get('subdomain'),
+                ip_str,
+                open_ports_str,
+                cms_str,
+                webserver_str
+            ]
+        ]
+        
+        # return f"\n{'-'*20}\n"\
+        #     f"{G}--> {response.get('subdomain')}{G}\n"\
+        #     f"{W}   [+] IP: {response.get('subdomain_ip')}{W}\n"\
+        #     f"{W}   [+] Ports: {response.get('subdomain_ports')}{W}\n"\
+        #     f"{W}   [+] CMS: {response.get('subdomain_cms')}{W}\n"\
+        #     f"{W}   [+] Webserver: {response.get('subdomain_webserver')}{W}\n"\
+        #     f"{'-'*20}\n"
+        return {
+            'columns': columns,
+            'row': row
+        }
     
     def _get_response_without_scanning_modules(self):
         response = {

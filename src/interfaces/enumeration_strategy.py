@@ -4,6 +4,8 @@ from src.core.domain.cache import Cache
 from src.interfaces.success_response import SuccessResponse
 import logging
 from src.core.application.decorators.loggers_decorators import info_logger
+from rich.console import Console
+from rich.table import Table
 
 class EnumerationStrategy(ABC):
     
@@ -26,9 +28,16 @@ class EnumerationStrategy(ABC):
     
     
     
-    def display_result(self, result: str):
+    def display_result(self, result: dict):
         if self.config.scanning_modules:
-            print(result)
+            table = Table(title="\n")
+            for col in result.get('columns'):
+                table.add_column(col)
+            for ro in result.get('row'):
+                table.add_row(*ro,style='bright_green')
+            
+            console = Console()
+            console.print(table)
     
     def display_result_count(self, succes_response: SuccessResponse):
         _ = succes_response.get_target_subdomains()

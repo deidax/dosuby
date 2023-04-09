@@ -29,7 +29,7 @@ def main():
     
     
     config = Config()
-    config.scanning_modules = True
+    config.scanning_modules = False
     
     print('dosuby version:', version)
     print('\n')
@@ -39,12 +39,10 @@ def main():
     try:
         
         # virustotal = VirustotalHandler()
-        # waybackmachine = WaybackmachineHandler()
-        alient_vault = AlientvaultHandler()
-        # hacker_target = HackertargetHandler()
-        # ask = AskDorkHandler()
-        # alient_vault = AlientvaultHandler(next_handler=ask)
-        # aol = AolDorkHandler()
+        waybackmachine = WaybackmachineHandler()
+        # hacker_target = HackertargetHandler(next_handler=waybackmachine)
+        # alient_vault = AlientvaultHandler(next_handler=hacker_target)
+        # aol = AolDorkHandler(next_handler=alient_vault)
         # crt = CrtSearchHandler(next_handler=aol)
         # anubis = AnubisHandler(next_handler=crt)
         # bing = BingDorkHandler(next_handler=anubis)
@@ -52,14 +50,14 @@ def main():
         # duckduckgo = DuckduckgoDorkHandler(next_handler=yahoo)
         # google = GoogleDorkHandler(next_handler=duckduckgo)
         # brave = BraveDorkHandler(next_handler=google)
-        # ask = AskDorkHandler(next_handler=brave)
+        ask = AskDorkHandler()
 
         
     # yahoo = YahooDorkHandler()
     # google = GoogleDorkHandler(next_handler=yahoo)
     # crt = CrtSearchHandler(next_handler=google)
     
-        alient_vault.handle(uri=uri)
+        waybackmachine.handle(uri=uri)
         
         print('report--->')
         report = EnumerationReporte()
