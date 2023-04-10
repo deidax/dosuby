@@ -49,8 +49,9 @@ def main():
         # yahoo = YahooDorkHandler(next_handler=bing)
         # duckduckgo = DuckduckgoDorkHandler(next_handler=yahoo)
         # google = GoogleDorkHandler(next_handler=duckduckgo)
-        # brave = BraveDorkHandler(next_handler=google)
-        ask = AskDorkHandler()
+        google = GoogleDorkHandler()
+        brave = BraveDorkHandler(next_handler=google)
+        ask = AskDorkHandler(next_handler=brave)
 
         
     # yahoo = YahooDorkHandler()
@@ -59,9 +60,8 @@ def main():
     
         ask.handle(uri=uri)
         
-        print('report--->')
         report = CliReportRepo()
-        print(report.read_report())
+        report.read_report()
 
     except Exception as ex:
         print(ex)

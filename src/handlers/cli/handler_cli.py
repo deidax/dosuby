@@ -1,4 +1,6 @@
 from src.interfaces.handler import Handler
+import logging
+from src.core.application.decorators.loggers_decorators import *
 
 
 class HandlerCli(Handler):
@@ -10,6 +12,7 @@ class HandlerCli(Handler):
     
     def pre_handler_process(self, **kwargs):
         # Display handler name on the CLI
-        print('+'*20)
-        print(self)
-        print('+'*20)
+        # print('+'*20)
+        # print(self)
+        # print('+'*20)
+        logging.info(f"{C}[*] Running enumeration{C} {W}[{self}]{W}")

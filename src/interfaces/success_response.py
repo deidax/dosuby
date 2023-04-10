@@ -53,7 +53,6 @@ class SuccessResponse(SearchResponse):
             'subdomain_webserver': self.target.subdomain.subdomain_webserver,
         }
         
-        open_ports_str = ", ".join([str(num) for num in response.get('subdomain_ports')])
         if not response.get('subdomain_ip'):
             ip_str = 'N/A'
         else:
