@@ -153,7 +153,7 @@ def save_cms(attr_name):
     """values in a list
 
     Args:
-        attr_name (list): list attribute to append to
+        attr_name (cms): cms attribute to append to
     """
     def decorator(func):
         def wrapper(*args, **kwargs):
@@ -163,6 +163,23 @@ def save_cms(attr_name):
             cms = func(*args, **kwargs)
             setattr(args[0], attr_name, cms)
             return cms
+        return wrapper
+    return decorator
+
+def save_webserver(attr_name):
+    """values in a list
+
+    Args:
+        attr_name (webserver): webserver attribute to append to
+    """
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            config = Config()
+            if not config.scanning_modules:
+                return ModuleStatus.ABORT
+            webserver = func(*args, **kwargs)
+            setattr(args[0], attr_name, webserver)
+            return webserver
         return wrapper
     return decorator
 

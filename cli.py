@@ -6,7 +6,7 @@ from src.handlers.cli.brave_dork_handler import BraveDorkHandler
 from src.handlers.cli.aol_dork_handler import AolDorkHandler
 from src.handlers.cli.crt_search_handler import CrtSearchHandler
 from src.handlers.cli.bing_dork_handler import BingDorkHandler
-from src.core.domain.enumeration_reporte import EnumerationReporte
+from src.repositories.cli_report_repo import CliReportRepo
 from src.handlers.cli.anubis_dork_handler import AnubisHandler
 from src.handlers.cli.ask_dork_handler import AskDorkHandler
 from src.handlers.cli.alientvault_handler import AlientvaultHandler
@@ -29,7 +29,7 @@ def main():
     
     
     config = Config()
-    config.scanning_modules = False
+    config.scanning_modules = True
     
     print('dosuby version:', version)
     print('\n')
@@ -57,11 +57,11 @@ def main():
     # google = GoogleDorkHandler(next_handler=yahoo)
     # crt = CrtSearchHandler(next_handler=google)
     
-        waybackmachine.handle(uri=uri)
+        ask.handle(uri=uri)
         
         print('report--->')
-        report = EnumerationReporte()
-        print(report.report_subdomains)
+        report = CliReportRepo()
+        print(report.read_report())
 
     except Exception as ex:
         print(ex)

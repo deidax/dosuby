@@ -11,6 +11,7 @@ class Subdomain:
     subdomain_uri: str = field(init=True)
     open_ports: list = field(init=False, default_factory=list)
     cms: Any = field(init=False)
+    webserver: Any = field(init=False)
     skip_logging: bool = field(init=False)
     skip_subdomain_login: bool = field(init=False, default=False)
     _subdomain_cms: Any = field(init=False, default='')
@@ -87,6 +88,7 @@ class Subdomain:
     
     
     @property
+    @save_webserver('webserver')
     @get_webserver
     def subdomain_webserver(self) -> str:
         """Scan for webserver
