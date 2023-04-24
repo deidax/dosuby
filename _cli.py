@@ -33,7 +33,7 @@ def main():
                 datefmt="%Y-%m-%d %H:%M:%S"
             )
     config = Config()
-    config.scanning_modules = True
+    config.scanning_modules = False
     
     print('dosuby version:', version)
     print('\n')
@@ -66,12 +66,14 @@ def main():
                         message="Choose methods to use for the enumeration",
                         choices=handlers_choices,
                         ),
+    inquirer.Confirm("scanning_modules", message="Do you want to scan subdomains?",)
     ]
     
     answers = inquirer.prompt(questions)
     
     target_uri = answers.get('TLD')
     selected_handlers = answers.get('handlers')
+    config.scanning_modules = answers.get('scanning_modules')
     
     found_handlers: List[dict] = []
 
@@ -83,18 +85,27 @@ def main():
         try:
             
             handlers_selected: List[Handler] = []
+            handlers_selected_objects: List[Handler] = []
+            
             for handler in found_handlers:
+                handler_class_name = handler.get('value')
+                handlers_selected.append(handler_class_name)
+                
+            for handler_selected_class_name in reversed(handlers_selected):
                 handler_object: Handler = None
                 next_handler = None
-                handler_class_name = handler.get('value')
-                
-                if handlers_selected:
-                    next_handler = handlers_selected[-1]
+                if handlers_selected_objects:
+                    next_selected_handler = handlers_selected_objects[-1]
+                    next_handler = next_selected_handler
                     
-                handler_object = handler_class_name(next_handler=next_handler)
-                handlers_selected.append(handler_object)
-        
-            handler_starter = handlers_selected[0]
+                handler_object = handler_selected_class_name(next_handler=next_handler)
+                handlers_selected_objects.append(handler_object)
+            
+            handlers_to_use = handlers_selected_objects[::-1]
+            handler_starter = handlers_to_use[0]
+            
+            s = f"\n{'-'*10}[Starting...]{'-'*10}"
+            print(s)
             handler_starter.handle(uri=target_uri)
             report = CliReportRepo()
             report.read_report()

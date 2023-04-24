@@ -12,7 +12,7 @@ class Handler(EnumerationHandler):
     and return a one final result to the user
     
     """
-
+    
     def __init__(self, next_handler: EnumerationHandler=None) -> None:
         self._next_handler = next_handler
         self.cache = Cache()
