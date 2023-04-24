@@ -52,7 +52,6 @@ def main():
         google = GoogleDorkHandler()
         brave = BraveDorkHandler(next_handler=google)
         ask = AskDorkHandler(next_handler=brave)
-
         
     # yahoo = YahooDorkHandler()
     # google = GoogleDorkHandler(next_handler=yahoo)
