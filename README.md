@@ -6,7 +6,7 @@ Dosuby is a tool developed in Python that aims to enumerate subdomains of a pare
 
 1. Clone the repository:
    ```
-   git clone https://github.com/username/dosuby.git
+   git clone https://github.com/deidax/dosuby.git
    ```
 2. Navigate to the project directory:
    ```
@@ -26,6 +26,10 @@ python dosuby.py
 The above command will start the tool
 
 ![dosuby Image](imgs/dosuby.png)
+
+![dosuby_gif_1 Gif](imgs/dosuby_gif.gif)
+
+![dosuby_gif_2 Gif](imgs/dosuby_gif_2.gif)
 
 ## Contributing
 
