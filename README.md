@@ -25,6 +25,8 @@ python dosuby.py
 
 The above command will start the tool
 
+![dosuby Image](imgs/dosuby.png)
+
 ## Contributing
 
 Contributions are welcome! If you find a bug or would like to suggest a new feature, please open an issue or submit a pull request.
