@@ -40,31 +40,31 @@ def main():
     
     regex = r"^[a-z]{2,}\.[a-z]{2,}$"
     handlers = [
-        {'name':'Google', 'value': GoogleDorkHandler},
-        {'name':'Yahoo', 'value': YahooDorkHandler},
-        {'name':'Duckduckgo', 'value': DuckduckgoDorkHandler},
-        {'name':'Brave', 'value': BraveDorkHandler},
-        {'name':'Aol', 'value': AolDorkHandler},
-        {'name':'Bing', 'value': BingDorkHandler},
-        {'name':'Ask', 'value': AskDorkHandler},
-        {'name':'Crt Search', 'value': CrtSearchHandler},
-        {'name':'Anubis', 'value': AnubisHandler},
-        {'name':'AlientVault', 'value': AlientvaultHandler},
-        {'name':'HackerTarget', 'value': HackertargetHandler},
-        {'name':'WaybackMachine', 'value': WaybackmachineHandler},
-        {'name':'VirusTotal', 'value': VirustotalHandler}
+        {'id': '1','name':'Google', 'value': GoogleDorkHandler},
+        {'id': '2','name':'Yahoo', 'value': YahooDorkHandler},
+        {'id': '3','name':'Duckduckgo', 'value': DuckduckgoDorkHandler},
+        {'id': '4','name':'Brave', 'value': BraveDorkHandler},
+        {'id': '5','name':'Aol', 'value': AolDorkHandler},
+        {'id': '6','name':'Bing', 'value': BingDorkHandler},
+        {'id': '7','name':'Ask', 'value': AskDorkHandler},
+        {'id': '8','name':'Crt Search', 'value': CrtSearchHandler},
+        {'id': '9','name':'Anubis', 'value': AnubisHandler},
+        {'id': '10','name':'AlientVault', 'value': AlientvaultHandler},
+        {'id': '11','name':'HackerTarget', 'value': HackertargetHandler},
+        {'id': '12','name':'WaybackMachine', 'value': WaybackmachineHandler},
+        {'id': '13','name':'VirusTotal', 'value': VirustotalHandler}
     ]
-    
+
     # Extract the 'name' keys from the list of dictionaries
     handlers_choices = [handler['name'] for handler in handlers]
-    
+   
     questions = [
     inquirer.Text('TLD', message="What's the domain to enumerate",
-                        validate=lambda _, x: re.match(regex, x)
-                ),
+                       validate=lambda _, x: re.match(regex, x)
+               ),
     inquirer.Checkbox('handlers',
-                        message="Choose methods to use for the enumeration",
-                        choices=handlers_choices,
+                    message="Choose methods to use for the enumeration",
+                    choices=handlers_choices,
                         ),
     inquirer.Confirm("scanning_modules", message="Do you want to scan subdomains?",)
     ]
@@ -77,20 +77,22 @@ def main():
     
     found_handlers: List[dict] = []
 
-    for handler in handlers:
-        if handler['name'] in selected_handlers:
-            found_handlers.append(handler)
-
+    for selected_handler in selected_handlers:
+        if selected_handler in handlers_choices:
+            for handler in handlers:
+                if selected_handler == handler['name']:
+                    found_handlers.append(handler)
+    
+    
     if found_handlers:
         try:
-            
             handlers_selected: List[Handler] = []
             handlers_selected_objects: List[Handler] = []
             
             for handler in found_handlers:
                 handler_class_name = handler.get('value')
                 handlers_selected.append(handler_class_name)
-                
+            
             for handler_selected_class_name in reversed(handlers_selected):
                 handler_object: Handler = None
                 next_handler = None
@@ -102,9 +104,10 @@ def main():
                 handlers_selected_objects.append(handler_object)
             
             handlers_to_use = handlers_selected_objects[::-1]
+            
             handler_starter = handlers_to_use[0]
             
-            s = f"\n{'-'*10}[Starting...]{'-'*10}"
+            s = f"\n{'-'*20}[Starting...]{'-'*20}"
             print(s)
             handler_starter.handle(uri=target_uri)
             report = CliReportRepo()
