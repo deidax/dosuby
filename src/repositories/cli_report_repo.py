@@ -9,12 +9,36 @@ class CliReportRepo(ReportRepo):
     def read_report(self):
         report = EnumerationReporte()
         report_subdomains = report.report_subdomains
+        table = Table(title="\nSubdomains Found")
+        
         if not self.config.scanning_modules:
+            columns = ["Subdomain", "IP"]
+            for col in columns:
+                table.add_column(col)
+                
+            for subdomain in report_subdomains:
+                if not subdomain.get('subdomain_ip'):
+                    ip_str = 'N/A'
+                else:
+                    ip_str = subdomain.get('subdomain_ip')
+                    
+                row =  [
+                        subdomain.get('subdomain_uri'),
+                        ip_str,
+                    ]
+            
+                table.add_row(*row,style='bright_green')
+                
+            console = Console()
+            console.print(table)
             return
         
+        
+        
+        
         columns = ["Subdomain", "IP", "Open Ports", "CMS", "Web Server"]
-        rows = []
-        table = Table(title="\nSubdomains Found")
+        
+        
         for col in columns:
             table.add_column(col)
             

@@ -14,8 +14,8 @@ def get_ip(func):
     def wrapper(*args, **kwargs):
         value = func(*args, **kwargs)
         config = Config()
-        if not config.scanning_modules:
-            return ModuleStatus.ABORT
+        # if not config.scanning_modules:
+        #     return ModuleStatus.ABORT
 
         try:
             value = socket.gethostbyname(value)

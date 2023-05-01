@@ -29,7 +29,7 @@ def main():
     
     
     config = Config()
-    config.scanning_modules = True
+    config.scanning_modules = False
     
     print('dosuby version:', version)
     print('\n')

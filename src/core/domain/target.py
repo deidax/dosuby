@@ -91,6 +91,7 @@ class Target(metaclass=Singleton):
        else:
            sub_dict = lambda s: {
                                     'subdomain_uri': s.subdomain_uri,
+                                    'subdomain_ip': s.subdomain_ip,
                                 }
            
        
