@@ -9,10 +9,11 @@ class HandlerCli(Handler):
     Args:
         Handler (EnumerationHandler): Abstract class for enumerator handlers
     """
+    def __init__(self, next_handler = None):
+        super().__init__(next_handler)
+        self.silent = True
     
     def pre_handler_process(self, **kwargs):
-        # Display handler name on the CLI
-        # print('+'*20)
-        # print(self)
-        # print('+'*20)
-        logging.info(f"{C}[*] Running enumeration{C} {W}[{self}]{W}")
+        if not self.silent:
+            logging.info(f"{C}[*] Running enumeration{C} {W}[{self}]{W}")
+        
