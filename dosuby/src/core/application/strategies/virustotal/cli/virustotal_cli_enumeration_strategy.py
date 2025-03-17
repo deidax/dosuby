@@ -6,7 +6,7 @@ from dosuby.src.core.application.decorators.loggers_decorators import info_logge
 
 class VirustotalCliEnumerationStrategy(EnumerationStrategy):
     
-    #@info_logger("Enumerating ...")
+    @info_logger("Enumerating ...")
     def enumeration_process(self, subdomains_links, **kwargs) -> list:
         """Enumeration strategy that will handle each subdomain found\n
         the purpose of this it that each strategy will can handle the results differently.

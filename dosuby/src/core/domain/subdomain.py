@@ -69,7 +69,7 @@ class Subdomain:
     @property
     @save_cms('cms')
     @scan_for_cms
-    # #@info_logger('Scanning for CMS')
+    # @info_logger('Scanning for CMS')
     def subdomain_cms(self):
         return self._subdomain_cms
     

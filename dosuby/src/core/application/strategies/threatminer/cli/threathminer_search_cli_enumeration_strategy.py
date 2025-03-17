@@ -6,7 +6,7 @@ from dosuby.src.core.application.decorators.loggers_decorators import info_logge
 
 class ThreatMinerCliEnumerationStrategy(EnumerationStrategy):
     
-    #@info_logger("Enumerating ...")
+    @info_logger("Enumerating ...")
     def enumeration_process(self, subdomains_links, **kwargs) -> list:
         """_summary_
 
