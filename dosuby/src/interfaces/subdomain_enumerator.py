@@ -43,7 +43,7 @@ class SubdomainEnumerator(ABC):
     def add_dork_queries(self, query: str) -> None:
         self.queries.append(query)
     
-    # @info_logger("Starting subdomains enumeration...")
+    # #@info_logger("Starting subdomains enumeration...")
     def run(self):
         """This method will run the dork enumeration process
 

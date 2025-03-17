@@ -6,7 +6,7 @@ from dosuby.src.core.application.decorators.loggers_decorators import info_logge
 class CMSCliEnumerationStrategy(EnumerationStrategy):
     
     
-    @info_logger('CMS Scanning')
+    #@info_logger('CMS Scanning')
     def enumeration_process(self, **kwargs) -> list:
         """_summary_
 
