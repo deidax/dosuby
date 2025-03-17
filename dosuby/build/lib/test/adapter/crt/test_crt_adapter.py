@@ -1,5 +1,5 @@
 from src.adapter.crt.crt_adapter import CrtAdapter
-from infrastructure.libs.CrtSearch.crt_search import CrtSearch
+from dosuby.infrastructure.libs.CrtSearch.crt_search import CrtSearch
 
 
 # def test_crt_search_return_correct_data():

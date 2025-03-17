@@ -1,5 +1,5 @@
 try:
-    from infrastructure.libs.Search_Engines_Scraper.search_engines import Yahoo
+    from dosuby.infrastructure.libs.Search_Engines_Scraper.search_engines import Yahoo
 except ImportError:
     print("No module named 'search_engines' found")
     

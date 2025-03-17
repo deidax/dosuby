@@ -1,5 +1,5 @@
 try:
-    from infrastructure.libs.CrtSearch.crt_search import CrtSearch
+    from dosuby.infrastructure.libs.CrtSearch.crt_search import CrtSearch
 except ImportError:
     print("No module named 'search_engines' found")
     

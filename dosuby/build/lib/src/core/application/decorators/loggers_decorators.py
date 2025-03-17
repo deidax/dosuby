@@ -3,7 +3,7 @@ from src.core.domain.config import Config
 from src.core.domain.cache import Cache
 from src.serializers.extract_domain_serializer import ExtractUriSerializer
 import socket
-from infrastructure.libs.loader import Loader
+from dosuby.infrastructure.libs.loader import Loader
 
 R = '\033[31m'  # red
 G = '\033[32m'  # green

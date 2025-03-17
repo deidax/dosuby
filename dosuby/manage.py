@@ -2,7 +2,7 @@
 
 import argparse
 import sys
-from infrastructure.libs.helpers.dosuby_module import DosubyModule
+from dosuby.infrastructure.libs.helpers.dosuby_module import DosubyModule
 
 
 parser = argparse.ArgumentParser(description='Dosuby manager')
