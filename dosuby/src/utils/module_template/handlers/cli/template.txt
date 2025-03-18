@@ -1,7 +1,7 @@
 from .handler_cli import HandlerCli
-from src.services.{{class}}.cli.{{class}}_cli_service import {{Class}}CliService
-from src.interfaces.success_response import SuccessResponse
-from src.core.application.response.cli.failed_response_builder import FailureResponseBuilder
+from dosuby.src.services.{{class}}.cli.{{class}}_cli_service import {{Class}}CliService
+from dosuby.src.interfaces.success_response import SuccessResponse
+from dosuby.src.core.application.response.cli.failed_response_builder import FailureResponseBuilder
 
 class {{Class}}Handler(HandlerCli):
     

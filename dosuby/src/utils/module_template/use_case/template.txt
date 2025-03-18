@@ -1,5 +1,5 @@
-from src.core.domain.target import Target
-from src.interfaces.subdomain_enumerator import SubdomainEnumerator
+from dosuby.src.core.domain.target import Target
+from dosuby.src.interfaces.subdomain_enumerator import SubdomainEnumerator
 
 class {{Class}}EnumerationUseCase:
     """This is the {{Class}} Enumeration Use Case.\n

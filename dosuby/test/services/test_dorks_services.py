@@ -1,5 +1,5 @@
-from src.services.dorks.cli.google_dork_cli_service import GoogleDorkCliService
-from src.interfaces.success_response import SuccessResponse
+from dosuby.src.services.dorks.cli.google_dork_cli_service import GoogleDorkCliService
+from dosuby.src.interfaces.success_response import SuccessResponse
 
 
 def test_google_service_creation():

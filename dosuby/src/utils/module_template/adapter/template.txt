@@ -1,4 +1,4 @@
-from src.interfaces.subdomain_enumerator import SubdomainEnumerator
+from dosuby.src.interfaces.subdomain_enumerator import SubdomainEnumerator
 
 class {{Class}}Adapter(SubdomainEnumerator):
     

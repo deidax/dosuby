@@ -1,5 +1,5 @@
-from src.services.socket_port_scanning.cli.socket_port_scanning_cli_service import SocketPortScanningCliService
-from src.interfaces.success_response import SuccessResponse
+from dosuby.src.services.socket_port_scanning.cli.socket_port_scanning_cli_service import SocketPortScanningCliService
+from dosuby.src.interfaces.success_response import SuccessResponse
 
 
 
