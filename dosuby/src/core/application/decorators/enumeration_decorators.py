@@ -1,10 +1,13 @@
 import socket
+from dosuby.src.adapter.cms_scanning.drupal_scanning_adapter import DrupalScanningAdapter
+from dosuby.src.adapter.cms_scanning.joomia_scanning_adapter import JoomlaScanningAdapter
+from dosuby.src.adapter.cms_scanning.moodle_scanning_adapter import MoodleScanningAdapter
+from dosuby.src.adapter.cms_scanning.wordpress_scanning_adapter import WordPressScanningAdapter
 from dosuby.src.adapter.ports_scanning.socket_port_scanning_adapter import SocketPortScanningAdapter
 from dosuby.src.core.domain.cache import Cache
 from dosuby.src.core.domain.config import Config
 from dosuby.src.core.application.enums.modules_status import ModuleStatus
 from dosuby.src.core.domain.enumeration_reporte import EnumerationReporte
-from dosuby.src.adapter.cms_scanning.wordpress_scanning_adapter import WordPressScanningAdapter
 from dosuby.src.adapter.webserver_scanning.http_client_webserver_scanning_adapter import HttpClientWebserverScanningAdapter
 from .loggers_decorators import *
 
@@ -146,22 +149,27 @@ def scan_for_cms(func):
                 # Create scanners in priority order
                 cms_scanners = [
                     WordPressScanningAdapter(),
-                    JoomlaScanningAdapter()
-                    # DrupalScanningAdapter(),
+                    JoomlaScanningAdapter(),
+                    DrupalScanningAdapter(),
+                    MoodleScanningAdapter()
                 ]
-                
+                cms_version = ''
                 # Try each CMS scanner until we get a positive detection
                 for scanner in cms_scanners:
                     scanner.subdomain_uri = value.get('uri')
                     result = scanner.run()
                     
+                        
                     if result and result.get('detected'):
                         cms = result  # Return the full CMS result
-                        print(cms)
                         if cms.get('confidence') != 'Low':
-                            cms_output = "{} v{} - confidence: {}".format(
+                            
+                            if cms.get('version') != 'N/A':
+                                cms_version = f" v{cms.get('version')}"
+                                
+                            cms_output = "{}{} - confidence: {}".format(
                                 cms.get('cms'),
-                                cms.get('version'),
+                                cms_version,
                                 cms.get('confidence')
                             )
                         break

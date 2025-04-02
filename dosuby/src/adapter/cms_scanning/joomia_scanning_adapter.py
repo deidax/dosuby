@@ -1,7 +1,7 @@
 import re
-from src.interfaces.cms_enumeration_adapter import CMSEnumerationAdapter
 import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+from dosuby.src.interfaces.cms_enumeration_adapter import CMSEnumerationAdapter
 
 class JoomlaScanningAdapter(CMSEnumerationAdapter):
     """Joomla-specific scanning adapter

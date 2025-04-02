@@ -1,4 +1,4 @@
-from src.interfaces.security_enumeration import SecurityEnumeration
+from dosuby.src.interfaces.security_enumeration import SecurityEnumeration
 import requests
 import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
