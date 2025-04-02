@@ -9,7 +9,7 @@ class PortEnumerationAdapter(SecurityEnumeration):
 
         """
         super().__init__()
-        self._ports = [21, 22, 23, 25, 53, 80, 110, 135, 139, 443, 3306, 5432]
+        self._ports = [21, 22, 23, 25, 53, 80, 110, 135, 139, 443, 3306, 5432, 445]
         self.logger_message = f"Starting port scanning"
     
     @property

@@ -1,0 +1,2747 @@
+.
+├── dosuby.py
+├── imgs
+│   ├── dosuby_gif_2.gif
+│   ├── dosuby_gif.gif
+│   └── dosuby.png
+├── infrastructure
+│   ├── __init__.py
+│   └── libs
+│       ├── CrtSearch
+│       │   ├── crt_search.py
+│       │   └── __init__.py
+│       ├── helpers
+│       │   ├── dosuby_module.py
+│       │   └── __init__.py
+│       ├── __init__.py
+│       ├── loader.py
+│       └── Search_Engines_Scraper
+│           ├── LICENSE
+│           ├── README.md
+│           └── search_engines
+│               ├── config.py
+│               ├── engine.py
+│               ├── engines
+│               │   ├── aol.py
+│               │   ├── ask.py
+│               │   ├── bing.py
+│               │   ├── brave.py
+│               │   ├── dogpile.py
+│               │   ├── duckduckgo.py
+│               │   ├── google.py
+│               │   ├── __init__.py
+│               │   ├── metager.py
+│               │   ├── mojeek.py
+│               │   ├── qwant.py
+│               │   ├── startpage.py
+│               │   ├── torch.py
+│               │   └── yahoo.py
+│               ├── http_client.py
+│               ├── __init__.py
+│               ├── libs
+│               │   ├── get_terminal_size.py
+│               │   ├── __init__.py
+│               │   └── windows_cmd_encoding.py
+│               ├── multiple_search_engines.py
+│               ├── output.py
+│               ├── results.py
+│               ├── search_results
+│               │   └── __init__.py
+│               └── utils.py
+├── LICENSE
+├── manage.py
+├── README.md
+├── requirements.txt
+├── src
+│   ├── adapter
+│   │   ├── alientvault
+│   │   │   ├── alientvault_adapter.py
+│   │   │   └── __init__.py
+│   │   ├── anubis
+│   │   │   ├── anubis_dorks_adapter.py
+│   │   │   └── __init__.py
+│   │   ├── cms_scanning
+│   │   │   ├── __init__.py
+│   │   │   └── wordpress_scanning_adapter.py
+│   │   ├── crt
+│   │   │   ├── crt_adapter.py
+│   │   │   └── __init__.py
+│   │   ├── dorks
+│   │   │   ├── aol_dorks_adapter.py
+│   │   │   ├── ask_dorks_adapter.py
+│   │   │   ├── bing_dorks_adapter.py
+│   │   │   ├── brave_dorks_adapter.py
+│   │   │   ├── duckduckgo_dorks_adapter.py
+│   │   │   ├── google_dorks_adapter.py
+│   │   │   ├── __init__.py
+│   │   │   └── yahoo_dorks_adapter.py
+│   │   ├── hackertarget
+│   │   │   ├── hackertarget_adapter.py
+│   │   │   └── __init__.py
+│   │   ├── __init__.py
+│   │   ├── ports_scanning
+│   │   │   ├── __init__.py
+│   │   │   └── socket_port_scanning_adapter.py
+│   │   ├── threatminer
+│   │   │   ├── __init__.py
+│   │   │   └── threatminer_adapter.py
+│   │   ├── virustotal
+│   │   │   ├── __init__.py
+│   │   │   └── virustotal_adapter.py
+│   │   ├── waybackmachine
+│   │   │   ├── __init__.py
+│   │   │   └── waybackmachine_adapter.py
+│   │   └── webserver_scanning
+│   │       ├── http_client_webserver_scanning_adapter.py
+│   │       └── __init__.py
+│   ├── core
+│   │   ├── application
+│   │   │   ├── anubis
+│   │   │   │   └── cli
+│   │   │   ├── crt
+│   │   │   │   └── cli
+│   │   │   ├── decorators
+│   │   │   │   ├── enumeration_decorators.py
+│   │   │   │   ├── __init__.py
+│   │   │   │   └── loggers_decorators.py
+│   │   │   ├── dorks
+│   │   │   │   └── cli
+│   │   │   ├── enums
+│   │   │   │   ├── cli_response_type_enum.py
+│   │   │   │   ├── __init__.py
+│   │   │   │   └── modules_status.py
+│   │   │   ├── exceptions
+│   │   │   │   ├── __init__.py
+│   │   │   │   └── invalid_target_input_exception.py
+│   │   │   ├── __init__.py
+│   │   │   ├── input_dtos
+│   │   │   │   ├── __init__.py
+│   │   │   │   └── target_input_dto.py
+│   │   │   ├── response
+│   │   │   │   ├── cli
+│   │   │   │   │   ├── failed_response_builder.py
+│   │   │   │   │   ├── __init__.py
+│   │   │   │   │   └── success_response_builder.py
+│   │   │   │   └── __init__.py
+│   │   │   ├── security_enumeration
+│   │   │   │   └── cli
+│   │   │   ├── strategies
+│   │   │   │   ├── alientvault
+│   │   │   │   │   ├── cli
+│   │   │   │   │   │   └── alientvault_cli_enumeration_strategy.py
+│   │   │   │   │   └── __init__.py
+│   │   │   │   ├── anubis
+│   │   │   │   │   ├── cli
+│   │   │   │   │   │   └── anubis_search_cli_enumeration_strategy.py
+│   │   │   │   │   └── __init__.py
+│   │   │   │   ├── crt
+│   │   │   │   │   ├── cli
+│   │   │   │   │   │   └── crt_search_cli_enumeration_strategy.py
+│   │   │   │   │   └── __init__.py
+│   │   │   │   ├── dorks
+│   │   │   │   │   ├── cli
+│   │   │   │   │   │   ├── ask_dork_cli_enumeration_strategy.py
+│   │   │   │   │   │   ├── bing_dork_cli_enumeration_strategy.py
+│   │   │   │   │   │   ├── default_dork_cli_enumeration_strategy.py
+│   │   │   │   │   │   └── __init__.py
+│   │   │   │   │   └── __init__.py
+│   │   │   │   ├── hackertarget
+│   │   │   │   │   ├── cli
+│   │   │   │   │   │   └── hackertarget_cli_enumeration_strategy.py
+│   │   │   │   │   └── __init__.py
+│   │   │   │   ├── __init__.py
+│   │   │   │   ├── security_enumeration
+│   │   │   │   │   ├── cli
+│   │   │   │   │   │   ├── cms_cli_enumeration_strategy.py
+│   │   │   │   │   │   ├── socket_ports_cli_enumeration_strategy.py
+│   │   │   │   │   │   └── webserver_cli_enumeration_strategy.py
+│   │   │   │   │   └── __init__.py
+│   │   │   │   ├── threatminer
+│   │   │   │   │   ├── cli
+│   │   │   │   │   │   └── threathminer_search_cli_enumeration_strategy.py
+│   │   │   │   │   └── __init__.py
+│   │   │   │   ├── virustotal
+│   │   │   │   │   ├── cli
+│   │   │   │   │   │   └── virustotal_cli_enumeration_strategy.py
+│   │   │   │   │   └── __init__.py
+│   │   │   │   └── waybackmachine
+│   │   │   │       ├── cli
+│   │   │   │       │   └── waybackmachine_cli_enumeration_strategy.py
+│   │   │   │       └── __init__.py
+│   │   │   ├── use_cases
+│   │   │   │   ├── alientvault_enumeration_use_case.py
+│   │   │   │   ├── anubis_enumeration_use_case.py
+│   │   │   │   ├── cms_enumeration_use_case.py
+│   │   │   │   ├── crt_enumeration_use_case.py
+│   │   │   │   ├── dorks_enumeration_use_case.py
+│   │   │   │   ├── hackertarget_enumeration_use_case.py
+│   │   │   │   ├── __init__.py
+│   │   │   │   ├── ports_enumeration_use_case.py
+│   │   │   │   ├── threatminer_enumeration_use_case.py
+│   │   │   │   ├── virustotal_enumeration_use_case.py
+│   │   │   │   ├── waybackmachine_enumeration_use_case.py
+│   │   │   │   └── webserver_enumeration_use_case.py
+│   │   │   └── validators
+│   │   │       ├── __init__.py
+│   │   │       └── validate_target_input.py
+│   │   ├── domain
+│   │   │   ├── cache.py
+│   │   │   ├── config.py
+│   │   │   ├── enumeration_reporte.py
+│   │   │   ├── __init__.py
+│   │   │   ├── subdomain.py
+│   │   │   └── target.py
+│   │   └── __init__.py
+│   ├── handlers
+│   │   ├── cli
+│   │   │   ├── alientvault_handler.py
+│   │   │   ├── anubis_dork_handler.py
+│   │   │   ├── aol_dork_handler.py
+│   │   │   ├── ask_dork_handler.py
+│   │   │   ├── bing_dork_handler.py
+│   │   │   ├── brave_dork_handler.py
+│   │   │   ├── crt_search_handler.py
+│   │   │   ├── duckduckgo_dork_handler.py
+│   │   │   ├── google_dork_handler.py
+│   │   │   ├── hackertarget_handler.py
+│   │   │   ├── handler_cli.py
+│   │   │   ├── __init__.py
+│   │   │   ├── socket_ports_scanning_handler.py
+│   │   │   ├── threathminer_handler.py
+│   │   │   ├── virustotal_handler.py
+│   │   │   ├── waybackmachine_handler.py
+│   │   │   └── yahoo_dork_handler.py
+│   │   └── __init__.py
+│   ├── __init__.py
+│   ├── interfaces
+│   │   ├── cms_enumeration_adapter.py
+│   │   ├── domain_serializer.py
+│   │   ├── enumeration_handler.py
+│   │   ├── enumeration_strategy.py
+│   │   ├── failed_response.py
+│   │   ├── handler.py
+│   │   ├── __init__.py
+│   │   ├── ports_enumeration_adapter.py
+│   │   ├── report_repo.py
+│   │   ├── response_builder.py
+│   │   ├── search_response.py
+│   │   ├── security_enumeration.py
+│   │   ├── security_enumerator_service.py
+│   │   ├── singleton.py
+│   │   ├── subdomain_enumerator.py
+│   │   ├── subdomain_enumerator_service.py
+│   │   ├── success_response.py
+│   │   └── webserver_enumeration_adapter.py
+│   ├── repositories
+│   │   ├── cli_report_repo.py
+│   │   └── __init__.py
+│   ├── serializers
+│   │   ├── extract_domain_serializer.py
+│   │   └── __init__.py
+│   ├── services
+│   │   ├── alientvault
+│   │   │   ├── cli
+│   │   │   │   └── alientvault_cli_service.py
+│   │   │   └── __init__.py
+│   │   ├── anubis
+│   │   │   ├── cli
+│   │   │   │   └── anubis_dork_cli_service.py
+│   │   │   └── __init__.py
+│   │   ├── cms_scanning
+│   │   │   ├── cli
+│   │   │   │   ├── __init__.py
+│   │   │   │   └── wordpress_scanning_cli_service.py
+│   │   │   └── __init__.py
+│   │   ├── crt
+│   │   │   ├── cli
+│   │   │   │   ├── crt_cli_service.py
+│   │   │   │   └── __init__.py
+│   │   │   └── __init__.py
+│   │   ├── dorks
+│   │   │   ├── cli
+│   │   │   │   ├── aol_dork_cli_service.py
+│   │   │   │   ├── ask_dork_cli_service.py
+│   │   │   │   ├── bing_dork_cli_service.py
+│   │   │   │   ├── brave_dork_cli_service.py
+│   │   │   │   ├── duckduckgo_dork_cli_service.py
+│   │   │   │   ├── google_dork_cli_service.py
+│   │   │   │   ├── __init__.py
+│   │   │   │   └── yahoo_dork_cli_service.py
+│   │   │   └── __init__.py
+│   │   ├── hackertarget
+│   │   │   ├── cli
+│   │   │   │   └── hackertarget_cli_service.py
+│   │   │   └── __init__.py
+│   │   ├── __init__.py
+│   │   ├── socket_port_scanning
+│   │   │   ├── cli
+│   │   │   │   ├── __init__.py
+│   │   │   │   └── socket_port_scanning_cli_service.py
+│   │   │   └── __init__.py
+│   │   ├── threatminer
+│   │   │   ├── cli
+│   │   │   │   └── threatminer_cli_service.py
+│   │   │   └── __init__.py
+│   │   ├── virustotal
+│   │   │   ├── cli
+│   │   │   │   └── virustotal_cli_service.py
+│   │   │   └── __init__.py
+│   │   ├── waybackmachine
+│   │   │   ├── cli
+│   │   │   │   └── waybackmachine_cli_service.py
+│   │   │   └── __init__.py
+│   │   └── webserver_scanning
+│   │       ├── cli
+│   │       │   ├── __init__.py
+│   │       │   └── webserver_scanning_cli_service.py
+│   │       └── __init__.py
+│   └── utils
+│       ├── __init__.py
+│       └── module_template
+│           ├── adapter
+│           │   └── template.txt
+│           ├── handlers
+│           │   └── cli
+│           │       └── template.txt
+│           ├── services
+│           │   └── cli
+│           │       └── template.txt
+│           ├── strategy
+│           │   └── cli
+│           │       └── template.txt
+│           └── use_case
+│               └── template.txt
+├── s.txt
+├── test
+│   ├── adapter
+│   │   ├── crt
+│   │   │   ├── __init__.py
+│   │   │   └── test_crt_adapter.py
+│   │   ├── dorks
+│   │   │   ├── __init__.py
+│   │   │   └── test_google_dorks_adapter.py
+│   │   ├── __init__.py
+│   │   └── ports_scanning
+│   │       ├── __init__.py
+│   │       └── test_socket_adapter.py
+│   ├── core
+│   │   ├── application
+│   │   │   ├── exceptions
+│   │   │   │   ├── __init__.py
+│   │   │   │   └── test_invalid_target_exception.py
+│   │   │   ├── __init__.py
+│   │   │   ├── input_dtos
+│   │   │   │   ├── __init__.py
+│   │   │   │   └── test_target_input_dto.py
+│   │   │   ├── response
+│   │   │   │   ├── __init__.py
+│   │   │   │   ├── test_failed_response.py
+│   │   │   │   └── test_success_response.py
+│   │   │   ├── use_cases
+│   │   │   │   ├── __init__.py
+│   │   │   │   └── test_enumerate_subdomains_using_dorkes.py
+│   │   │   └── validators
+│   │   │       ├── __init__.py
+│   │   │       └── test_target_input.py
+│   │   ├── domain
+│   │   │   ├── __init__.py
+│   │   │   └── test_target_domain.py
+│   │   └── __init__.py
+│   ├── decorators
+│   │   ├── __init__.py
+│   │   └── test_cache_decorator.py
+│   ├── handlers
+│   │   └── test_handlers.py
+│   ├── __init__.py
+│   ├── interfaces
+│   │   └── __init__.py
+│   ├── repositories
+│   │   └── __init__.py
+│   ├── serializers
+│   │   ├── __init__.py
+│   │   └── test_extract_uri_serializer.py
+│   └── services
+│       ├── test_dorks_services.py
+│       └── test_port_scanning_service.py
+├── venv
+│   ├── bin
+│   │   ├── activate
+│   │   ├── activate.csh
+│   │   ├── activate.fish
+│   │   ├── Activate.ps1
+│   │   ├── art
+│   │   ├── chardetect
+│   │   ├── flake8
+│   │   ├── google
+│   │   ├── markdown-it
+│   │   ├── pip
+│   │   ├── pip3
+│   │   ├── pip3.10
+│   │   ├── pycodestyle
+│   │   ├── pyflakes
+│   │   ├── pygmentize
+│   │   ├── py.test
+│   │   ├── pytest
+│   │   ├── python -> python3
+│   │   ├── python3 -> /usr/bin/python3
+│   │   └── python3.10 -> python3
+│   ├── include
+│   ├── lib
+│   │   └── python3.10
+│   │       └── site-packages
+│   │           ├── art
+│   │           │   ├── art_dic.py
+│   │           │   ├── art_param.py
+│   │           │   ├── art.py
+│   │           │   ├── decor_dic.py
+│   │           │   ├── __init__.py
+│   │           │   ├── __main__.py
+│   │           │   ├── test2.py
+│   │           │   ├── test.py
+│   │           │   ├── text_dic1.py
+│   │           │   ├── text_dic2.py
+│   │           │   └── text_dic3.py
+│   │           ├── art-5.9.dist-info
+│   │           │   ├── AUTHORS.md
+│   │           │   ├── entry_points.txt
+│   │           │   ├── INSTALLER
+│   │           │   ├── LICENSE
+│   │           │   ├── METADATA
+│   │           │   ├── RECORD
+│   │           │   ├── REQUESTED
+│   │           │   ├── top_level.txt
+│   │           │   └── WHEEL
+│   │           ├── attr
+│   │           │   ├── _cmp.py
+│   │           │   ├── _cmp.pyi
+│   │           │   ├── _compat.py
+│   │           │   ├── _config.py
+│   │           │   ├── converters.py
+│   │           │   ├── converters.pyi
+│   │           │   ├── exceptions.py
+│   │           │   ├── exceptions.pyi
+│   │           │   ├── filters.py
+│   │           │   ├── filters.pyi
+│   │           │   ├── _funcs.py
+│   │           │   ├── __init__.py
+│   │           │   ├── __init__.pyi
+│   │           │   ├── _make.py
+│   │           │   ├── _next_gen.py
+│   │           │   ├── py.typed
+│   │           │   ├── setters.py
+│   │           │   ├── setters.pyi
+│   │           │   ├── _typing_compat.pyi
+│   │           │   ├── validators.py
+│   │           │   ├── validators.pyi
+│   │           │   ├── _version_info.py
+│   │           │   └── _version_info.pyi
+│   │           ├── attrs
+│   │           │   ├── converters.py
+│   │           │   ├── exceptions.py
+│   │           │   ├── filters.py
+│   │           │   ├── __init__.py
+│   │           │   ├── __init__.pyi
+│   │           │   ├── py.typed
+│   │           │   ├── setters.py
+│   │           │   └── validators.py
+│   │           ├── attrs-22.2.0.dist-info
+│   │           │   ├── INSTALLER
+│   │           │   ├── LICENSE
+│   │           │   ├── METADATA
+│   │           │   ├── RECORD
+│   │           │   ├── REQUESTED
+│   │           │   ├── top_level.txt
+│   │           │   └── WHEEL
+│   │           ├── beautifulsoup4-4.9.3.dist-info
+│   │           │   ├── AUTHORS
+│   │           │   ├── COPYING.txt
+│   │           │   ├── INSTALLER
+│   │           │   ├── LICENSE
+│   │           │   ├── METADATA
+│   │           │   ├── RECORD
+│   │           │   ├── REQUESTED
+│   │           │   ├── top_level.txt
+│   │           │   └── WHEEL
+│   │           ├── blessed
+│   │           │   ├── _capabilities.py
+│   │           │   ├── _capabilities.pyi
+│   │           │   ├── color.py
+│   │           │   ├── color.pyi
+│   │           │   ├── colorspace.py
+│   │           │   ├── colorspace.pyi
+│   │           │   ├── formatters.py
+│   │           │   ├── formatters.pyi
+│   │           │   ├── __init__.py
+│   │           │   ├── keyboard.py
+│   │           │   ├── keyboard.pyi
+│   │           │   ├── py.typed
+│   │           │   ├── sequences.py
+│   │           │   ├── sequences.pyi
+│   │           │   ├── terminal.py
+│   │           │   ├── terminal.pyi
+│   │           │   ├── win_terminal.py
+│   │           │   └── win_terminal.pyi
+│   │           ├── blessed-1.19.1.dist-info
+│   │           │   ├── INSTALLER
+│   │           │   ├── LICENSE
+│   │           │   ├── METADATA
+│   │           │   ├── RECORD
+│   │           │   ├── REQUESTED
+│   │           │   ├── top_level.txt
+│   │           │   └── WHEEL
+│   │           ├── bs4
+│   │           │   ├── builder
+│   │           │   │   ├── _html5lib.py
+│   │           │   │   ├── _htmlparser.py
+│   │           │   │   ├── __init__.py
+│   │           │   │   └── _lxml.py
+│   │           │   ├── dammit.py
+│   │           │   ├── diagnose.py
+│   │           │   ├── element.py
+│   │           │   ├── formatter.py
+│   │           │   ├── __init__.py
+│   │           │   ├── testing.py
+│   │           │   └── tests
+│   │           │       ├── __init__.py
+│   │           │       ├── test_builder_registry.py
+│   │           │       ├── test_docs.py
+│   │           │       ├── test_html5lib.py
+│   │           │       ├── test_htmlparser.py
+│   │           │       ├── test_lxml.py
+│   │           │       ├── test_soup.py
+│   │           │       └── test_tree.py
+│   │           ├── certifi
+│   │           │   ├── cacert.pem
+│   │           │   ├── core.py
+│   │           │   ├── __init__.py
+│   │           │   ├── __main__.py
+│   │           │   └── py.typed
+│   │           ├── certifi-2022.12.7.dist-info
+│   │           │   ├── INSTALLER
+│   │           │   ├── LICENSE
+│   │           │   ├── METADATA
+│   │           │   ├── RECORD
+│   │           │   ├── REQUESTED
+│   │           │   ├── top_level.txt
+│   │           │   └── WHEEL
+│   │           ├── chardet
+│   │           │   ├── big5freq.py
+│   │           │   ├── big5prober.py
+│   │           │   ├── chardistribution.py
+│   │           │   ├── charsetgroupprober.py
+│   │           │   ├── charsetprober.py
+│   │           │   ├── cli
+│   │           │   │   ├── chardetect.py
+│   │           │   │   └── __init__.py
+│   │           │   ├── codingstatemachine.py
+│   │           │   ├── compat.py
+│   │           │   ├── cp949prober.py
+│   │           │   ├── enums.py
+│   │           │   ├── escprober.py
+│   │           │   ├── escsm.py
+│   │           │   ├── eucjpprober.py
+│   │           │   ├── euckrfreq.py
+│   │           │   ├── euckrprober.py
+│   │           │   ├── euctwfreq.py
+│   │           │   ├── euctwprober.py
+│   │           │   ├── gb2312freq.py
+│   │           │   ├── gb2312prober.py
+│   │           │   ├── hebrewprober.py
+│   │           │   ├── __init__.py
+│   │           │   ├── jisfreq.py
+│   │           │   ├── jpcntx.py
+│   │           │   ├── langbulgarianmodel.py
+│   │           │   ├── langgreekmodel.py
+│   │           │   ├── langhebrewmodel.py
+│   │           │   ├── langhungarianmodel.py
+│   │           │   ├── langrussianmodel.py
+│   │           │   ├── langthaimodel.py
+│   │           │   ├── langturkishmodel.py
+│   │           │   ├── latin1prober.py
+│   │           │   ├── mbcharsetprober.py
+│   │           │   ├── mbcsgroupprober.py
+│   │           │   ├── mbcssm.py
+│   │           │   ├── metadata
+│   │           │   │   ├── __init__.py
+│   │           │   │   └── languages.py
+│   │           │   ├── sbcharsetprober.py
+│   │           │   ├── sbcsgroupprober.py
+│   │           │   ├── sjisprober.py
+│   │           │   ├── universaldetector.py
+│   │           │   ├── utf8prober.py
+│   │           │   └── version.py
+│   │           ├── chardet-4.0.0.dist-info
+│   │           │   ├── entry_points.txt
+│   │           │   ├── INSTALLER
+│   │           │   ├── LICENSE
+│   │           │   ├── METADATA
+│   │           │   ├── RECORD
+│   │           │   ├── REQUESTED
+│   │           │   ├── top_level.txt
+│   │           │   └── WHEEL
+│   │           ├── click
+│   │           │   ├── _compat.py
+│   │           │   ├── core.py
+│   │           │   ├── decorators.py
+│   │           │   ├── exceptions.py
+│   │           │   ├── formatting.py
+│   │           │   ├── globals.py
+│   │           │   ├── __init__.py
+│   │           │   ├── parser.py
+│   │           │   ├── py.typed
+│   │           │   ├── shell_completion.py
+│   │           │   ├── _termui_impl.py
+│   │           │   ├── termui.py
+│   │           │   ├── testing.py
+│   │           │   ├── _textwrap.py
+│   │           │   ├── types.py
+│   │           │   ├── utils.py
+│   │           │   └── _winconsole.py
+│   │           ├── click-8.1.3.dist-info
+│   │           │   ├── INSTALLER
+│   │           │   ├── LICENSE.rst
+│   │           │   ├── METADATA
+│   │           │   ├── RECORD
+│   │           │   ├── REQUESTED
+│   │           │   ├── top_level.txt
+│   │           │   └── WHEEL
+│   │           ├── _distutils_hack
+│   │           │   ├── __init__.py
+│   │           │   └── override.py
+│   │           ├── distutils-precedence.pth
+│   │           ├── dnslib
+│   │           │   ├── bimap.py
+│   │           │   ├── bit.py
+│   │           │   ├── buffer.py
+│   │           │   ├── client.py
+│   │           │   ├── digparser.py
+│   │           │   ├── dns.py
+│   │           │   ├── fixedresolver.py
+│   │           │   ├── __init__.py
+│   │           │   ├── intercept.py
+│   │           │   ├── label.py
+│   │           │   ├── lex.py
+│   │           │   ├── proxy.py
+│   │           │   ├── ranges.py
+│   │           │   ├── server.py
+│   │           │   ├── shellresolver.py
+│   │           │   ├── test_decode.py
+│   │           │   └── zoneresolver.py
+│   │           ├── dnslib-0.9.23.dist-info
+│   │           │   ├── INSTALLER
+│   │           │   ├── LICENSE
+│   │           │   ├── METADATA
+│   │           │   ├── RECORD
+│   │           │   ├── REQUESTED
+│   │           │   ├── top_level.txt
+│   │           │   └── WHEEL
+│   │           ├── editor.py
+│   │           ├── examples
+│   │           │   ├── checkbox.py
+│   │           │   ├── confirm.py
+│   │           │   ├── editor.py
+│   │           │   ├── expand.py
+│   │           │   ├── hierarchical.py
+│   │           │   ├── __init__.py
+│   │           │   ├── input.py
+│   │           │   ├── list.py
+│   │           │   ├── password.py
+│   │           │   ├── pizza.py
+│   │           │   ├── rawlist.py
+│   │           │   └── when.py
+│   │           ├── exceptiongroup
+│   │           │   ├── _catch.py
+│   │           │   ├── _exceptions.py
+│   │           │   ├── _formatting.py
+│   │           │   ├── __init__.py
+│   │           │   ├── py.typed
+│   │           │   └── _version.py
+│   │           ├── exceptiongroup-1.1.0.dist-info
+│   │           │   ├── INSTALLER
+│   │           │   ├── LICENSE
+│   │           │   ├── METADATA
+│   │           │   ├── RECORD
+│   │           │   ├── REQUESTED
+│   │           │   └── WHEEL
+│   │           ├── flake8
+│   │           │   ├── api
+│   │           │   │   ├── __init__.py
+│   │           │   │   └── legacy.py
+│   │           │   ├── checker.py
+│   │           │   ├── defaults.py
+│   │           │   ├── discover_files.py
+│   │           │   ├── exceptions.py
+│   │           │   ├── formatting
+│   │           │   │   ├── base.py
+│   │           │   │   ├── default.py
+│   │           │   │   ├── __init__.py
+│   │           │   │   └── _windows_color.py
+│   │           │   ├── __init__.py
+│   │           │   ├── main
+│   │           │   │   ├── application.py
+│   │           │   │   ├── cli.py
+│   │           │   │   ├── debug.py
+│   │           │   │   ├── __init__.py
+│   │           │   │   └── options.py
+│   │           │   ├── __main__.py
+│   │           │   ├── options
+│   │           │   │   ├── aggregator.py
+│   │           │   │   ├── config.py
+│   │           │   │   ├── __init__.py
+│   │           │   │   ├── manager.py
+│   │           │   │   └── parse_args.py
+│   │           │   ├── plugins
+│   │           │   │   ├── finder.py
+│   │           │   │   ├── __init__.py
+│   │           │   │   ├── pycodestyle.py
+│   │           │   │   ├── pyflakes.py
+│   │           │   │   └── reporter.py
+│   │           │   ├── processor.py
+│   │           │   ├── statistics.py
+│   │           │   ├── style_guide.py
+│   │           │   ├── utils.py
+│   │           │   └── violation.py
+│   │           ├── flake8-6.0.0.dist-info
+│   │           │   ├── entry_points.txt
+│   │           │   ├── INSTALLER
+│   │           │   ├── LICENSE
+│   │           │   ├── METADATA
+│   │           │   ├── RECORD
+│   │           │   ├── REQUESTED
+│   │           │   ├── top_level.txt
+│   │           │   └── WHEEL
+│   │           ├── google-3.0.0.dist-info
+│   │           │   ├── DESCRIPTION.rst
+│   │           │   ├── INSTALLER
+│   │           │   ├── METADATA
+│   │           │   ├── metadata.json
+│   │           │   ├── RECORD
+│   │           │   ├── REQUESTED
+│   │           │   ├── top_level.txt
+│   │           │   └── WHEEL
+│   │           ├── googlesearch
+│   │           │   ├── __init__.py
+│   │           │   └── user_agents.txt.gz
+│   │           ├── idna
+│   │           │   ├── codec.py
+│   │           │   ├── compat.py
+│   │           │   ├── core.py
+│   │           │   ├── idnadata.py
+│   │           │   ├── __init__.py
+│   │           │   ├── intranges.py
+│   │           │   ├── package_data.py
+│   │           │   └── uts46data.py
+│   │           ├── idna-2.10.dist-info
+│   │           │   ├── INSTALLER
+│   │           │   ├── LICENSE.rst
+│   │           │   ├── METADATA
+│   │           │   ├── RECORD
+│   │           │   ├── REQUESTED
+│   │           │   ├── top_level.txt
+│   │           │   └── WHEEL
+│   │           ├── iniconfig
+│   │           │   ├── exceptions.py
+│   │           │   ├── __init__.py
+│   │           │   ├── _parse.py
+│   │           │   ├── py.typed
+│   │           │   └── _version.py
+│   │           ├── iniconfig-2.0.0.dist-info
+│   │           │   ├── INSTALLER
+│   │           │   ├── licenses
+│   │           │   │   └── LICENSE
+│   │           │   ├── METADATA
+│   │           │   ├── RECORD
+│   │           │   ├── REQUESTED
+│   │           │   └── WHEEL
+│   │           ├── inquirer
+│   │           │   ├── errors.py
+│   │           │   ├── events.py
+│   │           │   ├── __init__.py
+│   │           │   ├── prompt.py
+│   │           │   ├── questions.py
+│   │           │   ├── render
+│   │           │   │   ├── console
+│   │           │   │   │   ├── base.py
+│   │           │   │   │   ├── _checkbox.py
+│   │           │   │   │   ├── _confirm.py
+│   │           │   │   │   ├── _editor.py
+│   │           │   │   │   ├── __init__.py
+│   │           │   │   │   ├── _list.py
+│   │           │   │   │   ├── _other.py
+│   │           │   │   │   ├── _password.py
+│   │           │   │   │   ├── _path.py
+│   │           │   │   │   └── _text.py
+│   │           │   │   └── __init__.py
+│   │           │   ├── shortcuts.py
+│   │           │   └── themes.py
+│   │           ├── inquirer-3.1.2.dist-info
+│   │           │   ├── INSTALLER
+│   │           │   ├── LICENSE
+│   │           │   ├── METADATA
+│   │           │   ├── RECORD
+│   │           │   ├── REQUESTED
+│   │           │   └── WHEEL
+│   │           ├── lxml
+│   │           │   ├── apihelpers.pxi
+│   │           │   ├── builder.cpython-310-x86_64-linux-gnu.so
+│   │           │   ├── builder.py
+│   │           │   ├── classlookup.pxi
+│   │           │   ├── cleanup.pxi
+│   │           │   ├── cssselect.py
+│   │           │   ├── debug.pxi
+│   │           │   ├── docloader.pxi
+│   │           │   ├── doctestcompare.py
+│   │           │   ├── dtd.pxi
+│   │           │   ├── ElementInclude.py
+│   │           │   ├── _elementpath.cpython-310-x86_64-linux-gnu.so
+│   │           │   ├── _elementpath.py
+│   │           │   ├── etree_api.h
+│   │           │   ├── etree.cpython-310-x86_64-linux-gnu.so
+│   │           │   ├── etree.h
+│   │           │   ├── etree.pyx
+│   │           │   ├── extensions.pxi
+│   │           │   ├── html
+│   │           │   │   ├── builder.py
+│   │           │   │   ├── clean.cpython-310-x86_64-linux-gnu.so
+│   │           │   │   ├── clean.py
+│   │           │   │   ├── defs.py
+│   │           │   │   ├── _diffcommand.py
+│   │           │   │   ├── diff.cpython-310-x86_64-linux-gnu.so
+│   │           │   │   ├── diff.py
+│   │           │   │   ├── ElementSoup.py
+│   │           │   │   ├── formfill.py
+│   │           │   │   ├── _html5builder.py
+│   │           │   │   ├── html5parser.py
+│   │           │   │   ├── __init__.py
+│   │           │   │   ├── _setmixin.py
+│   │           │   │   ├── soupparser.py
+│   │           │   │   └── usedoctest.py
+│   │           │   ├── includes
+│   │           │   │   ├── c14n.pxd
+│   │           │   │   ├── config.pxd
+│   │           │   │   ├── dtdvalid.pxd
+│   │           │   │   ├── etree_defs.h
+│   │           │   │   ├── etreepublic.pxd
+│   │           │   │   ├── extlibs
+│   │           │   │   │   ├── __init__.py
+│   │           │   │   │   ├── libcharset.h
+│   │           │   │   │   ├── localcharset.h
+│   │           │   │   │   ├── zconf.h
+│   │           │   │   │   └── zlib.h
+│   │           │   │   ├── htmlparser.pxd
+│   │           │   │   ├── __init__.pxd
+│   │           │   │   ├── __init__.py
+│   │           │   │   ├── libexslt
+│   │           │   │   │   ├── exsltconfig.h
+│   │           │   │   │   ├── exsltexports.h
+│   │           │   │   │   ├── exslt.h
+│   │           │   │   │   └── __init__.py
+│   │           │   │   ├── libxml
+│   │           │   │   │   ├── c14n.h
+│   │           │   │   │   ├── catalog.h
+│   │           │   │   │   ├── chvalid.h
+│   │           │   │   │   ├── debugXML.h
+│   │           │   │   │   ├── dict.h
+│   │           │   │   │   ├── DOCBparser.h
+│   │           │   │   │   ├── encoding.h
+│   │           │   │   │   ├── entities.h
+│   │           │   │   │   ├── globals.h
+│   │           │   │   │   ├── hash.h
+│   │           │   │   │   ├── HTMLparser.h
+│   │           │   │   │   ├── HTMLtree.h
+│   │           │   │   │   ├── __init__.py
+│   │           │   │   │   ├── list.h
+│   │           │   │   │   ├── nanoftp.h
+│   │           │   │   │   ├── nanohttp.h
+│   │           │   │   │   ├── parser.h
+│   │           │   │   │   ├── parserInternals.h
+│   │           │   │   │   ├── relaxng.h
+│   │           │   │   │   ├── SAX2.h
+│   │           │   │   │   ├── SAX.h
+│   │           │   │   │   ├── schemasInternals.h
+│   │           │   │   │   ├── schematron.h
+│   │           │   │   │   ├── threads.h
+│   │           │   │   │   ├── tree.h
+│   │           │   │   │   ├── uri.h
+│   │           │   │   │   ├── valid.h
+│   │           │   │   │   ├── xinclude.h
+│   │           │   │   │   ├── xlink.h
+│   │           │   │   │   ├── xmlautomata.h
+│   │           │   │   │   ├── xmlerror.h
+│   │           │   │   │   ├── xmlexports.h
+│   │           │   │   │   ├── xmlIO.h
+│   │           │   │   │   ├── xmlmemory.h
+│   │           │   │   │   ├── xmlmodule.h
+│   │           │   │   │   ├── xmlreader.h
+│   │           │   │   │   ├── xmlregexp.h
+│   │           │   │   │   ├── xmlsave.h
+│   │           │   │   │   ├── xmlschemas.h
+│   │           │   │   │   ├── xmlschemastypes.h
+│   │           │   │   │   ├── xmlstring.h
+│   │           │   │   │   ├── xmlunicode.h
+│   │           │   │   │   ├── xmlversion.h
+│   │           │   │   │   ├── xmlwriter.h
+│   │           │   │   │   ├── xpath.h
+│   │           │   │   │   ├── xpathInternals.h
+│   │           │   │   │   └── xpointer.h
+│   │           │   │   ├── libxslt
+│   │           │   │   │   ├── attributes.h
+│   │           │   │   │   ├── documents.h
+│   │           │   │   │   ├── extensions.h
+│   │           │   │   │   ├── extra.h
+│   │           │   │   │   ├── functions.h
+│   │           │   │   │   ├── imports.h
+│   │           │   │   │   ├── __init__.py
+│   │           │   │   │   ├── keys.h
+│   │           │   │   │   ├── namespaces.h
+│   │           │   │   │   ├── numbersInternals.h
+│   │           │   │   │   ├── pattern.h
+│   │           │   │   │   ├── preproc.h
+│   │           │   │   │   ├── security.h
+│   │           │   │   │   ├── templates.h
+│   │           │   │   │   ├── transform.h
+│   │           │   │   │   ├── variables.h
+│   │           │   │   │   ├── xsltconfig.h
+│   │           │   │   │   ├── xsltexports.h
+│   │           │   │   │   ├── xslt.h
+│   │           │   │   │   ├── xsltInternals.h
+│   │           │   │   │   ├── xsltlocale.h
+│   │           │   │   │   └── xsltutils.h
+│   │           │   │   ├── lxml-version.h
+│   │           │   │   ├── relaxng.pxd
+│   │           │   │   ├── schematron.pxd
+│   │           │   │   ├── tree.pxd
+│   │           │   │   ├── uri.pxd
+│   │           │   │   ├── xinclude.pxd
+│   │           │   │   ├── xmlerror.pxd
+│   │           │   │   ├── xmlparser.pxd
+│   │           │   │   ├── xmlschema.pxd
+│   │           │   │   ├── xpath.pxd
+│   │           │   │   └── xslt.pxd
+│   │           │   ├── __init__.py
+│   │           │   ├── isoschematron
+│   │           │   │   ├── __init__.py
+│   │           │   │   └── resources
+│   │           │   │       ├── rng
+│   │           │   │       │   └── iso-schematron.rng
+│   │           │   │       └── xsl
+│   │           │   │           ├── iso-schematron-xslt1
+│   │           │   │           │   ├── iso_abstract_expand.xsl
+│   │           │   │           │   ├── iso_dsdl_include.xsl
+│   │           │   │           │   ├── iso_schematron_message.xsl
+│   │           │   │           │   ├── iso_schematron_skeleton_for_xslt1.xsl
+│   │           │   │           │   ├── iso_svrl_for_xslt1.xsl
+│   │           │   │           │   └── readme.txt
+│   │           │   │           ├── RNG2Schtrn.xsl
+│   │           │   │           └── XSD2Schtrn.xsl
+│   │           │   ├── iterparse.pxi
+│   │           │   ├── lxml.etree_api.h
+│   │           │   ├── lxml.etree.h
+│   │           │   ├── nsclasses.pxi
+│   │           │   ├── objectify.cpython-310-x86_64-linux-gnu.so
+│   │           │   ├── objectify.pyx
+│   │           │   ├── objectpath.pxi
+│   │           │   ├── parser.pxi
+│   │           │   ├── parsertarget.pxi
+│   │           │   ├── proxy.pxi
+│   │           │   ├── public-api.pxi
+│   │           │   ├── pyclasslookup.py
+│   │           │   ├── readonlytree.pxi
+│   │           │   ├── relaxng.pxi
+│   │           │   ├── sax.cpython-310-x86_64-linux-gnu.so
+│   │           │   ├── saxparser.pxi
+│   │           │   ├── sax.py
+│   │           │   ├── schematron.pxi
+│   │           │   ├── serializer.pxi
+│   │           │   ├── usedoctest.py
+│   │           │   ├── xinclude.pxi
+│   │           │   ├── xmlerror.pxi
+│   │           │   ├── xmlid.pxi
+│   │           │   ├── xmlschema.pxi
+│   │           │   ├── xpath.pxi
+│   │           │   ├── xsltext.pxi
+│   │           │   └── xslt.pxi
+│   │           ├── lxml-4.9.2.dist-info
+│   │           │   ├── INSTALLER
+│   │           │   ├── LICENSES.txt
+│   │           │   ├── LICENSE.txt
+│   │           │   ├── METADATA
+│   │           │   ├── RECORD
+│   │           │   ├── REQUESTED
+│   │           │   ├── top_level.txt
+│   │           │   └── WHEEL
+│   │           ├── markdown_it
+│   │           │   ├── cli
+│   │           │   │   ├── __init__.py
+│   │           │   │   └── parse.py
+│   │           │   ├── common
+│   │           │   │   ├── entities.py
+│   │           │   │   ├── html_blocks.py
+│   │           │   │   ├── html_re.py
+│   │           │   │   ├── __init__.py
+│   │           │   │   ├── normalize_url.py
+│   │           │   │   └── utils.py
+│   │           │   ├── _compat.py
+│   │           │   ├── helpers
+│   │           │   │   ├── __init__.py
+│   │           │   │   ├── parse_link_destination.py
+│   │           │   │   ├── parse_link_label.py
+│   │           │   │   └── parse_link_title.py
+│   │           │   ├── __init__.py
+│   │           │   ├── main.py
+│   │           │   ├── parser_block.py
+│   │           │   ├── parser_core.py
+│   │           │   ├── parser_inline.py
+│   │           │   ├── port.yaml
+│   │           │   ├── presets
+│   │           │   │   ├── commonmark.py
+│   │           │   │   ├── default.py
+│   │           │   │   ├── __init__.py
+│   │           │   │   └── zero.py
+│   │           │   ├── _punycode.py
+│   │           │   ├── py.typed
+│   │           │   ├── renderer.py
+│   │           │   ├── ruler.py
+│   │           │   ├── rules_block
+│   │           │   │   ├── blockquote.py
+│   │           │   │   ├── code.py
+│   │           │   │   ├── fence.py
+│   │           │   │   ├── heading.py
+│   │           │   │   ├── hr.py
+│   │           │   │   ├── html_block.py
+│   │           │   │   ├── __init__.py
+│   │           │   │   ├── lheading.py
+│   │           │   │   ├── list.py
+│   │           │   │   ├── paragraph.py
+│   │           │   │   ├── reference.py
+│   │           │   │   ├── state_block.py
+│   │           │   │   └── table.py
+│   │           │   ├── rules_core
+│   │           │   │   ├── block.py
+│   │           │   │   ├── __init__.py
+│   │           │   │   ├── inline.py
+│   │           │   │   ├── linkify.py
+│   │           │   │   ├── normalize.py
+│   │           │   │   ├── replacements.py
+│   │           │   │   ├── smartquotes.py
+│   │           │   │   └── state_core.py
+│   │           │   ├── rules_inline
+│   │           │   │   ├── autolink.py
+│   │           │   │   ├── backticks.py
+│   │           │   │   ├── balance_pairs.py
+│   │           │   │   ├── emphasis.py
+│   │           │   │   ├── entity.py
+│   │           │   │   ├── escape.py
+│   │           │   │   ├── html_inline.py
+│   │           │   │   ├── image.py
+│   │           │   │   ├── __init__.py
+│   │           │   │   ├── link.py
+│   │           │   │   ├── newline.py
+│   │           │   │   ├── state_inline.py
+│   │           │   │   ├── strikethrough.py
+│   │           │   │   ├── text_collapse.py
+│   │           │   │   └── text.py
+│   │           │   ├── token.py
+│   │           │   ├── tree.py
+│   │           │   └── utils.py
+│   │           ├── markdown_it_py-2.2.0.dist-info
+│   │           │   ├── entry_points.txt
+│   │           │   ├── INSTALLER
+│   │           │   ├── LICENSE
+│   │           │   ├── LICENSE.markdown-it
+│   │           │   ├── METADATA
+│   │           │   ├── RECORD
+│   │           │   └── WHEEL
+│   │           ├── mccabe-0.7.0.dist-info
+│   │           │   ├── entry_points.txt
+│   │           │   ├── INSTALLER
+│   │           │   ├── LICENSE
+│   │           │   ├── METADATA
+│   │           │   ├── RECORD
+│   │           │   ├── top_level.txt
+│   │           │   └── WHEEL
+│   │           ├── mccabe.py
+│   │           ├── mdurl
+│   │           │   ├── _decode.py
+│   │           │   ├── _encode.py
+│   │           │   ├── _format.py
+│   │           │   ├── __init__.py
+│   │           │   ├── _parse.py
+│   │           │   ├── py.typed
+│   │           │   └── _url.py
+│   │           ├── mdurl-0.1.2.dist-info
+│   │           │   ├── INSTALLER
+│   │           │   ├── LICENSE
+│   │           │   ├── METADATA
+│   │           │   ├── RECORD
+│   │           │   └── WHEEL
+│   │           ├── packaging
+│   │           │   ├── _elffile.py
+│   │           │   ├── __init__.py
+│   │           │   ├── _manylinux.py
+│   │           │   ├── markers.py
+│   │           │   ├── _musllinux.py
+│   │           │   ├── _parser.py
+│   │           │   ├── py.typed
+│   │           │   ├── requirements.py
+│   │           │   ├── specifiers.py
+│   │           │   ├── _structures.py
+│   │           │   ├── tags.py
+│   │           │   ├── _tokenizer.py
+│   │           │   ├── utils.py
+│   │           │   └── version.py
+│   │           ├── packaging-23.0.dist-info
+│   │           │   ├── INSTALLER
+│   │           │   ├── LICENSE
+│   │           │   ├── LICENSE.APACHE
+│   │           │   ├── LICENSE.BSD
+│   │           │   ├── METADATA
+│   │           │   ├── RECORD
+│   │           │   ├── REQUESTED
+│   │           │   └── WHEEL
+│   │           ├── pip
+│   │           │   ├── __init__.py
+│   │           │   ├── _internal
+│   │           │   │   ├── build_env.py
+│   │           │   │   ├── cache.py
+│   │           │   │   ├── cli
+│   │           │   │   │   ├── autocompletion.py
+│   │           │   │   │   ├── base_command.py
+│   │           │   │   │   ├── cmdoptions.py
+│   │           │   │   │   ├── command_context.py
+│   │           │   │   │   ├── __init__.py
+│   │           │   │   │   ├── main_parser.py
+│   │           │   │   │   ├── main.py
+│   │           │   │   │   ├── parser.py
+│   │           │   │   │   ├── progress_bars.py
+│   │           │   │   │   ├── req_command.py
+│   │           │   │   │   ├── spinners.py
+│   │           │   │   │   └── status_codes.py
+│   │           │   │   ├── commands
+│   │           │   │   │   ├── cache.py
+│   │           │   │   │   ├── check.py
+│   │           │   │   │   ├── completion.py
+│   │           │   │   │   ├── configuration.py
+│   │           │   │   │   ├── debug.py
+│   │           │   │   │   ├── download.py
+│   │           │   │   │   ├── freeze.py
+│   │           │   │   │   ├── hash.py
+│   │           │   │   │   ├── help.py
+│   │           │   │   │   ├── index.py
+│   │           │   │   │   ├── __init__.py
+│   │           │   │   │   ├── install.py
+│   │           │   │   │   ├── list.py
+│   │           │   │   │   ├── search.py
+│   │           │   │   │   ├── show.py
+│   │           │   │   │   ├── uninstall.py
+│   │           │   │   │   └── wheel.py
+│   │           │   │   ├── configuration.py
+│   │           │   │   ├── distributions
+│   │           │   │   │   ├── base.py
+│   │           │   │   │   ├── __init__.py
+│   │           │   │   │   ├── installed.py
+│   │           │   │   │   ├── sdist.py
+│   │           │   │   │   └── wheel.py
+│   │           │   │   ├── exceptions.py
+│   │           │   │   ├── index
+│   │           │   │   │   ├── collector.py
+│   │           │   │   │   ├── __init__.py
+│   │           │   │   │   ├── package_finder.py
+│   │           │   │   │   └── sources.py
+│   │           │   │   ├── __init__.py
+│   │           │   │   ├── locations
+│   │           │   │   │   ├── base.py
+│   │           │   │   │   ├── _distutils.py
+│   │           │   │   │   ├── __init__.py
+│   │           │   │   │   └── _sysconfig.py
+│   │           │   │   ├── main.py
+│   │           │   │   ├── metadata
+│   │           │   │   │   ├── base.py
+│   │           │   │   │   ├── __init__.py
+│   │           │   │   │   └── pkg_resources.py
+│   │           │   │   ├── models
+│   │           │   │   │   ├── candidate.py
+│   │           │   │   │   ├── direct_url.py
+│   │           │   │   │   ├── format_control.py
+│   │           │   │   │   ├── index.py
+│   │           │   │   │   ├── __init__.py
+│   │           │   │   │   ├── link.py
+│   │           │   │   │   ├── scheme.py
+│   │           │   │   │   ├── search_scope.py
+│   │           │   │   │   ├── selection_prefs.py
+│   │           │   │   │   ├── target_python.py
+│   │           │   │   │   └── wheel.py
+│   │           │   │   ├── network
+│   │           │   │   │   ├── auth.py
+│   │           │   │   │   ├── cache.py
+│   │           │   │   │   ├── download.py
+│   │           │   │   │   ├── __init__.py
+│   │           │   │   │   ├── lazy_wheel.py
+│   │           │   │   │   ├── session.py
+│   │           │   │   │   ├── utils.py
+│   │           │   │   │   └── xmlrpc.py
+│   │           │   │   ├── operations
+│   │           │   │   │   ├── build
+│   │           │   │   │   │   ├── __init__.py
+│   │           │   │   │   │   ├── metadata_editable.py
+│   │           │   │   │   │   ├── metadata_legacy.py
+│   │           │   │   │   │   ├── metadata.py
+│   │           │   │   │   │   ├── wheel_editable.py
+│   │           │   │   │   │   ├── wheel_legacy.py
+│   │           │   │   │   │   └── wheel.py
+│   │           │   │   │   ├── check.py
+│   │           │   │   │   ├── freeze.py
+│   │           │   │   │   ├── __init__.py
+│   │           │   │   │   ├── install
+│   │           │   │   │   │   ├── editable_legacy.py
+│   │           │   │   │   │   ├── __init__.py
+│   │           │   │   │   │   ├── legacy.py
+│   │           │   │   │   │   └── wheel.py
+│   │           │   │   │   └── prepare.py
+│   │           │   │   ├── pyproject.py
+│   │           │   │   ├── req
+│   │           │   │   │   ├── constructors.py
+│   │           │   │   │   ├── __init__.py
+│   │           │   │   │   ├── req_file.py
+│   │           │   │   │   ├── req_install.py
+│   │           │   │   │   ├── req_set.py
+│   │           │   │   │   ├── req_tracker.py
+│   │           │   │   │   └── req_uninstall.py
+│   │           │   │   ├── resolution
+│   │           │   │   │   ├── base.py
+│   │           │   │   │   ├── __init__.py
+│   │           │   │   │   ├── legacy
+│   │           │   │   │   │   ├── __init__.py
+│   │           │   │   │   │   └── resolver.py
+│   │           │   │   │   └── resolvelib
+│   │           │   │   │       ├── base.py
+│   │           │   │   │       ├── candidates.py
+│   │           │   │   │       ├── factory.py
+│   │           │   │   │       ├── found_candidates.py
+│   │           │   │   │       ├── __init__.py
+│   │           │   │   │       ├── provider.py
+│   │           │   │   │       ├── reporter.py
+│   │           │   │   │       ├── requirements.py
+│   │           │   │   │       └── resolver.py
+│   │           │   │   ├── self_outdated_check.py
+│   │           │   │   ├── utils
+│   │           │   │   │   ├── appdirs.py
+│   │           │   │   │   ├── compatibility_tags.py
+│   │           │   │   │   ├── compat.py
+│   │           │   │   │   ├── datetime.py
+│   │           │   │   │   ├── deprecation.py
+│   │           │   │   │   ├── direct_url_helpers.py
+│   │           │   │   │   ├── distutils_args.py
+│   │           │   │   │   ├── egg_link.py
+│   │           │   │   │   ├── encoding.py
+│   │           │   │   │   ├── entrypoints.py
+│   │           │   │   │   ├── filesystem.py
+│   │           │   │   │   ├── filetypes.py
+│   │           │   │   │   ├── glibc.py
+│   │           │   │   │   ├── hashes.py
+│   │           │   │   │   ├── __init__.py
+│   │           │   │   │   ├── inject_securetransport.py
+│   │           │   │   │   ├── logging.py
+│   │           │   │   │   ├── _log.py
+│   │           │   │   │   ├── misc.py
+│   │           │   │   │   ├── models.py
+│   │           │   │   │   ├── packaging.py
+│   │           │   │   │   ├── setuptools_build.py
+│   │           │   │   │   ├── subprocess.py
+│   │           │   │   │   ├── temp_dir.py
+│   │           │   │   │   ├── unpacking.py
+│   │           │   │   │   ├── urls.py
+│   │           │   │   │   ├── virtualenv.py
+│   │           │   │   │   └── wheel.py
+│   │           │   │   ├── vcs
+│   │           │   │   │   ├── bazaar.py
+│   │           │   │   │   ├── git.py
+│   │           │   │   │   ├── __init__.py
+│   │           │   │   │   ├── mercurial.py
+│   │           │   │   │   ├── subversion.py
+│   │           │   │   │   └── versioncontrol.py
+│   │           │   │   └── wheel_builder.py
+│   │           │   ├── __main__.py
+│   │           │   ├── py.typed
+│   │           │   └── _vendor
+│   │           │       ├── cachecontrol
+│   │           │       │   ├── adapter.py
+│   │           │       │   ├── cache.py
+│   │           │       │   ├── caches
+│   │           │       │   │   ├── file_cache.py
+│   │           │       │   │   ├── __init__.py
+│   │           │       │   │   └── redis_cache.py
+│   │           │       │   ├── _cmd.py
+│   │           │       │   ├── compat.py
+│   │           │       │   ├── controller.py
+│   │           │       │   ├── filewrapper.py
+│   │           │       │   ├── heuristics.py
+│   │           │       │   ├── __init__.py
+│   │           │       │   ├── serialize.py
+│   │           │       │   └── wrapper.py
+│   │           │       ├── certifi
+│   │           │       │   ├── cacert.pem
+│   │           │       │   ├── core.py
+│   │           │       │   ├── __init__.py
+│   │           │       │   └── __main__.py
+│   │           │       ├── chardet
+│   │           │       │   ├── big5freq.py
+│   │           │       │   ├── big5prober.py
+│   │           │       │   ├── chardistribution.py
+│   │           │       │   ├── charsetgroupprober.py
+│   │           │       │   ├── charsetprober.py
+│   │           │       │   ├── cli
+│   │           │       │   │   ├── chardetect.py
+│   │           │       │   │   └── __init__.py
+│   │           │       │   ├── codingstatemachine.py
+│   │           │       │   ├── compat.py
+│   │           │       │   ├── cp949prober.py
+│   │           │       │   ├── enums.py
+│   │           │       │   ├── escprober.py
+│   │           │       │   ├── escsm.py
+│   │           │       │   ├── eucjpprober.py
+│   │           │       │   ├── euckrfreq.py
+│   │           │       │   ├── euckrprober.py
+│   │           │       │   ├── euctwfreq.py
+│   │           │       │   ├── euctwprober.py
+│   │           │       │   ├── gb2312freq.py
+│   │           │       │   ├── gb2312prober.py
+│   │           │       │   ├── hebrewprober.py
+│   │           │       │   ├── __init__.py
+│   │           │       │   ├── jisfreq.py
+│   │           │       │   ├── jpcntx.py
+│   │           │       │   ├── langbulgarianmodel.py
+│   │           │       │   ├── langgreekmodel.py
+│   │           │       │   ├── langhebrewmodel.py
+│   │           │       │   ├── langhungarianmodel.py
+│   │           │       │   ├── langrussianmodel.py
+│   │           │       │   ├── langthaimodel.py
+│   │           │       │   ├── langturkishmodel.py
+│   │           │       │   ├── latin1prober.py
+│   │           │       │   ├── mbcharsetprober.py
+│   │           │       │   ├── mbcsgroupprober.py
+│   │           │       │   ├── mbcssm.py
+│   │           │       │   ├── metadata
+│   │           │       │   │   ├── __init__.py
+│   │           │       │   │   └── languages.py
+│   │           │       │   ├── sbcharsetprober.py
+│   │           │       │   ├── sbcsgroupprober.py
+│   │           │       │   ├── sjisprober.py
+│   │           │       │   ├── universaldetector.py
+│   │           │       │   ├── utf8prober.py
+│   │           │       │   └── version.py
+│   │           │       ├── colorama
+│   │           │       │   ├── ansi.py
+│   │           │       │   ├── ansitowin32.py
+│   │           │       │   ├── initialise.py
+│   │           │       │   ├── __init__.py
+│   │           │       │   ├── win32.py
+│   │           │       │   └── winterm.py
+│   │           │       ├── distlib
+│   │           │       │   ├── compat.py
+│   │           │       │   ├── database.py
+│   │           │       │   ├── index.py
+│   │           │       │   ├── __init__.py
+│   │           │       │   ├── locators.py
+│   │           │       │   ├── manifest.py
+│   │           │       │   ├── markers.py
+│   │           │       │   ├── metadata.py
+│   │           │       │   ├── resources.py
+│   │           │       │   ├── scripts.py
+│   │           │       │   ├── util.py
+│   │           │       │   ├── version.py
+│   │           │       │   └── wheel.py
+│   │           │       ├── distro.py
+│   │           │       ├── html5lib
+│   │           │       │   ├── constants.py
+│   │           │       │   ├── filters
+│   │           │       │   │   ├── alphabeticalattributes.py
+│   │           │       │   │   ├── base.py
+│   │           │       │   │   ├── __init__.py
+│   │           │       │   │   ├── inject_meta_charset.py
+│   │           │       │   │   ├── lint.py
+│   │           │       │   │   ├── optionaltags.py
+│   │           │       │   │   ├── sanitizer.py
+│   │           │       │   │   └── whitespace.py
+│   │           │       │   ├── html5parser.py
+│   │           │       │   ├── _ihatexml.py
+│   │           │       │   ├── __init__.py
+│   │           │       │   ├── _inputstream.py
+│   │           │       │   ├── serializer.py
+│   │           │       │   ├── _tokenizer.py
+│   │           │       │   ├── treeadapters
+│   │           │       │   │   ├── genshi.py
+│   │           │       │   │   ├── __init__.py
+│   │           │       │   │   └── sax.py
+│   │           │       │   ├── treebuilders
+│   │           │       │   │   ├── base.py
+│   │           │       │   │   ├── dom.py
+│   │           │       │   │   ├── etree_lxml.py
+│   │           │       │   │   ├── etree.py
+│   │           │       │   │   └── __init__.py
+│   │           │       │   ├── treewalkers
+│   │           │       │   │   ├── base.py
+│   │           │       │   │   ├── dom.py
+│   │           │       │   │   ├── etree_lxml.py
+│   │           │       │   │   ├── etree.py
+│   │           │       │   │   ├── genshi.py
+│   │           │       │   │   └── __init__.py
+│   │           │       │   ├── _trie
+│   │           │       │   │   ├── _base.py
+│   │           │       │   │   ├── __init__.py
+│   │           │       │   │   └── py.py
+│   │           │       │   └── _utils.py
+│   │           │       ├── idna
+│   │           │       │   ├── codec.py
+│   │           │       │   ├── compat.py
+│   │           │       │   ├── core.py
+│   │           │       │   ├── idnadata.py
+│   │           │       │   ├── __init__.py
+│   │           │       │   ├── intranges.py
+│   │           │       │   ├── package_data.py
+│   │           │       │   └── uts46data.py
+│   │           │       ├── __init__.py
+│   │           │       ├── msgpack
+│   │           │       │   ├── exceptions.py
+│   │           │       │   ├── ext.py
+│   │           │       │   ├── fallback.py
+│   │           │       │   ├── __init__.py
+│   │           │       │   └── _version.py
+│   │           │       ├── packaging
+│   │           │       │   ├── __about__.py
+│   │           │       │   ├── __init__.py
+│   │           │       │   ├── _manylinux.py
+│   │           │       │   ├── markers.py
+│   │           │       │   ├── _musllinux.py
+│   │           │       │   ├── requirements.py
+│   │           │       │   ├── specifiers.py
+│   │           │       │   ├── _structures.py
+│   │           │       │   ├── tags.py
+│   │           │       │   ├── utils.py
+│   │           │       │   └── version.py
+│   │           │       ├── pep517
+│   │           │       │   ├── build.py
+│   │           │       │   ├── check.py
+│   │           │       │   ├── colorlog.py
+│   │           │       │   ├── compat.py
+│   │           │       │   ├── dirtools.py
+│   │           │       │   ├── envbuild.py
+│   │           │       │   ├── __init__.py
+│   │           │       │   ├── in_process
+│   │           │       │   │   ├── __init__.py
+│   │           │       │   │   └── _in_process.py
+│   │           │       │   ├── meta.py
+│   │           │       │   └── wrappers.py
+│   │           │       ├── pkg_resources
+│   │           │       │   ├── __init__.py
+│   │           │       │   └── py31compat.py
+│   │           │       ├── platformdirs
+│   │           │       │   ├── android.py
+│   │           │       │   ├── api.py
+│   │           │       │   ├── __init__.py
+│   │           │       │   ├── macos.py
+│   │           │       │   ├── __main__.py
+│   │           │       │   ├── unix.py
+│   │           │       │   ├── version.py
+│   │           │       │   └── windows.py
+│   │           │       ├── progress
+│   │           │       │   ├── bar.py
+│   │           │       │   ├── colors.py
+│   │           │       │   ├── counter.py
+│   │           │       │   ├── __init__.py
+│   │           │       │   └── spinner.py
+│   │           │       ├── pygments
+│   │           │       │   ├── cmdline.py
+│   │           │       │   ├── console.py
+│   │           │       │   ├── filter.py
+│   │           │       │   ├── filters
+│   │           │       │   │   └── __init__.py
+│   │           │       │   ├── formatter.py
+│   │           │       │   ├── formatters
+│   │           │       │   │   ├── bbcode.py
+│   │           │       │   │   ├── groff.py
+│   │           │       │   │   ├── html.py
+│   │           │       │   │   ├── img.py
+│   │           │       │   │   ├── __init__.py
+│   │           │       │   │   ├── irc.py
+│   │           │       │   │   ├── latex.py
+│   │           │       │   │   ├── _mapping.py
+│   │           │       │   │   ├── other.py
+│   │           │       │   │   ├── pangomarkup.py
+│   │           │       │   │   ├── rtf.py
+│   │           │       │   │   ├── svg.py
+│   │           │       │   │   ├── terminal256.py
+│   │           │       │   │   └── terminal.py
+│   │           │       │   ├── __init__.py
+│   │           │       │   ├── lexer.py
+│   │           │       │   ├── lexers
+│   │           │       │   │   ├── __init__.py
+│   │           │       │   │   ├── _mapping.py
+│   │           │       │   │   └── python.py
+│   │           │       │   ├── __main__.py
+│   │           │       │   ├── modeline.py
+│   │           │       │   ├── plugin.py
+│   │           │       │   ├── regexopt.py
+│   │           │       │   ├── scanner.py
+│   │           │       │   ├── sphinxext.py
+│   │           │       │   ├── style.py
+│   │           │       │   ├── styles
+│   │           │       │   │   └── __init__.py
+│   │           │       │   ├── token.py
+│   │           │       │   ├── unistring.py
+│   │           │       │   └── util.py
+│   │           │       ├── pyparsing
+│   │           │       │   ├── actions.py
+│   │           │       │   ├── common.py
+│   │           │       │   ├── core.py
+│   │           │       │   ├── diagram
+│   │           │       │   │   └── __init__.py
+│   │           │       │   ├── exceptions.py
+│   │           │       │   ├── helpers.py
+│   │           │       │   ├── __init__.py
+│   │           │       │   ├── results.py
+│   │           │       │   ├── testing.py
+│   │           │       │   ├── unicode.py
+│   │           │       │   └── util.py
+│   │           │       ├── requests
+│   │           │       │   ├── adapters.py
+│   │           │       │   ├── api.py
+│   │           │       │   ├── auth.py
+│   │           │       │   ├── certs.py
+│   │           │       │   ├── compat.py
+│   │           │       │   ├── cookies.py
+│   │           │       │   ├── exceptions.py
+│   │           │       │   ├── help.py
+│   │           │       │   ├── hooks.py
+│   │           │       │   ├── __init__.py
+│   │           │       │   ├── _internal_utils.py
+│   │           │       │   ├── models.py
+│   │           │       │   ├── packages.py
+│   │           │       │   ├── sessions.py
+│   │           │       │   ├── status_codes.py
+│   │           │       │   ├── structures.py
+│   │           │       │   ├── utils.py
+│   │           │       │   └── __version__.py
+│   │           │       ├── resolvelib
+│   │           │       │   ├── compat
+│   │           │       │   │   ├── collections_abc.py
+│   │           │       │   │   └── __init__.py
+│   │           │       │   ├── __init__.py
+│   │           │       │   ├── providers.py
+│   │           │       │   ├── reporters.py
+│   │           │       │   ├── resolvers.py
+│   │           │       │   └── structs.py
+│   │           │       ├── rich
+│   │           │       │   ├── abc.py
+│   │           │       │   ├── align.py
+│   │           │       │   ├── ansi.py
+│   │           │       │   ├── bar.py
+│   │           │       │   ├── box.py
+│   │           │       │   ├── cells.py
+│   │           │       │   ├── _cell_widths.py
+│   │           │       │   ├── color.py
+│   │           │       │   ├── color_triplet.py
+│   │           │       │   ├── columns.py
+│   │           │       │   ├── console.py
+│   │           │       │   ├── constrain.py
+│   │           │       │   ├── containers.py
+│   │           │       │   ├── control.py
+│   │           │       │   ├── default_styles.py
+│   │           │       │   ├── diagnose.py
+│   │           │       │   ├── _emoji_codes.py
+│   │           │       │   ├── emoji.py
+│   │           │       │   ├── _emoji_replace.py
+│   │           │       │   ├── errors.py
+│   │           │       │   ├── _extension.py
+│   │           │       │   ├── file_proxy.py
+│   │           │       │   ├── filesize.py
+│   │           │       │   ├── highlighter.py
+│   │           │       │   ├── __init__.py
+│   │           │       │   ├── _inspect.py
+│   │           │       │   ├── json.py
+│   │           │       │   ├── jupyter.py
+│   │           │       │   ├── layout.py
+│   │           │       │   ├── live.py
+│   │           │       │   ├── live_render.py
+│   │           │       │   ├── logging.py
+│   │           │       │   ├── _log_render.py
+│   │           │       │   ├── _loop.py
+│   │           │       │   ├── _lru_cache.py
+│   │           │       │   ├── __main__.py
+│   │           │       │   ├── markup.py
+│   │           │       │   ├── measure.py
+│   │           │       │   ├── padding.py
+│   │           │       │   ├── pager.py
+│   │           │       │   ├── palette.py
+│   │           │       │   ├── _palettes.py
+│   │           │       │   ├── panel.py
+│   │           │       │   ├── _pick.py
+│   │           │       │   ├── pretty.py
+│   │           │       │   ├── progress_bar.py
+│   │           │       │   ├── progress.py
+│   │           │       │   ├── prompt.py
+│   │           │       │   ├── protocol.py
+│   │           │       │   ├── _ratio.py
+│   │           │       │   ├── region.py
+│   │           │       │   ├── repr.py
+│   │           │       │   ├── rule.py
+│   │           │       │   ├── scope.py
+│   │           │       │   ├── screen.py
+│   │           │       │   ├── segment.py
+│   │           │       │   ├── spinner.py
+│   │           │       │   ├── _spinners.py
+│   │           │       │   ├── _stack.py
+│   │           │       │   ├── status.py
+│   │           │       │   ├── styled.py
+│   │           │       │   ├── style.py
+│   │           │       │   ├── syntax.py
+│   │           │       │   ├── table.py
+│   │           │       │   ├── tabulate.py
+│   │           │       │   ├── terminal_theme.py
+│   │           │       │   ├── text.py
+│   │           │       │   ├── theme.py
+│   │           │       │   ├── themes.py
+│   │           │       │   ├── _timer.py
+│   │           │       │   ├── traceback.py
+│   │           │       │   ├── tree.py
+│   │           │       │   ├── _windows.py
+│   │           │       │   └── _wrap.py
+│   │           │       ├── six.py
+│   │           │       ├── tenacity
+│   │           │       │   ├── after.py
+│   │           │       │   ├── _asyncio.py
+│   │           │       │   ├── before.py
+│   │           │       │   ├── before_sleep.py
+│   │           │       │   ├── __init__.py
+│   │           │       │   ├── nap.py
+│   │           │       │   ├── retry.py
+│   │           │       │   ├── stop.py
+│   │           │       │   ├── tornadoweb.py
+│   │           │       │   ├── _utils.py
+│   │           │       │   └── wait.py
+│   │           │       ├── tomli
+│   │           │       │   ├── __init__.py
+│   │           │       │   ├── _parser.py
+│   │           │       │   └── _re.py
+│   │           │       ├── typing_extensions.py
+│   │           │       ├── urllib3
+│   │           │       │   ├── _collections.py
+│   │           │       │   ├── connectionpool.py
+│   │           │       │   ├── connection.py
+│   │           │       │   ├── contrib
+│   │           │       │   │   ├── _appengine_environ.py
+│   │           │       │   │   ├── appengine.py
+│   │           │       │   │   ├── __init__.py
+│   │           │       │   │   ├── ntlmpool.py
+│   │           │       │   │   ├── pyopenssl.py
+│   │           │       │   │   ├── _securetransport
+│   │           │       │   │   │   ├── bindings.py
+│   │           │       │   │   │   ├── __init__.py
+│   │           │       │   │   │   └── low_level.py
+│   │           │       │   │   ├── securetransport.py
+│   │           │       │   │   └── socks.py
+│   │           │       │   ├── exceptions.py
+│   │           │       │   ├── fields.py
+│   │           │       │   ├── filepost.py
+│   │           │       │   ├── __init__.py
+│   │           │       │   ├── packages
+│   │           │       │   │   ├── backports
+│   │           │       │   │   │   ├── __init__.py
+│   │           │       │   │   │   └── makefile.py
+│   │           │       │   │   ├── __init__.py
+│   │           │       │   │   └── six.py
+│   │           │       │   ├── poolmanager.py
+│   │           │       │   ├── request.py
+│   │           │       │   ├── response.py
+│   │           │       │   ├── util
+│   │           │       │   │   ├── connection.py
+│   │           │       │   │   ├── __init__.py
+│   │           │       │   │   ├── proxy.py
+│   │           │       │   │   ├── queue.py
+│   │           │       │   │   ├── request.py
+│   │           │       │   │   ├── response.py
+│   │           │       │   │   ├── retry.py
+│   │           │       │   │   ├── ssl_match_hostname.py
+│   │           │       │   │   ├── ssl_.py
+│   │           │       │   │   ├── ssltransport.py
+│   │           │       │   │   ├── timeout.py
+│   │           │       │   │   ├── url.py
+│   │           │       │   │   └── wait.py
+│   │           │       │   └── _version.py
+│   │           │       ├── vendor.txt
+│   │           │       └── webencodings
+│   │           │           ├── __init__.py
+│   │           │           ├── labels.py
+│   │           │           ├── mklabels.py
+│   │           │           ├── tests.py
+│   │           │           └── x_user_defined.py
+│   │           ├── pip-22.0.2.dist-info
+│   │           │   ├── entry_points.txt
+│   │           │   ├── INSTALLER
+│   │           │   ├── LICENSE.txt
+│   │           │   ├── METADATA
+│   │           │   ├── RECORD
+│   │           │   ├── REQUESTED
+│   │           │   ├── top_level.txt
+│   │           │   └── WHEEL
+│   │           ├── pkg_resources
+│   │           │   ├── extern
+│   │           │   │   └── __init__.py
+│   │           │   ├── __init__.py
+│   │           │   ├── tests
+│   │           │   │   └── data
+│   │           │   │       └── my-test-package-source
+│   │           │   │           └── setup.py
+│   │           │   └── _vendor
+│   │           │       ├── appdirs.py
+│   │           │       ├── __init__.py
+│   │           │       ├── packaging
+│   │           │       │   ├── __about__.py
+│   │           │       │   ├── __init__.py
+│   │           │       │   ├── _manylinux.py
+│   │           │       │   ├── markers.py
+│   │           │       │   ├── _musllinux.py
+│   │           │       │   ├── requirements.py
+│   │           │       │   ├── specifiers.py
+│   │           │       │   ├── _structures.py
+│   │           │       │   ├── tags.py
+│   │           │       │   ├── utils.py
+│   │           │       │   └── version.py
+│   │           │       └── pyparsing.py
+│   │           ├── pluggy
+│   │           │   ├── _callers.py
+│   │           │   ├── _hooks.py
+│   │           │   ├── __init__.py
+│   │           │   ├── _manager.py
+│   │           │   ├── _result.py
+│   │           │   ├── _tracing.py
+│   │           │   └── _version.py
+│   │           ├── pluggy-1.0.0.dist-info
+│   │           │   ├── INSTALLER
+│   │           │   ├── LICENSE
+│   │           │   ├── METADATA
+│   │           │   ├── RECORD
+│   │           │   ├── REQUESTED
+│   │           │   ├── top_level.txt
+│   │           │   └── WHEEL
+│   │           ├── prompt_toolkit
+│   │           │   ├── application.py
+│   │           │   ├── auto_suggest.py
+│   │           │   ├── buffer_mapping.py
+│   │           │   ├── buffer.py
+│   │           │   ├── cache.py
+│   │           │   ├── clipboard
+│   │           │   │   ├── base.py
+│   │           │   │   ├── __init__.py
+│   │           │   │   ├── in_memory.py
+│   │           │   │   └── pyperclip.py
+│   │           │   ├── completion.py
+│   │           │   ├── contrib
+│   │           │   │   ├── completers
+│   │           │   │   │   ├── base.py
+│   │           │   │   │   ├── filesystem.py
+│   │           │   │   │   ├── __init__.py
+│   │           │   │   │   └── system.py
+│   │           │   │   ├── __init__.py
+│   │           │   │   ├── regular_languages
+│   │           │   │   │   ├── compiler.py
+│   │           │   │   │   ├── completion.py
+│   │           │   │   │   ├── __init__.py
+│   │           │   │   │   ├── lexer.py
+│   │           │   │   │   ├── regex_parser.py
+│   │           │   │   │   └── validation.py
+│   │           │   │   ├── telnet
+│   │           │   │   │   ├── application.py
+│   │           │   │   │   ├── __init__.py
+│   │           │   │   │   ├── log.py
+│   │           │   │   │   ├── protocol.py
+│   │           │   │   │   └── server.py
+│   │           │   │   └── validators
+│   │           │   │       ├── base.py
+│   │           │   │       └── __init__.py
+│   │           │   ├── document.py
+│   │           │   ├── enums.py
+│   │           │   ├── eventloop
+│   │           │   │   ├── asyncio_base.py
+│   │           │   │   ├── asyncio_posix.py
+│   │           │   │   ├── asyncio_win32.py
+│   │           │   │   ├── base.py
+│   │           │   │   ├── callbacks.py
+│   │           │   │   ├── __init__.py
+│   │           │   │   ├── inputhook.py
+│   │           │   │   ├── posix.py
+│   │           │   │   ├── posix_utils.py
+│   │           │   │   ├── select.py
+│   │           │   │   ├── utils.py
+│   │           │   │   └── win32.py
+│   │           │   ├── filters
+│   │           │   │   ├── base.py
+│   │           │   │   ├── cli.py
+│   │           │   │   ├── __init__.py
+│   │           │   │   ├── types.py
+│   │           │   │   └── utils.py
+│   │           │   ├── history.py
+│   │           │   ├── __init__.py
+│   │           │   ├── input.py
+│   │           │   ├── interface.py
+│   │           │   ├── key_binding
+│   │           │   │   ├── bindings
+│   │           │   │   │   ├── basic.py
+│   │           │   │   │   ├── completion.py
+│   │           │   │   │   ├── emacs.py
+│   │           │   │   │   ├── __init__.py
+│   │           │   │   │   ├── named_commands.py
+│   │           │   │   │   ├── scroll.py
+│   │           │   │   │   ├── utils.py
+│   │           │   │   │   └── vi.py
+│   │           │   │   ├── defaults.py
+│   │           │   │   ├── digraphs.py
+│   │           │   │   ├── __init__.py
+│   │           │   │   ├── input_processor.py
+│   │           │   │   ├── manager.py
+│   │           │   │   ├── registry.py
+│   │           │   │   └── vi_state.py
+│   │           │   ├── keys.py
+│   │           │   ├── layout
+│   │           │   │   ├── containers.py
+│   │           │   │   ├── controls.py
+│   │           │   │   ├── dimension.py
+│   │           │   │   ├── __init__.py
+│   │           │   │   ├── lexers.py
+│   │           │   │   ├── margins.py
+│   │           │   │   ├── menus.py
+│   │           │   │   ├── mouse_handlers.py
+│   │           │   │   ├── processors.py
+│   │           │   │   ├── prompt.py
+│   │           │   │   ├── screen.py
+│   │           │   │   ├── toolbars.py
+│   │           │   │   └── utils.py
+│   │           │   ├── mouse_events.py
+│   │           │   ├── output.py
+│   │           │   ├── reactive.py
+│   │           │   ├── renderer.py
+│   │           │   ├── search_state.py
+│   │           │   ├── selection.py
+│   │           │   ├── shortcuts.py
+│   │           │   ├── styles
+│   │           │   │   ├── base.py
+│   │           │   │   ├── defaults.py
+│   │           │   │   ├── from_dict.py
+│   │           │   │   ├── from_pygments.py
+│   │           │   │   ├── __init__.py
+│   │           │   │   └── utils.py
+│   │           │   ├── terminal
+│   │           │   │   ├── conemu_output.py
+│   │           │   │   ├── __init__.py
+│   │           │   │   ├── vt100_input.py
+│   │           │   │   ├── vt100_output.py
+│   │           │   │   ├── win32_input.py
+│   │           │   │   └── win32_output.py
+│   │           │   ├── token.py
+│   │           │   ├── utils.py
+│   │           │   ├── validation.py
+│   │           │   └── win32_types.py
+│   │           ├── prompt_toolkit-1.0.14.dist-info
+│   │           │   ├── DESCRIPTION.rst
+│   │           │   ├── INSTALLER
+│   │           │   ├── METADATA
+│   │           │   ├── metadata.json
+│   │           │   ├── RECORD
+│   │           │   ├── top_level.txt
+│   │           │   └── WHEEL
+│   │           ├── pycodestyle-2.10.0.dist-info
+│   │           │   ├── entry_points.txt
+│   │           │   ├── INSTALLER
+│   │           │   ├── LICENSE
+│   │           │   ├── METADATA
+│   │           │   ├── RECORD
+│   │           │   ├── top_level.txt
+│   │           │   └── WHEEL
+│   │           ├── pycodestyle.py
+│   │           ├── pyflakes
+│   │           │   ├── api.py
+│   │           │   ├── checker.py
+│   │           │   ├── __init__.py
+│   │           │   ├── __main__.py
+│   │           │   ├── messages.py
+│   │           │   ├── reporter.py
+│   │           │   ├── scripts
+│   │           │   │   ├── __init__.py
+│   │           │   │   └── pyflakes.py
+│   │           │   └── test
+│   │           │       ├── harness.py
+│   │           │       ├── __init__.py
+│   │           │       ├── test_api.py
+│   │           │       ├── test_builtin.py
+│   │           │       ├── test_code_segment.py
+│   │           │       ├── test_dict.py
+│   │           │       ├── test_doctests.py
+│   │           │       ├── test_imports.py
+│   │           │       ├── test_is_literal.py
+│   │           │       ├── test_match.py
+│   │           │       ├── test_other.py
+│   │           │       ├── test_type_annotations.py
+│   │           │       └── test_undefined_names.py
+│   │           ├── pyflakes-3.0.1.dist-info
+│   │           │   ├── entry_points.txt
+│   │           │   ├── INSTALLER
+│   │           │   ├── LICENSE
+│   │           │   ├── METADATA
+│   │           │   ├── RECORD
+│   │           │   ├── top_level.txt
+│   │           │   └── WHEEL
+│   │           ├── pygments
+│   │           │   ├── cmdline.py
+│   │           │   ├── console.py
+│   │           │   ├── filter.py
+│   │           │   ├── filters
+│   │           │   │   └── __init__.py
+│   │           │   ├── formatter.py
+│   │           │   ├── formatters
+│   │           │   │   ├── bbcode.py
+│   │           │   │   ├── groff.py
+│   │           │   │   ├── html.py
+│   │           │   │   ├── img.py
+│   │           │   │   ├── __init__.py
+│   │           │   │   ├── irc.py
+│   │           │   │   ├── latex.py
+│   │           │   │   ├── _mapping.py
+│   │           │   │   ├── other.py
+│   │           │   │   ├── pangomarkup.py
+│   │           │   │   ├── rtf.py
+│   │           │   │   ├── svg.py
+│   │           │   │   ├── terminal256.py
+│   │           │   │   └── terminal.py
+│   │           │   ├── __init__.py
+│   │           │   ├── lexer.py
+│   │           │   ├── lexers
+│   │           │   │   ├── actionscript.py
+│   │           │   │   ├── _ada_builtins.py
+│   │           │   │   ├── ada.py
+│   │           │   │   ├── agile.py
+│   │           │   │   ├── algebra.py
+│   │           │   │   ├── ambient.py
+│   │           │   │   ├── amdgpu.py
+│   │           │   │   ├── ampl.py
+│   │           │   │   ├── apdlexer.py
+│   │           │   │   ├── apl.py
+│   │           │   │   ├── archetype.py
+│   │           │   │   ├── arrow.py
+│   │           │   │   ├── arturo.py
+│   │           │   │   ├── asc.py
+│   │           │   │   ├── asm.py
+│   │           │   │   ├── _asy_builtins.py
+│   │           │   │   ├── automation.py
+│   │           │   │   ├── bare.py
+│   │           │   │   ├── basic.py
+│   │           │   │   ├── bdd.py
+│   │           │   │   ├── berry.py
+│   │           │   │   ├── bibtex.py
+│   │           │   │   ├── boa.py
+│   │           │   │   ├── business.py
+│   │           │   │   ├── capnproto.py
+│   │           │   │   ├── c_cpp.py
+│   │           │   │   ├── cddl.py
+│   │           │   │   ├── chapel.py
+│   │           │   │   ├── _cl_builtins.py
+│   │           │   │   ├── clean.py
+│   │           │   │   ├── c_like.py
+│   │           │   │   ├── _cocoa_builtins.py
+│   │           │   │   ├── comal.py
+│   │           │   │   ├── compiled.py
+│   │           │   │   ├── configs.py
+│   │           │   │   ├── console.py
+│   │           │   │   ├── cplint.py
+│   │           │   │   ├── crystal.py
+│   │           │   │   ├── _csound_builtins.py
+│   │           │   │   ├── csound.py
+│   │           │   │   ├── _css_builtins.py
+│   │           │   │   ├── css.py
+│   │           │   │   ├── dalvik.py
+│   │           │   │   ├── data.py
+│   │           │   │   ├── devicetree.py
+│   │           │   │   ├── diff.py
+│   │           │   │   ├── dotnet.py
+│   │           │   │   ├── d.py
+│   │           │   │   ├── dsls.py
+│   │           │   │   ├── dylan.py
+│   │           │   │   ├── ecl.py
+│   │           │   │   ├── eiffel.py
+│   │           │   │   ├── elm.py
+│   │           │   │   ├── elpi.py
+│   │           │   │   ├── email.py
+│   │           │   │   ├── erlang.py
+│   │           │   │   ├── esoteric.py
+│   │           │   │   ├── ezhil.py
+│   │           │   │   ├── factor.py
+│   │           │   │   ├── fantom.py
+│   │           │   │   ├── felix.py
+│   │           │   │   ├── fift.py
+│   │           │   │   ├── floscript.py
+│   │           │   │   ├── forth.py
+│   │           │   │   ├── fortran.py
+│   │           │   │   ├── foxpro.py
+│   │           │   │   ├── freefem.py
+│   │           │   │   ├── func.py
+│   │           │   │   ├── functional.py
+│   │           │   │   ├── futhark.py
+│   │           │   │   ├── gcodelexer.py
+│   │           │   │   ├── gdscript.py
+│   │           │   │   ├── go.py
+│   │           │   │   ├── grammar_notation.py
+│   │           │   │   ├── graphics.py
+│   │           │   │   ├── graph.py
+│   │           │   │   ├── graphviz.py
+│   │           │   │   ├── gsql.py
+│   │           │   │   ├── haskell.py
+│   │           │   │   ├── haxe.py
+│   │           │   │   ├── hdl.py
+│   │           │   │   ├── hexdump.py
+│   │           │   │   ├── html.py
+│   │           │   │   ├── idl.py
+│   │           │   │   ├── igor.py
+│   │           │   │   ├── inferno.py
+│   │           │   │   ├── __init__.py
+│   │           │   │   ├── installers.py
+│   │           │   │   ├── int_fiction.py
+│   │           │   │   ├── iolang.py
+│   │           │   │   ├── javascript.py
+│   │           │   │   ├── jmespath.py
+│   │           │   │   ├── j.py
+│   │           │   │   ├── jslt.py
+│   │           │   │   ├── jsonnet.py
+│   │           │   │   ├── _julia_builtins.py
+│   │           │   │   ├── julia.py
+│   │           │   │   ├── jvm.py
+│   │           │   │   ├── kuin.py
+│   │           │   │   ├── _lasso_builtins.py
+│   │           │   │   ├── _lilypond_builtins.py
+│   │           │   │   ├── lilypond.py
+│   │           │   │   ├── lisp.py
+│   │           │   │   ├── _lua_builtins.py
+│   │           │   │   ├── macaulay2.py
+│   │           │   │   ├── make.py
+│   │           │   │   ├── _mapping.py
+│   │           │   │   ├── markup.py
+│   │           │   │   ├── math.py
+│   │           │   │   ├── matlab.py
+│   │           │   │   ├── maxima.py
+│   │           │   │   ├── meson.py
+│   │           │   │   ├── mime.py
+│   │           │   │   ├── minecraft.py
+│   │           │   │   ├── mips.py
+│   │           │   │   ├── ml.py
+│   │           │   │   ├── modeling.py
+│   │           │   │   ├── modula2.py
+│   │           │   │   ├── monte.py
+│   │           │   │   ├── mosel.py
+│   │           │   │   ├── _mql_builtins.py
+│   │           │   │   ├── _mysql_builtins.py
+│   │           │   │   ├── ncl.py
+│   │           │   │   ├── nimrod.py
+│   │           │   │   ├── nit.py
+│   │           │   │   ├── nix.py
+│   │           │   │   ├── oberon.py
+│   │           │   │   ├── objective.py
+│   │           │   │   ├── ooc.py
+│   │           │   │   ├── _openedge_builtins.py
+│   │           │   │   ├── other.py
+│   │           │   │   ├── parasail.py
+│   │           │   │   ├── parsers.py
+│   │           │   │   ├── pascal.py
+│   │           │   │   ├── pawn.py
+│   │           │   │   ├── perl.py
+│   │           │   │   ├── phix.py
+│   │           │   │   ├── _php_builtins.py
+│   │           │   │   ├── php.py
+│   │           │   │   ├── pointless.py
+│   │           │   │   ├── pony.py
+│   │           │   │   ├── _postgres_builtins.py
+│   │           │   │   ├── praat.py
+│   │           │   │   ├── procfile.py
+│   │           │   │   ├── prolog.py
+│   │           │   │   ├── promql.py
+│   │           │   │   ├── python.py
+│   │           │   │   ├── _qlik_builtins.py
+│   │           │   │   ├── qlik.py
+│   │           │   │   ├── q.py
+│   │           │   │   ├── qvt.py
+│   │           │   │   ├── rdf.py
+│   │           │   │   ├── rebol.py
+│   │           │   │   ├── resource.py
+│   │           │   │   ├── ride.py
+│   │           │   │   ├── rita.py
+│   │           │   │   ├── rnc.py
+│   │           │   │   ├── roboconf.py
+│   │           │   │   ├── robotframework.py
+│   │           │   │   ├── r.py
+│   │           │   │   ├── ruby.py
+│   │           │   │   ├── rust.py
+│   │           │   │   ├── sas.py
+│   │           │   │   ├── savi.py
+│   │           │   │   ├── scdoc.py
+│   │           │   │   ├── _scheme_builtins.py
+│   │           │   │   ├── _scilab_builtins.py
+│   │           │   │   ├── scripting.py
+│   │           │   │   ├── sgf.py
+│   │           │   │   ├── shell.py
+│   │           │   │   ├── sieve.py
+│   │           │   │   ├── slash.py
+│   │           │   │   ├── smalltalk.py
+│   │           │   │   ├── smithy.py
+│   │           │   │   ├── smv.py
+│   │           │   │   ├── snobol.py
+│   │           │   │   ├── solidity.py
+│   │           │   │   ├── sophia.py
+│   │           │   │   ├── _sourcemod_builtins.py
+│   │           │   │   ├── special.py
+│   │           │   │   ├── spice.py
+│   │           │   │   ├── sql.py
+│   │           │   │   ├── srcinfo.py
+│   │           │   │   ├── _stan_builtins.py
+│   │           │   │   ├── _stata_builtins.py
+│   │           │   │   ├── stata.py
+│   │           │   │   ├── supercollider.py
+│   │           │   │   ├── tal.py
+│   │           │   │   ├── tcl.py
+│   │           │   │   ├── teal.py
+│   │           │   │   ├── templates.py
+│   │           │   │   ├── teraterm.py
+│   │           │   │   ├── testing.py
+│   │           │   │   ├── textedit.py
+│   │           │   │   ├── textfmts.py
+│   │           │   │   ├── text.py
+│   │           │   │   ├── theorem.py
+│   │           │   │   ├── thingsdb.py
+│   │           │   │   ├── tlb.py
+│   │           │   │   ├── tnt.py
+│   │           │   │   ├── trafficscript.py
+│   │           │   │   ├── _tsql_builtins.py
+│   │           │   │   ├── typoscript.py
+│   │           │   │   ├── ul4.py
+│   │           │   │   ├── unicon.py
+│   │           │   │   ├── urbi.py
+│   │           │   │   ├── _usd_builtins.py
+│   │           │   │   ├── usd.py
+│   │           │   │   ├── varnish.py
+│   │           │   │   ├── _vbscript_builtins.py
+│   │           │   │   ├── verification.py
+│   │           │   │   ├── _vim_builtins.py
+│   │           │   │   ├── webassembly.py
+│   │           │   │   ├── webidl.py
+│   │           │   │   ├── webmisc.py
+│   │           │   │   ├── web.py
+│   │           │   │   ├── whiley.py
+│   │           │   │   ├── wowtoc.py
+│   │           │   │   ├── wren.py
+│   │           │   │   ├── x10.py
+│   │           │   │   ├── xorg.py
+│   │           │   │   ├── yang.py
+│   │           │   │   └── zig.py
+│   │           │   ├── __main__.py
+│   │           │   ├── modeline.py
+│   │           │   ├── plugin.py
+│   │           │   ├── regexopt.py
+│   │           │   ├── scanner.py
+│   │           │   ├── sphinxext.py
+│   │           │   ├── style.py
+│   │           │   ├── styles
+│   │           │   │   ├── abap.py
+│   │           │   │   ├── algol_nu.py
+│   │           │   │   ├── algol.py
+│   │           │   │   ├── arduino.py
+│   │           │   │   ├── autumn.py
+│   │           │   │   ├── borland.py
+│   │           │   │   ├── bw.py
+│   │           │   │   ├── colorful.py
+│   │           │   │   ├── default.py
+│   │           │   │   ├── dracula.py
+│   │           │   │   ├── emacs.py
+│   │           │   │   ├── friendly_grayscale.py
+│   │           │   │   ├── friendly.py
+│   │           │   │   ├── fruity.py
+│   │           │   │   ├── gh_dark.py
+│   │           │   │   ├── gruvbox.py
+│   │           │   │   ├── igor.py
+│   │           │   │   ├── __init__.py
+│   │           │   │   ├── inkpot.py
+│   │           │   │   ├── lilypond.py
+│   │           │   │   ├── lovelace.py
+│   │           │   │   ├── manni.py
+│   │           │   │   ├── material.py
+│   │           │   │   ├── monokai.py
+│   │           │   │   ├── murphy.py
+│   │           │   │   ├── native.py
+│   │           │   │   ├── nord.py
+│   │           │   │   ├── onedark.py
+│   │           │   │   ├── paraiso_dark.py
+│   │           │   │   ├── paraiso_light.py
+│   │           │   │   ├── pastie.py
+│   │           │   │   ├── perldoc.py
+│   │           │   │   ├── rainbow_dash.py
+│   │           │   │   ├── rrt.py
+│   │           │   │   ├── sas.py
+│   │           │   │   ├── solarized.py
+│   │           │   │   ├── staroffice.py
+│   │           │   │   ├── stata_dark.py
+│   │           │   │   ├── stata_light.py
+│   │           │   │   ├── tango.py
+│   │           │   │   ├── trac.py
+│   │           │   │   ├── vim.py
+│   │           │   │   ├── vs.py
+│   │           │   │   ├── xcode.py
+│   │           │   │   └── zenburn.py
+│   │           │   ├── token.py
+│   │           │   ├── unistring.py
+│   │           │   └── util.py
+│   │           ├── Pygments-2.14.0.dist-info
+│   │           │   ├── AUTHORS
+│   │           │   ├── entry_points.txt
+│   │           │   ├── INSTALLER
+│   │           │   ├── LICENSE
+│   │           │   ├── METADATA
+│   │           │   ├── RECORD
+│   │           │   ├── top_level.txt
+│   │           │   └── WHEEL
+│   │           ├── PyInquirer
+│   │           │   ├── color_print.py
+│   │           │   ├── __init__.py
+│   │           │   ├── prompt.py
+│   │           │   ├── prompts
+│   │           │   │   ├── checkbox.py
+│   │           │   │   ├── common.py
+│   │           │   │   ├── confirm.py
+│   │           │   │   ├── editor.py
+│   │           │   │   ├── expand.py
+│   │           │   │   ├── __init__.py
+│   │           │   │   ├── input.py
+│   │           │   │   ├── list.py
+│   │           │   │   ├── password.py
+│   │           │   │   └── rawlist.py
+│   │           │   ├── separator.py
+│   │           │   └── utils.py
+│   │           ├── PyInquirer-1.0.3.egg-info
+│   │           │   ├── dependency_links.txt
+│   │           │   ├── installed-files.txt
+│   │           │   ├── PKG-INFO
+│   │           │   ├── requires.txt
+│   │           │   ├── SOURCES.txt
+│   │           │   └── top_level.txt
+│   │           ├── py.py
+│   │           ├── _pytest
+│   │           │   ├── _argcomplete.py
+│   │           │   ├── assertion
+│   │           │   │   ├── __init__.py
+│   │           │   │   ├── rewrite.py
+│   │           │   │   ├── truncate.py
+│   │           │   │   └── util.py
+│   │           │   ├── cacheprovider.py
+│   │           │   ├── capture.py
+│   │           │   ├── _code
+│   │           │   │   ├── code.py
+│   │           │   │   ├── __init__.py
+│   │           │   │   └── source.py
+│   │           │   ├── compat.py
+│   │           │   ├── config
+│   │           │   │   ├── argparsing.py
+│   │           │   │   ├── compat.py
+│   │           │   │   ├── exceptions.py
+│   │           │   │   ├── findpaths.py
+│   │           │   │   └── __init__.py
+│   │           │   ├── debugging.py
+│   │           │   ├── deprecated.py
+│   │           │   ├── doctest.py
+│   │           │   ├── faulthandler.py
+│   │           │   ├── fixtures.py
+│   │           │   ├── freeze_support.py
+│   │           │   ├── helpconfig.py
+│   │           │   ├── hookspec.py
+│   │           │   ├── __init__.py
+│   │           │   ├── _io
+│   │           │   │   ├── __init__.py
+│   │           │   │   ├── saferepr.py
+│   │           │   │   ├── terminalwriter.py
+│   │           │   │   └── wcwidth.py
+│   │           │   ├── junitxml.py
+│   │           │   ├── legacypath.py
+│   │           │   ├── logging.py
+│   │           │   ├── main.py
+│   │           │   ├── mark
+│   │           │   │   ├── expression.py
+│   │           │   │   ├── __init__.py
+│   │           │   │   └── structures.py
+│   │           │   ├── monkeypatch.py
+│   │           │   ├── nodes.py
+│   │           │   ├── nose.py
+│   │           │   ├── outcomes.py
+│   │           │   ├── pastebin.py
+│   │           │   ├── pathlib.py
+│   │           │   ├── _py
+│   │           │   │   ├── error.py
+│   │           │   │   ├── __init__.py
+│   │           │   │   └── path.py
+│   │           │   ├── pytester_assertions.py
+│   │           │   ├── pytester.py
+│   │           │   ├── python_api.py
+│   │           │   ├── python_path.py
+│   │           │   ├── python.py
+│   │           │   ├── py.typed
+│   │           │   ├── recwarn.py
+│   │           │   ├── reports.py
+│   │           │   ├── runner.py
+│   │           │   ├── scope.py
+│   │           │   ├── setuponly.py
+│   │           │   ├── setupplan.py
+│   │           │   ├── skipping.py
+│   │           │   ├── stash.py
+│   │           │   ├── stepwise.py
+│   │           │   ├── terminal.py
+│   │           │   ├── threadexception.py
+│   │           │   ├── timing.py
+│   │           │   ├── tmpdir.py
+│   │           │   ├── unittest.py
+│   │           │   ├── unraisableexception.py
+│   │           │   ├── _version.py
+│   │           │   ├── warnings.py
+│   │           │   └── warning_types.py
+│   │           ├── pytest
+│   │           │   ├── __init__.py
+│   │           │   ├── __main__.py
+│   │           │   └── py.typed
+│   │           ├── pytest-7.2.1.dist-info
+│   │           │   ├── entry_points.txt
+│   │           │   ├── INSTALLER
+│   │           │   ├── LICENSE
+│   │           │   ├── METADATA
+│   │           │   ├── RECORD
+│   │           │   ├── REQUESTED
+│   │           │   ├── top_level.txt
+│   │           │   └── WHEEL
+│   │           ├── python_editor-1.0.4.dist-info
+│   │           │   ├── DESCRIPTION.rst
+│   │           │   ├── INSTALLER
+│   │           │   ├── METADATA
+│   │           │   ├── metadata.json
+│   │           │   ├── RECORD
+│   │           │   ├── REQUESTED
+│   │           │   ├── top_level.txt
+│   │           │   └── WHEEL
+│   │           ├── pyuseragents
+│   │           │   ├── _backward_compatibility.py
+│   │           │   ├── data
+│   │           │   │   ├── __init__.py
+│   │           │   │   └── list.py
+│   │           │   ├── __init__.py
+│   │           │   └── _useragents.py
+│   │           ├── pyuseragents-1.0.5.dist-info
+│   │           │   ├── INSTALLER
+│   │           │   ├── LICENSE
+│   │           │   ├── METADATA
+│   │           │   ├── RECORD
+│   │           │   ├── REQUESTED
+│   │           │   ├── top_level.txt
+│   │           │   └── WHEEL
+│   │           ├── readchar
+│   │           │   ├── _base_key.py
+│   │           │   ├── _config.py
+│   │           │   ├── __init__.py
+│   │           │   ├── key.py
+│   │           │   ├── _posix_key.py
+│   │           │   ├── _posix_read.py
+│   │           │   ├── _win_key.py
+│   │           │   └── _win_read.py
+│   │           ├── readchar-4.0.3.dist-info
+│   │           │   ├── INSTALLER
+│   │           │   ├── LICENCE
+│   │           │   ├── METADATA
+│   │           │   ├── RECORD
+│   │           │   ├── REQUESTED
+│   │           │   ├── top_level.txt
+│   │           │   └── WHEEL
+│   │           ├── regex
+│   │           │   ├── __init__.py
+│   │           │   ├── _regex_core.py
+│   │           │   ├── _regex.cpython-310-x86_64-linux-gnu.so
+│   │           │   ├── regex.py
+│   │           │   └── test_regex.py
+│   │           ├── regex-2023.3.23.dist-info
+│   │           │   ├── INSTALLER
+│   │           │   ├── LICENSE.txt
+│   │           │   ├── METADATA
+│   │           │   ├── RECORD
+│   │           │   ├── top_level.txt
+│   │           │   └── WHEEL
+│   │           ├── requests
+│   │           │   ├── adapters.py
+│   │           │   ├── api.py
+│   │           │   ├── auth.py
+│   │           │   ├── certs.py
+│   │           │   ├── compat.py
+│   │           │   ├── cookies.py
+│   │           │   ├── exceptions.py
+│   │           │   ├── help.py
+│   │           │   ├── hooks.py
+│   │           │   ├── __init__.py
+│   │           │   ├── _internal_utils.py
+│   │           │   ├── models.py
+│   │           │   ├── packages.py
+│   │           │   ├── sessions.py
+│   │           │   ├── status_codes.py
+│   │           │   ├── structures.py
+│   │           │   ├── utils.py
+│   │           │   └── __version__.py
+│   │           ├── requests-2.25.1.dist-info
+│   │           │   ├── INSTALLER
+│   │           │   ├── LICENSE
+│   │           │   ├── METADATA
+│   │           │   ├── RECORD
+│   │           │   ├── REQUESTED
+│   │           │   ├── top_level.txt
+│   │           │   └── WHEEL
+│   │           ├── rich
+│   │           │   ├── abc.py
+│   │           │   ├── align.py
+│   │           │   ├── ansi.py
+│   │           │   ├── bar.py
+│   │           │   ├── box.py
+│   │           │   ├── cells.py
+│   │           │   ├── _cell_widths.py
+│   │           │   ├── color.py
+│   │           │   ├── color_triplet.py
+│   │           │   ├── columns.py
+│   │           │   ├── console.py
+│   │           │   ├── constrain.py
+│   │           │   ├── containers.py
+│   │           │   ├── control.py
+│   │           │   ├── default_styles.py
+│   │           │   ├── diagnose.py
+│   │           │   ├── _emoji_codes.py
+│   │           │   ├── emoji.py
+│   │           │   ├── _emoji_replace.py
+│   │           │   ├── errors.py
+│   │           │   ├── _export_format.py
+│   │           │   ├── _extension.py
+│   │           │   ├── _fileno.py
+│   │           │   ├── file_proxy.py
+│   │           │   ├── filesize.py
+│   │           │   ├── highlighter.py
+│   │           │   ├── __init__.py
+│   │           │   ├── _inspect.py
+│   │           │   ├── json.py
+│   │           │   ├── jupyter.py
+│   │           │   ├── layout.py
+│   │           │   ├── live.py
+│   │           │   ├── live_render.py
+│   │           │   ├── logging.py
+│   │           │   ├── _log_render.py
+│   │           │   ├── _loop.py
+│   │           │   ├── __main__.py
+│   │           │   ├── markdown.py
+│   │           │   ├── markup.py
+│   │           │   ├── measure.py
+│   │           │   ├── _null_file.py
+│   │           │   ├── padding.py
+│   │           │   ├── pager.py
+│   │           │   ├── palette.py
+│   │           │   ├── _palettes.py
+│   │           │   ├── panel.py
+│   │           │   ├── _pick.py
+│   │           │   ├── pretty.py
+│   │           │   ├── progress_bar.py
+│   │           │   ├── progress.py
+│   │           │   ├── prompt.py
+│   │           │   ├── protocol.py
+│   │           │   ├── py.typed
+│   │           │   ├── _ratio.py
+│   │           │   ├── region.py
+│   │           │   ├── repr.py
+│   │           │   ├── rule.py
+│   │           │   ├── scope.py
+│   │           │   ├── screen.py
+│   │           │   ├── segment.py
+│   │           │   ├── spinner.py
+│   │           │   ├── _spinners.py
+│   │           │   ├── _stack.py
+│   │           │   ├── status.py
+│   │           │   ├── styled.py
+│   │           │   ├── style.py
+│   │           │   ├── syntax.py
+│   │           │   ├── table.py
+│   │           │   ├── terminal_theme.py
+│   │           │   ├── text.py
+│   │           │   ├── theme.py
+│   │           │   ├── themes.py
+│   │           │   ├── _timer.py
+│   │           │   ├── traceback.py
+│   │           │   ├── tree.py
+│   │           │   ├── _win32_console.py
+│   │           │   ├── _windows.py
+│   │           │   ├── _windows_renderer.py
+│   │           │   └── _wrap.py
+│   │           ├── rich-13.3.3.dist-info
+│   │           │   ├── INSTALLER
+│   │           │   ├── LICENSE
+│   │           │   ├── METADATA
+│   │           │   ├── RECORD
+│   │           │   ├── REQUESTED
+│   │           │   └── WHEEL
+│   │           ├── setuptools
+│   │           │   ├── archive_util.py
+│   │           │   ├── build_meta.py
+│   │           │   ├── cli-32.exe
+│   │           │   ├── cli-64.exe
+│   │           │   ├── cli-arm64.exe
+│   │           │   ├── cli.exe
+│   │           │   ├── command
+│   │           │   │   ├── alias.py
+│   │           │   │   ├── bdist_egg.py
+│   │           │   │   ├── bdist_rpm.py
+│   │           │   │   ├── build_clib.py
+│   │           │   │   ├── build_ext.py
+│   │           │   │   ├── build_py.py
+│   │           │   │   ├── develop.py
+│   │           │   │   ├── dist_info.py
+│   │           │   │   ├── easy_install.py
+│   │           │   │   ├── egg_info.py
+│   │           │   │   ├── __init__.py
+│   │           │   │   ├── install_egg_info.py
+│   │           │   │   ├── install_lib.py
+│   │           │   │   ├── install.py
+│   │           │   │   ├── install_scripts.py
+│   │           │   │   ├── launcher manifest.xml
+│   │           │   │   ├── py36compat.py
+│   │           │   │   ├── register.py
+│   │           │   │   ├── rotate.py
+│   │           │   │   ├── saveopts.py
+│   │           │   │   ├── sdist.py
+│   │           │   │   ├── setopt.py
+│   │           │   │   ├── test.py
+│   │           │   │   ├── upload_docs.py
+│   │           │   │   └── upload.py
+│   │           │   ├── config.py
+│   │           │   ├── depends.py
+│   │           │   ├── _deprecation_warning.py
+│   │           │   ├── dep_util.py
+│   │           │   ├── dist.py
+│   │           │   ├── _distutils
+│   │           │   │   ├── archive_util.py
+│   │           │   │   ├── bcppcompiler.py
+│   │           │   │   ├── ccompiler.py
+│   │           │   │   ├── cmd.py
+│   │           │   │   ├── command
+│   │           │   │   │   ├── bdist_dumb.py
+│   │           │   │   │   ├── bdist_msi.py
+│   │           │   │   │   ├── bdist.py
+│   │           │   │   │   ├── bdist_rpm.py
+│   │           │   │   │   ├── bdist_wininst.py
+│   │           │   │   │   ├── build_clib.py
+│   │           │   │   │   ├── build_ext.py
+│   │           │   │   │   ├── build.py
+│   │           │   │   │   ├── build_py.py
+│   │           │   │   │   ├── build_scripts.py
+│   │           │   │   │   ├── check.py
+│   │           │   │   │   ├── clean.py
+│   │           │   │   │   ├── config.py
+│   │           │   │   │   ├── __init__.py
+│   │           │   │   │   ├── install_data.py
+│   │           │   │   │   ├── install_egg_info.py
+│   │           │   │   │   ├── install_headers.py
+│   │           │   │   │   ├── install_lib.py
+│   │           │   │   │   ├── install.py
+│   │           │   │   │   ├── install_scripts.py
+│   │           │   │   │   ├── py37compat.py
+│   │           │   │   │   ├── register.py
+│   │           │   │   │   ├── sdist.py
+│   │           │   │   │   └── upload.py
+│   │           │   │   ├── config.py
+│   │           │   │   ├── core.py
+│   │           │   │   ├── cygwinccompiler.py
+│   │           │   │   ├── debug.py
+│   │           │   │   ├── dep_util.py
+│   │           │   │   ├── dir_util.py
+│   │           │   │   ├── dist.py
+│   │           │   │   ├── errors.py
+│   │           │   │   ├── extension.py
+│   │           │   │   ├── fancy_getopt.py
+│   │           │   │   ├── filelist.py
+│   │           │   │   ├── file_util.py
+│   │           │   │   ├── __init__.py
+│   │           │   │   ├── log.py
+│   │           │   │   ├── msvc9compiler.py
+│   │           │   │   ├── _msvccompiler.py
+│   │           │   │   ├── msvccompiler.py
+│   │           │   │   ├── py35compat.py
+│   │           │   │   ├── py38compat.py
+│   │           │   │   ├── spawn.py
+│   │           │   │   ├── sysconfig.py
+│   │           │   │   ├── text_file.py
+│   │           │   │   ├── unixccompiler.py
+│   │           │   │   ├── util.py
+│   │           │   │   ├── versionpredicate.py
+│   │           │   │   └── version.py
+│   │           │   ├── errors.py
+│   │           │   ├── extension.py
+│   │           │   ├── extern
+│   │           │   │   └── __init__.py
+│   │           │   ├── glob.py
+│   │           │   ├── gui-32.exe
+│   │           │   ├── gui-64.exe
+│   │           │   ├── gui-arm64.exe
+│   │           │   ├── gui.exe
+│   │           │   ├── _imp.py
+│   │           │   ├── __init__.py
+│   │           │   ├── installer.py
+│   │           │   ├── launch.py
+│   │           │   ├── monkey.py
+│   │           │   ├── msvc.py
+│   │           │   ├── namespaces.py
+│   │           │   ├── package_index.py
+│   │           │   ├── py34compat.py
+│   │           │   ├── sandbox.py
+│   │           │   ├── script (dev).tmpl
+│   │           │   ├── script.tmpl
+│   │           │   ├── unicode_utils.py
+│   │           │   ├── _vendor
+│   │           │   │   ├── __init__.py
+│   │           │   │   ├── more_itertools
+│   │           │   │   │   ├── __init__.py
+│   │           │   │   │   ├── more.py
+│   │           │   │   │   └── recipes.py
+│   │           │   │   ├── ordered_set.py
+│   │           │   │   ├── packaging
+│   │           │   │   │   ├── __about__.py
+│   │           │   │   │   ├── __init__.py
+│   │           │   │   │   ├── _manylinux.py
+│   │           │   │   │   ├── markers.py
+│   │           │   │   │   ├── _musllinux.py
+│   │           │   │   │   ├── requirements.py
+│   │           │   │   │   ├── specifiers.py
+│   │           │   │   │   ├── _structures.py
+│   │           │   │   │   ├── tags.py
+│   │           │   │   │   ├── utils.py
+│   │           │   │   │   └── version.py
+│   │           │   │   └── pyparsing.py
+│   │           │   ├── version.py
+│   │           │   ├── wheel.py
+│   │           │   └── windows_support.py
+│   │           ├── setuptools-59.6.0.dist-info
+│   │           │   ├── entry_points.txt
+│   │           │   ├── INSTALLER
+│   │           │   ├── LICENSE
+│   │           │   ├── METADATA
+│   │           │   ├── RECORD
+│   │           │   ├── REQUESTED
+│   │           │   ├── top_level.txt
+│   │           │   └── WHEEL
+│   │           ├── six-1.16.0.dist-info
+│   │           │   ├── INSTALLER
+│   │           │   ├── LICENSE
+│   │           │   ├── METADATA
+│   │           │   ├── RECORD
+│   │           │   ├── REQUESTED
+│   │           │   ├── top_level.txt
+│   │           │   └── WHEEL
+│   │           ├── six.py
+│   │           ├── soupsieve
+│   │           │   ├── css_match.py
+│   │           │   ├── css_parser.py
+│   │           │   ├── css_types.py
+│   │           │   ├── __init__.py
+│   │           │   ├── __meta__.py
+│   │           │   ├── pretty.py
+│   │           │   ├── py.typed
+│   │           │   └── util.py
+│   │           ├── soupsieve-2.3.2.post1.dist-info
+│   │           │   ├── entry_points.txt
+│   │           │   ├── INSTALLER
+│   │           │   ├── license_files
+│   │           │   │   └── LICENSE.md
+│   │           │   ├── METADATA
+│   │           │   ├── RECORD
+│   │           │   ├── REQUESTED
+│   │           │   └── WHEEL
+│   │           ├── tomli
+│   │           │   ├── __init__.py
+│   │           │   ├── _parser.py
+│   │           │   ├── py.typed
+│   │           │   ├── _re.py
+│   │           │   └── _types.py
+│   │           ├── tomli-2.0.1.dist-info
+│   │           │   ├── INSTALLER
+│   │           │   ├── LICENSE
+│   │           │   ├── METADATA
+│   │           │   ├── RECORD
+│   │           │   ├── REQUESTED
+│   │           │   └── WHEEL
+│   │           ├── urllib3
+│   │           │   ├── _collections.py
+│   │           │   ├── connectionpool.py
+│   │           │   ├── connection.py
+│   │           │   ├── contrib
+│   │           │   │   ├── _appengine_environ.py
+│   │           │   │   ├── appengine.py
+│   │           │   │   ├── __init__.py
+│   │           │   │   ├── ntlmpool.py
+│   │           │   │   ├── pyopenssl.py
+│   │           │   │   ├── _securetransport
+│   │           │   │   │   ├── bindings.py
+│   │           │   │   │   ├── __init__.py
+│   │           │   │   │   └── low_level.py
+│   │           │   │   ├── securetransport.py
+│   │           │   │   └── socks.py
+│   │           │   ├── exceptions.py
+│   │           │   ├── fields.py
+│   │           │   ├── filepost.py
+│   │           │   ├── __init__.py
+│   │           │   ├── packages
+│   │           │   │   ├── backports
+│   │           │   │   │   ├── __init__.py
+│   │           │   │   │   └── makefile.py
+│   │           │   │   ├── __init__.py
+│   │           │   │   └── six.py
+│   │           │   ├── poolmanager.py
+│   │           │   ├── request.py
+│   │           │   ├── response.py
+│   │           │   ├── util
+│   │           │   │   ├── connection.py
+│   │           │   │   ├── __init__.py
+│   │           │   │   ├── proxy.py
+│   │           │   │   ├── queue.py
+│   │           │   │   ├── request.py
+│   │           │   │   ├── response.py
+│   │           │   │   ├── retry.py
+│   │           │   │   ├── ssl_match_hostname.py
+│   │           │   │   ├── ssl_.py
+│   │           │   │   ├── ssltransport.py
+│   │           │   │   ├── timeout.py
+│   │           │   │   ├── url.py
+│   │           │   │   └── wait.py
+│   │           │   └── _version.py
+│   │           ├── urllib3-1.26.14.dist-info
+│   │           │   ├── INSTALLER
+│   │           │   ├── LICENSE.txt
+│   │           │   ├── METADATA
+│   │           │   ├── RECORD
+│   │           │   ├── REQUESTED
+│   │           │   ├── top_level.txt
+│   │           │   └── WHEEL
+│   │           ├── wcwidth
+│   │           │   ├── __init__.py
+│   │           │   ├── table_wide.py
+│   │           │   ├── table_zero.py
+│   │           │   ├── unicode_versions.py
+│   │           │   └── wcwidth.py
+│   │           └── wcwidth-0.2.6.dist-info
+│   │               ├── INSTALLER
+│   │               ├── LICENSE
+│   │               ├── METADATA
+│   │               ├── RECORD
+│   │               ├── REQUESTED
+│   │               ├── top_level.txt
+│   │               ├── WHEEL
+│   │               └── zip-safe
+│   ├── lib64 -> lib
+│   └── pyvenv.cfg
+└── version.txt
+
+341 directories, 2403 files

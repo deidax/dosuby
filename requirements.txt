@@ -1,4 +1,4 @@
-art==6.4
+art==6.3
 attrs==22.2.0
 beautifulsoup4==4.9.3
 blessed==1.19.1
