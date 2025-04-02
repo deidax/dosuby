@@ -4,3 +4,6 @@ venv
 .vscode
 __pycache__
 *.pyc
+dist
+dosuby.egg-info
+build

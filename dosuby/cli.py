@@ -8,10 +8,8 @@ from art import *
 def main():
     """Main function for the interactive CLI."""
     tprint(text="Dosuby")
-    with open('dosuby/version.txt', 'r') as f:
-        version = f.read().strip()
-    print('version:', version)
-    
+    print('version: 1.3.1')
+    print("https://github.com/deidax")
     
     logging.basicConfig(
                 level=logging.INFO, 
