@@ -1,33 +1,53 @@
 # Dosuby
 
 Dosuby is a tool developed in Python that aims to enumerate subdomains of a parent domain. It uses multiple techniques for enumeration, allowing for a comprehensive subdomain scan. Additionally, Dosuby has the option to scan the enumerated domains.
-   ```
 
-## Usage
+## Installation
 
-```
+```bash
 pip install dosuby
 ```
 
-```
+## Quick Start
+
+Run the tool simply by typing:
+
+```bash
 dosuby
 ```
-The above command will start the tool
 
-![dosuby Image](imgs/dosuby.png)
+## Features
 
-Default enumeration
+- Multiple subdomain enumeration techniques
+- Comprehensive domain scanning
+- Easy-to-use CLI interface
 
-![dosuby_gif_1 Gif](imgs/dosuby_gif.gif)
+## Screenshots
 
-Enumeration with scan
+Due to PyPI markdown limitations, screenshots are best viewed on the project's GitHub repository:
 
-![dosuby_gif_2 Gif](imgs/dosuby_gif_2.gif)
+[View Project Screenshots](https://github.com/deidax/dosuby)
+
+## Usage Example
+
+When you run `dosuby`, you'll be presented with an interactive interface to perform subdomain enumeration.
 
 ## Contributing
 
-Contributions are welcome! If you find a bug or would like to suggest a new feature, please open an issue or submit a pull request.
+Contributions are welcome!
+
+If you find a bug or would like to suggest a new feature:
+
+1. Open an issue on GitHub
+2. Submit a pull request
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License.
+
+See the LICENSE file for full details.
+
+## Contact
+
+- GitHub: [deidax/dosuby](https://github.com/deidax/dosuby)
+- Email: deidaxtech@gmail.com
