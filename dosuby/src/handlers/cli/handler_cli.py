@@ -11,7 +11,7 @@ class HandlerCli(Handler):
     """
     def __init__(self, next_handler = None):
         super().__init__(next_handler)
-        self.silent = True
+        self.silent = False
     
     def pre_handler_process(self, **kwargs):
         if not self.silent:

@@ -162,9 +162,10 @@ def scan_for_cms(func):
                         
                     if result and result.get('detected'):
                         cms = result  # Return the full CMS result
+                        print("--->", cms)
                         if cms.get('confidence') != 'Low':
                             
-                            if cms.get('version') != 'N/A':
+                            if cms.get('version') is not None:
                                 cms_version = f" v{cms.get('version')}"
                                 
                             cms_output = "{}{} - confidence: {}".format(
