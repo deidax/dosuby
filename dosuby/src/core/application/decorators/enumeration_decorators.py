@@ -119,34 +119,61 @@ def save_enumeration_report(func):
     return wrapper
 
 def scan_for_cms(func):
+    """Decorator to scan for CMS on a given subdomain
+    
+    This decorator takes the result of the wrapped function, which should include
+    subdomain information, and performs CMS detection on that subdomain.
+    Returns the CMS detection result directly.
+    """
     def wrapper(*args, **kwargs):
+        # Get the subdomain info from the wrapped function
         value = func(*args, **kwargs)
+        
         config = Config()
         if not config.scanning_modules:
             return ModuleStatus.ABORT
-        
+            
         try:
             cms = None
-            loader = None
+            cms_output = "N/A"
             cache_singleton = Cache()
-            cached_result = cache_singleton.check_if_ip_already_found_and_return_result(ip=value.get('ip'))
-            cached_uri = cache_singleton.check_if_uri_already_found_and_return_result(value.get('uri'))
-            if 80 in cached_result.get('open_ports'):
-                if cached_uri:
-                    loader = Loader(f"{Y}       [->] CMS Scanning...{Y}").start()
-                    loader.end = f"{Y}       [*] CMS Scanning{Y}{G} [DONE]{G}"
-                cms_scanning_adapter = WordPressScanningAdapter()
-                cms_scanning_adapter.subdomain_uri = value.get('uri')
-                cms = cms_scanning_adapter.run()
-            elif cached_uri:
-                loader = Loader('').start()
-                loader.end = f"{Y}       [*] CMS Scanning (No port 80){Y}{G} [SKIPED]{G}"
-        except:
-            cms = None
             
-        if loader:
-            loader.stop()
-        return cms
+            # Check if we have a cached result for this IP
+            cached_result = cache_singleton.check_if_ip_already_found_and_return_result(ip=value.get('ip'))
+            
+            # Only scan if port 80 is open
+            if 80 in cached_result.get('open_ports', []):
+                # Create scanners in priority order
+                cms_scanners = [
+                    WordPressScanningAdapter(),
+                    JoomlaScanningAdapter()
+                    # DrupalScanningAdapter(),
+                ]
+                
+                # Try each CMS scanner until we get a positive detection
+                for scanner in cms_scanners:
+                    scanner.subdomain_uri = value.get('uri')
+                    result = scanner.run()
+                    
+                    if result and result.get('detected'):
+                        cms = result  # Return the full CMS result
+                        print(cms)
+                        if cms.get('confidence') != 'Low':
+                            cms_output = "{} v{} - confidence: {}".format(
+                                cms.get('cms'),
+                                cms.get('version'),
+                                cms.get('confidence')
+                            )
+                        break
+            
+        except Exception as e:
+            # Log the exception but don't break the scan
+            # print(f"Error in CMS scanning: {str(e)}")
+            cms = None
+            cms_output = "N/A"
+            
+        return cms_output  # Return the CMS result directly
+        
     return wrapper
 
 def save_cms(attr_name):
