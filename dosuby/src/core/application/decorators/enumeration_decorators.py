@@ -9,6 +9,7 @@ from dosuby.src.core.domain.config import Config
 from dosuby.src.core.application.enums.modules_status import ModuleStatus
 from dosuby.src.core.domain.enumeration_reporte import EnumerationReporte
 from dosuby.src.adapter.webserver_scanning.http_client_webserver_scanning_adapter import HttpClientWebserverScanningAdapter
+from dosuby.src.factories.vulnerability_checker_factory import VulnerabilityCheckerFactory
 from .loggers_decorators import *
 
 SKIP_LOADING = False
@@ -153,6 +154,13 @@ def scan_for_cms(func):
                     DrupalScanningAdapter(),
                     MoodleScanningAdapter()
                 ]
+                
+                vulnerability_checker = None
+                if config.check_cms_vulnerabilities:
+                    vulnerability_checker = VulnerabilityCheckerFactory.create(
+                        name=config.vulnerability_checker
+                    )
+                
                 cms_version = ''
                 # Try each CMS scanner until we get a positive detection
                 for scanner in cms_scanners:
