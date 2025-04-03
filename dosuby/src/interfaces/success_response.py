@@ -42,60 +42,96 @@ class SuccessResponse(SearchResponse):
     
     
     def _get_response_with_scanning_modules(self):
-        response = {
-            'type': self.response_type,
-            'status_code': self.status_code,
-            'message': self.response_message,
-            'subdomain': self.target.subdomain.subdomain_uri,
-            'subdomain_ip': self.target.subdomain.subdomain_ip,
-            'subdomain_ports': self.target.subdomain.subdomain_open_ports_from_uri,
-            'subdomain_cms': self.target.subdomain.subdomain_cms,
-            'subdomain_webserver': self.target.subdomain.subdomain_webserver,
-        }
+        """
+        Aggregate scanning results for a subdomain with robust error handling and formatting.
         
-        if not response.get('subdomain_ip'):
-            ip_str = 'N/A'
-        else:
-            ip_str = response.get('subdomain_ip')
-        
-        if not response.get('subdomain_ports'):
-            open_ports_str = 'N/A'
-        else:
-            open_ports_str = ", ".join([str(num) for num in response.get('subdomain_ports')])
-        
-        if not response.get('subdomain_cms'):
-            cms_str = 'N/A'
-        else:
-            cms_str = response.get('subdomain_cms')
-        
-        if not response.get('subdomain_webserver'):
-            webserver_str = 'N/A'
-        else:
-            webserver_str = response.get('subdomain_webserver')
+        Returns:
+            dict: Structured response with scanning module results
+        """
+        try:
+            # Safely extract subdomain information
+            subdomain = self.target.subdomain
+            # Define safe extraction helper function
+            def safe_extract(attr, formatter=str, default='N/A'):
+                """
+                Safely extract and format an attribute, with optional formatting.
+                
+                Args:
+                    attr: Attribute to extract
+                    formatter (callable): Function to format the attribute
+                    default: Default value if attribute is None or empty
+                
+                Returns:
+                    Formatted attribute value or default
+                """
+                try:
+                    value = attr
+                    if value is None or (isinstance(value, (list, str)) and len(value) == 0):
+                        return default
+                    return formatter(value)
+                except Exception:
+                    return default
             
-        
-        columns = ["Subdomain", "IP", "Open Ports", "CMS", "Web Server"]
-        row = [
-            [
-                response.get('subdomain'),
-                ip_str,
-                open_ports_str,
-                cms_str,
-                webserver_str
+            # Prepare response dictionary
+            response = {
+                'type': safe_extract(self.response_type),
+                'status_code': safe_extract(self.status_code),
+                'message': safe_extract(self.response_message),
+                'subdomain': safe_extract(subdomain.subdomain_uri),
+                'subdomain_ip': safe_extract(subdomain.subdomain_ip),
+                'subdomain_ports': safe_extract(
+                    subdomain.subdomain_open_ports_from_uri, 
+                    formatter=lambda ports: ", ".join(map(str, ports))
+                ),
+                'subdomain_cms': safe_extract(subdomain.subdomain_cms),
+                'subdomain_webserver': safe_extract(subdomain.subdomain_webserver),
+                'subdomain_cve': safe_extract(
+                    subdomain.cve_codes, 
+                    formatter=lambda cves: ", ".join([
+                        f"{cve['cve_id']} (Score: {cve['cvss_score']} | {cve['severity']})" 
+                        for cve in cves
+                    ])
+                )
+            }
+            
+            # Prepare columns and row for tabular display
+            columns = [
+                "Subdomain", 
+                "IP", 
+                "Open Ports", 
+                "CMS", 
+                "Web Server", 
+                "Vulnerabilities"
             ]
-        ]
+            
+            row = [[
+                response.get('subdomain', 'N/A'),
+                response.get('subdomain_ip', 'N/A'),
+                response.get('subdomain_ports', 'N/A'),
+                response.get('subdomain_cms', 'N/A'),
+                response.get('subdomain_webserver', 'N/A'),
+                response.get('subdomain_cve', 'N/A')
+            ]]
+            
+            return {
+                'columns': columns,
+                'row': row
+            }
         
-        # return f"\n{'-'*20}\n"\
-        #     f"{G}--> {response.get('subdomain')}{G}\n"\
-        #     f"{W}   [+] IP: {response.get('subdomain_ip')}{W}\n"\
-        #     f"{W}   [+] Ports: {response.get('subdomain_ports')}{W}\n"\
-        #     f"{W}   [+] CMS: {response.get('subdomain_cms')}{W}\n"\
-        #     f"{W}   [+] Webserver: {response.get('subdomain_webserver')}{W}\n"\
-        #     f"{'-'*20}\n"
-        return {
-            'columns': columns,
-            'row': row
-        }
+        except Exception as e:
+            # Fallback error handling
+            print(f"Error in scanning response generation: {e}")
+            return {
+                'columns': [
+                    "Subdomain", 
+                    "IP", 
+                    "Open Ports", 
+                    "CMS", 
+                    "Web Server", 
+                    "Vulnerabilities"
+                ],
+                'row': [['Error', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A']]
+            }
     
     def _get_response_without_scanning_modules(self):
         response = {

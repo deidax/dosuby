@@ -101,7 +101,7 @@ def main():
         report.read_report()
         
     except Exception as ex:
-        print(ex)
+        raise ex
             
 
 

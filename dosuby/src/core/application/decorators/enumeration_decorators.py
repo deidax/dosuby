@@ -10,9 +10,11 @@ from dosuby.src.core.application.enums.modules_status import ModuleStatus
 from dosuby.src.core.domain.enumeration_reporte import EnumerationReporte
 from dosuby.src.adapter.webserver_scanning.http_client_webserver_scanning_adapter import HttpClientWebserverScanningAdapter
 from dosuby.src.factories.vulnerability_checker_factory import VulnerabilityCheckerFactory
+from dosuby.src.managers.vulnerability_checker_manager import VulnerabilityCheckerManager
 from .loggers_decorators import *
 
 SKIP_LOADING = False
+
 
 def get_ip(func):
     def wrapper(*args, **kwargs):
@@ -127,11 +129,15 @@ def scan_for_cms(func):
     
     This decorator takes the result of the wrapped function, which should include
     subdomain information, and performs CMS detection on that subdomain.
+    It also saves any discovered vulnerabilities directly to the Subdomain instance.
     Returns the CMS detection result directly.
     """
     def wrapper(*args, **kwargs):
         # Get the subdomain info from the wrapped function
         value = func(*args, **kwargs)
+        
+        # Get the Subdomain instance (self) from args
+        self = args[0]
         
         config = Config()
         
@@ -152,10 +158,7 @@ def scan_for_cms(func):
                 vulnerability_checker = None
                 if config.check_cms_vulnerabilities:
                     try:
-                        vulnerability_checker = VulnerabilityCheckerFactory.create(
-                            name=config.vulnerability_checker
-                        )
-                        print(f"Vulnerability Checker Created")
+                        vulnerability_checker = VulnerabilityCheckerManager.get_instance(name='nvd')
                     except Exception as vcf_error:
                         print(f"Error creating vulnerability checker: {vcf_error}")
                 
@@ -222,6 +225,56 @@ def scan_for_cms(func):
                                             vuln_info += f", {summary['exploitable']} exploitable"
                                             
                                         cms_output += vuln_info
+                                        
+                                    # DIRECT SAVE: Store vulnerabilities in the Subdomain instance
+                                    try:
+                                        # Check if _vulnerabilities attribute exists
+                                        if not hasattr(self, '_vulnerabilities'):
+                                            # Attribute doesn't exist - provide a helpful error message
+                                            error_msg = (
+                                                "Error: '_vulnerabilities' attribute not found in class."
+                                                "Please ensure your class defines a '_vulnerabilities' attribute, "
+                                                "typically initialized as: _vulnerabilities: List[Dict[str, Any]] = field(init=False, default_factory=list)"
+                                            )
+                                            print(error_msg)
+                                            # Create the attribute as a fallback
+                                            setattr(self, '_vulnerabilities', [])
+                                        
+                                        # Now we can safely store vulnerabilities
+                                        for vuln in vulnerabilities:
+                                            if vuln not in self._vulnerabilities:
+                                                self._vulnerabilities.append(vuln)
+                                        
+                                        # Check if _vulnerability_summaries attribute exists
+                                        if not hasattr(self, '_vulnerability_summaries'):
+                                            # Attribute doesn't exist - provide a helpful error message
+                                            error_msg = (
+                                                "Error: '_vulnerability_summaries' attribute not found in class. "
+                                                "Please ensure your class has a '_vulnerability_summaries' attribute, "
+                                                "typically initialized as: _vulnerability_summaries: List[Dict[str, Any]] = field(init=False, default_factory=list)"
+                                            )
+                                            print(error_msg)
+                                            # Create the attribute as a fallback
+                                            setattr(self, '_vulnerability_summaries', [])
+                                        
+                                        # Create a summary entry
+                                        summary_entry = {
+                                            'source': 'cms',
+                                            'cms_type': cms.get('cms'),
+                                            'cms_version': cms.get('version'),
+                                            'summary': summary
+                                        }
+                                        
+                                        # Add to summaries if not already present
+                                        summaries = getattr(self, '_vulnerability_summaries')
+                                        if not any(s.get('source') == 'cms' and 
+                                                s.get('cms_type') == summary_entry['cms_type'] and
+                                                s.get('cms_version') == summary_entry['cms_version']
+                                                for s in summaries):
+                                            summaries.append(summary_entry)
+                                    except Exception as e:
+                                        print(f"Error saving vulnerabilities to instance: {str(e)}")
+                                        
                                 except Exception as e:
                                     print(f"Error checking vulnerabilities: {str(e)}")
                             
@@ -234,7 +287,7 @@ def scan_for_cms(func):
             cms_output = "N/A"
             
         return cms_output  # Return the CMS result directly
-        
+    
     return wrapper
 
 def save_cms(attr_name):

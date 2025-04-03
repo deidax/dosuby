@@ -86,7 +86,8 @@ class Target(metaclass=Singleton):
                                     'subdomain_hostname': s.subdomain_hostname,
                                     'subdomain_open_ports': s.open_ports,
                                     'subdomian_cms': s.cms,
-                                    'subdomain_webserver': s.webserver
+                                    'subdomain_webserver': s.webserver,
+                                    'subdomain_vulnerabilities': s.cve_codes
                                 }
        else:
            sub_dict = lambda s: {

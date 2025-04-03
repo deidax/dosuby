@@ -2,7 +2,7 @@ from dataclasses import dataclass, field
 from dosuby.src.interfaces.domain_serializer import DomainSerializer
 from dosuby.src.core.application.decorators.enumeration_decorators import *
 from dosuby.src.core.application.decorators.loggers_decorators import *
-from typing import Any
+from typing import Any, Dict, List, Union
 
 @dataclass
 class Subdomain:
@@ -22,6 +22,9 @@ class Subdomain:
     _subdomain_webserver_from_ip: Any = field(init=False, default='')
     _tmp_s_uri: str = field(init=False, default='')
     _tmp_s_ip: str = field(init=False, default='')
+    
+    _vulnerabilities: List[Dict[str, Any]] = field(init=False, default_factory=list)
+    _cve_codes: List[str] = field(init=False, default_factory=list)
     
     
     @property
@@ -53,6 +56,42 @@ class Subdomain:
 
         self.skip_logging = False
         
+    @property
+    def vulnerabilities(self) -> List[Dict[str, Any]]:
+        """
+        Get the list of vulnerabilities discovered during scans.
+        
+        Returns:
+            List[Dict[str, Any]]: List of vulnerability dictionaries.
+        """
+        return self._vulnerabilities
+    
+    @property
+    def cve_codes(self) -> List[Dict[str, Union[str, float]]]:
+        """
+        Extract CVE codes and their scores from the vulnerabilities list.
+        
+        Returns:
+            List[Dict[str, Union[str, float]]]: List of dictionaries with CVE codes and scores
+        """
+        return [
+            {
+                'cve_id': vuln.get('cve_id', 'Unknown'),
+                'cvss_score': vuln.get('cvss_score', 0.0),
+                'severity': vuln.get('severity', 'unknown')
+            } 
+            for vuln in self._vulnerabilities
+        ]
+    
+    def add_vulnerability(self, vulnerability: Dict[str, Any]) -> None:
+        """
+        Manually add a vulnerability to the list.
+        
+        Args:
+            vulnerability (Dict[str, Any]): Vulnerability dictionary to add.
+        """
+        if vulnerability not in self._vulnerabilities:
+            self._vulnerabilities.append(vulnerability)
     
     @property
     @get_ip
@@ -117,6 +156,7 @@ class Subdomain:
             'ip': self._tmp_s_ip,
             'uri': self._tmp_s_uri,
             'open_ports': self.subdomain_open_ports_from_uri,
+            'vulnerabilities': self.vulnerabilities
         }
         
         self.skip_logging = False
