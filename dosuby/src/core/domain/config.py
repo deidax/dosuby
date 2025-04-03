@@ -3,16 +3,18 @@ from dosuby.src.interfaces.singleton import Singleton
 
 
 
+@dataclass
 class Config(metaclass=Singleton):
-    """Dosuby configuration
-
-    """
+    """Dosuby configuration"""
     
-    scanning_modules: bool = field(init=True, default=False)
+    # Basic scanning configuration
+    scanning_modules: bool = False
     
     # Vulnerability scanning configuration
-    check_cms_vulnerabilities: bool = field(init=False, default=False)
-    vulnerability_checker: str = field(init=True, default="nvd")
+    check_cms_vulnerabilities: bool = True
+    
+    # Use a default string value directly, not with field()
+    vulnerability_checker: str = "nvd"
     
     # Additional vulnerability scanner options
-    return_detailed_vulnerabilities: bool = field(init=True, default=False)
+    return_detailed_vulnerabilities: bool = False

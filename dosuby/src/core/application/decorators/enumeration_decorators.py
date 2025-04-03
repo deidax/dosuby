@@ -134,6 +134,7 @@ def scan_for_cms(func):
         value = func(*args, **kwargs)
         
         config = Config()
+        
         if not config.scanning_modules:
             return ModuleStatus.ABORT
             
@@ -147,6 +148,17 @@ def scan_for_cms(func):
             
             # Only scan if port 80 is open
             if 80 in cached_result.get('open_ports', []):
+                
+                vulnerability_checker = None
+                if config.check_cms_vulnerabilities:
+                    try:
+                        vulnerability_checker = VulnerabilityCheckerFactory.create(
+                            name=config.vulnerability_checker
+                        )
+                        print(f"Vulnerability Checker Created")
+                    except Exception as vcf_error:
+                        print(f"Error creating vulnerability checker: {vcf_error}")
+                
                 # Create scanners in priority order
                 cms_scanners = [
                     WordPressScanningAdapter(),
@@ -154,12 +166,6 @@ def scan_for_cms(func):
                     DrupalScanningAdapter(),
                     MoodleScanningAdapter()
                 ]
-                
-                vulnerability_checker = None
-                if config.check_cms_vulnerabilities:
-                    vulnerability_checker = VulnerabilityCheckerFactory.create(
-                        name=config.vulnerability_checker
-                    )
                 
                 cms_version = ''
                 # Try each CMS scanner until we get a positive detection
@@ -181,6 +187,43 @@ def scan_for_cms(func):
                                 cms_version,
                                 cms.get('confidence')
                             )
+                            
+                            if config.check_cms_vulnerabilities and vulnerability_checker and cms.get('version'):
+                                try:
+                                    # Check for vulnerabilities
+                                    vulnerabilities = vulnerability_checker.check_cms_vulnerabilities(
+                                        cms.get('cms'), cms.get('version')
+                                    )
+                                    
+                                    # Get summary of vulnerabilities
+                                    summary = vulnerability_checker.get_vulnerability_summary(vulnerabilities)
+                                    print(summary)
+                                    # Add vulnerability information to the cms result
+                                    cms['vulnerabilities'] = vulnerabilities
+                                    cms['vulnerability_summary'] = summary
+                                    cms['is_vulnerable'] = summary['has_vulnerabilities']
+                                    
+                                    # Add vulnerability information to the output string
+                                    if summary['has_vulnerabilities']:
+                                        vuln_info = f" - VULNERABLE: {summary['total']} issues"
+                                        
+                                        # Add severity info
+                                        if summary['critical'] > 0:
+                                            vuln_info += f" ({summary['critical']} critical"
+                                            if summary['high'] > 0:
+                                                vuln_info += f", {summary['high']} high"
+                                            vuln_info += ")"
+                                        elif summary['high'] > 0:
+                                            vuln_info += f" ({summary['high']} high)"
+                                            
+                                        # Add exploitable count
+                                        if summary['exploitable'] > 0:
+                                            vuln_info += f", {summary['exploitable']} exploitable"
+                                            
+                                        cms_output += vuln_info
+                                except Exception as e:
+                                    print(f"Error checking vulnerabilities: {str(e)}")
+                            
                         break
             
         except Exception as e:
