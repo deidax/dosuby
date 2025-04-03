@@ -195,9 +195,10 @@ def scan_for_cms(func):
                                         cms.get('cms'), cms.get('version')
                                     )
                                     
+                                    print(vulnerabilities)
+                                    
                                     # Get summary of vulnerabilities
                                     summary = vulnerability_checker.get_vulnerability_summary(vulnerabilities)
-                                    print(summary)
                                     # Add vulnerability information to the cms result
                                     cms['vulnerabilities'] = vulnerabilities
                                     cms['vulnerability_summary'] = summary
