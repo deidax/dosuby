@@ -8,7 +8,7 @@ with open('requirements.txt', 'r', encoding='utf-8') as f:
 
 setup(
     name='dosuby',
-    version='1.3.1',
+    version='1.5.0',
     packages=find_packages(),
     install_requires=requirements,
     entry_points={

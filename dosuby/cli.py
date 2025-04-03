@@ -8,7 +8,7 @@ from art import *
 def main():
     """Main function for the interactive CLI."""
     tprint(text="Dosuby")
-    print('version: 1.3.1')
+    print('version: 1.5.0')
     print("https://github.com/deidax")
     
     logging.basicConfig(
