@@ -1,5 +1,4 @@
 import socket
-import logging
 from dosuby.src.adapter.cms_scanning.drupal_scanning_adapter import DrupalScanningAdapter
 from dosuby.src.adapter.cms_scanning.joomia_scanning_adapter import JoomlaScanningAdapter
 from dosuby.src.adapter.cms_scanning.moodle_scanning_adapter import MoodleScanningAdapter
@@ -10,15 +9,9 @@ from dosuby.src.core.domain.config import Config
 from dosuby.src.core.application.enums.modules_status import ModuleStatus
 from dosuby.src.core.domain.enumeration_reporte import EnumerationReporte
 from dosuby.src.adapter.webserver_scanning.http_client_webserver_scanning_adapter import HttpClientWebserverScanningAdapter
+from dosuby.src.factories.vulnerability_checker_factory import VulnerabilityCheckerFactory
 from dosuby.src.managers.vulnerability_checker_manager import VulnerabilityCheckerManager
 from .loggers_decorators import *
-from rich.console import Console
-from rich.panel import Panel
-from rich.text import Text
-from rich.rule import Rule
-
-# Create a global console instance for consistent styling
-console = Console()
 
 SKIP_LOADING = False
 
@@ -74,37 +67,22 @@ def get_open_ports(func):
         
         cache.add_subdomain_uri(value.get('uri'))
         if display_sub_info:
-            # Use Rich for improved display
-            # console.print(f"[bold bright_green]🌐 Subdomain:[/bold bright_green] [bright_green underline]{value.get('uri')}[/bright_green underline]")
-            console.print(Rule(f"[bold bright_green]🌐 Subdomain:[/bold bright_green] [bright_green underline]{value.get('uri')}[/bright_green underline]"))
+            logging.info(f"{G}[*]  ==> {value.get('uri')}{G}")
         
-        # Use improved Loader with Rich styling
-        loader = Loader("Ports Scanning...").start()
-        loader.end = "🔍 Ports Scanning"
+        loader = Loader(f"{Y}       [->] Ports Scanning...{Y}").start()
+        loader.end = f"{Y}       [*] Ports Scanning{Y}{G} [DONE]{G}"
     
+        
         try:
             port_scanning = SocketPortScanningAdapter()
             port_scanning.target_uri = value.get('uri')
             ports = port_scanning.run()
-            
-            # If ports are found, display them nicely
-            if ports:
-                ports_text = ", ".join(str(p) for p in ports)
-                # Stop the loader before showing the ports
-                loader.stop()
-                console.print(Panel(
-                    f"[cyan]Found open ports:[/cyan] [green]{ports_text}[/green]",
-                    title="Port Scan Results",
-                    border_style="cyan"
-                ))
-            else:
-                loader.stop()
-            
-            return ports
-        except Exception as e:
             loader.stop()
-            console.print(f"[red]Error scanning ports: {str(e)}[/red]")
+            return ports
+        except:
+            pass
         
+        loader.stop()
         return []
     return wrapper
 
@@ -180,16 +158,15 @@ def scan_for_cms(func):
             # Only scan if port 80 is open
             if 80 in cached_result.get('open_ports', []):
                 if cached_uri:
-                    # Use improved Loader with Rich styling
-                    loader = Loader("CMS Scanning...").start()
-                    loader.end = "🔍 CMS Scanning"
+                    loader = Loader(f"{Y}       [->] CMS Scanning...{Y}").start()
+                    loader.end = f"{Y}       [*] CMS Scanning{Y}{G} [DONE]{G}"
                 
                 vulnerability_checker = None
                 if config.check_cms_vulnerabilities:
                     try:
                         vulnerability_checker = VulnerabilityCheckerManager.get_instance(name='nvd')
                     except Exception as vcf_error:
-                        console.print(f"[red]Error creating vulnerability checker: {vcf_error}[/red]")
+                        print(f"Error creating vulnerability checker: {vcf_error}")
                 
                 # Create scanners in priority order
                 cms_scanners = [
@@ -220,8 +197,6 @@ def scan_for_cms(func):
                                 cms.get('confidence')
                             )
                             
-                            vulnerabilities_found = False
-                            
                             if config.check_cms_vulnerabilities and vulnerability_checker and cms.get('version'):
                                 try:
                                     # Check for vulnerabilities
@@ -238,7 +213,6 @@ def scan_for_cms(func):
                                     
                                     # Add vulnerability information to the output string
                                     if summary['has_vulnerabilities']:
-                                        vulnerabilities_found = True
                                         vuln_info = f" - VULNERABLE: {summary['total']} issues"
                                         
                                         # Add severity info
@@ -256,23 +230,6 @@ def scan_for_cms(func):
                                             
                                         cms_output += vuln_info
                                         
-                                        # Stop the loader if vulnerabilities are found
-                                        if loader:
-                                            loader.stop()
-                                            
-                                        # Display a nice vulnerability panel
-                                        vuln_panel = Panel(
-                                            f"[bold red]CMS:[/bold red] {cms.get('cms')}{cms_version}\n"
-                                            f"[bold red]Confidence:[/bold red] {cms.get('confidence')}\n"
-                                            f"[bold red]Vulnerabilities:[/bold red] {summary['total']} total\n"
-                                            f"[bold red]Critical:[/bold red] {summary['critical']}\n"
-                                            f"[bold red]High:[/bold red] {summary['high']}\n"
-                                            f"[bold red]Exploitable:[/bold red] {summary['exploitable']}",
-                                            title="CMS Vulnerabilities Detected",
-                                            border_style="red"
-                                        )
-                                        console.print(vuln_panel)
-                                        
                                     # DIRECT SAVE: Store vulnerabilities in the Subdomain instance
                                     try:
                                         # Check if _vulnerabilities attribute exists
@@ -283,7 +240,7 @@ def scan_for_cms(func):
                                                 "Please ensure your class defines a '_vulnerabilities' attribute, "
                                                 "typically initialized as: _vulnerabilities: List[Dict[str, Any]] = field(init=False, default_factory=list)"
                                             )
-                                            console.print(f"[red]{error_msg}[/red]")
+                                            print(error_msg)
                                             # Create the attribute as a fallback
                                             setattr(self, '_vulnerabilities', [])
                                         
@@ -293,34 +250,20 @@ def scan_for_cms(func):
                                                 self._vulnerabilities.append(vuln)
                                         
                                     except Exception as e:
-                                        console.print(f"[red]Error saving vulnerabilities to instance: {str(e)}[/red]")
+                                        print(f"Error saving vulnerabilities to instance: {str(e)}")
                                         
                                 except Exception as e:
-                                    console.print(f"[red]Error checking vulnerabilities: {str(e)}[/red]")
+                                    print(f"Error checking vulnerabilities: {str(e)}")
                             
-                            # Display CMS information if confidence is not Low (regardless of vulnerabilities)
-                            if loader:
-                                loader.stop()
-                                
-                            # Only display the CMS panel if we haven't already displayed a vulnerability panel
-                            if not vulnerabilities_found:
-                                console.print(Panel(
-                                    f"[cyan]CMS:[/cyan] [green]{cms.get('cms')}{cms_version}[/green]\n"
-                                    f"[cyan]Confidence:[/cyan] [green]{cms.get('confidence')}[/green]",
-                                    title="CMS Detection Results",
-                                    border_style="green"
-                                ))
-                                
                         break
             elif cached_uri:
-                # Use improved Loader for skipped scans
-                loader = Loader("", style="bold yellow").start()
-                loader.end = "🔍 CMS Scanning (No port 80) [Skipped]"
+                loader = Loader('').start()
+                loader.end = f"{Y}       [*] CMS Scanning (No port 80){Y}{G} [SKIPED]{G}"
         except Exception as e:
             # Log the exception but don't break the scan
+            # print(f"Error in CMS scanning: {str(e)}")
             cms = None
             cms_output = "N/A"
-            console.print(f"[red]Error in CMS scanning: {str(e)}[/red]")
         
         if loader:
             loader.stop()    
@@ -374,52 +317,28 @@ def get_webserver(func):
         if not config.scanning_modules:
             return ModuleStatus.ABORT
         
-        loader = None
         
         try:
             cache_singleton = Cache()
             cached_result = cache_singleton.check_if_ip_already_found_and_return_result(ip=value.get('ip'))
             cached_uri = cache_singleton.check_if_uri_already_found_and_return_result(value.get('uri'))
-            
-            if cached_result and 80 in cached_result.get('open_ports', []):
+            if 80 in cached_result.get('open_ports'):
                 if cached_uri:
-                    # Use improved Loader with Rich styling
-                    loader = Loader("Webserver Scanning...").start()
-                    loader.end = "🔍 Webserver Scanning "
+                    loader = Loader(f"{Y}       [->] Webserver Scanning...{Y}").start()
+                    loader.end = f"{Y}       [*] Webserver Scanning{Y}{G} [DONE]{G}"
                 else:
                     cache_singleton.add_subdomain_uri(value.get('uri'))
-                    
                 webserver_scanning = HttpClientWebserverScanningAdapter()
                 webserver_scanning.target_uri = value.get('ip')
                 w_s = webserver_scanning.run()
-                
-                # Only stop the loader if it was started
-                if loader:
-                    loader.stop()
-                
-                if w_s and w_s != 'N/A':
-                    console.print(Panel(
-                        f"[magenta]Webserver:[/magenta] [green]{w_s}[/green]",
-                        title="Webserver Detection Results",
-                        border_style="magenta"
-                    ))
-                
+                loader.stop()
                 return w_s
             elif cached_uri:
-                # Use improved Loader for skipped scans
-                loader = Loader("").start()
-                loader.end = "🔍 Webserver Scanning (No port 80) [Skipped]"
-                if loader:  # Check if loader was initialized
-                    loader.stop()
-            # Add a default case when none of the above conditions match
-            else:
-                return []
-                
-        except Exception as e:
-            # Only try to stop the loader if it was initialized
-            if loader:
+                loader = Loader('').start()
+                loader.end = f"{Y}       [*] Webserver Scanning (No port 80){Y}{G} [SKIPED]{G}"
                 loader.stop()
-            console.print(f"[red]Error in Webserver scanning: {str(e)}[/red]")
+        except:
+            pass
         
-        return 'N/A'
+        return []
     return wrapper
