@@ -13,6 +13,8 @@ class Config(metaclass=Singleton):
     # Vulnerability scanning configuration
     check_cms_vulnerabilities: bool = True
     
+    check_webserver_vulnerabilities: bool = True
+    
     # Use a default string value directly, not with field()
     vulnerability_checker: str = "nvd"
     

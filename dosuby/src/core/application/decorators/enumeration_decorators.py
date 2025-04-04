@@ -11,6 +11,7 @@ from dosuby.src.core.domain.enumeration_reporte import EnumerationReporte
 from dosuby.src.adapter.webserver_scanning.http_client_webserver_scanning_adapter import HttpClientWebserverScanningAdapter
 from dosuby.src.factories.vulnerability_checker_factory import VulnerabilityCheckerFactory
 from dosuby.src.managers.vulnerability_checker_manager import VulnerabilityCheckerManager
+from dosuby.src.utils.helpers import extract_server_name_advanced, extract_version
 from .loggers_decorators import *
 
 SKIP_LOADING = False
@@ -317,12 +318,23 @@ def get_webserver(func):
         if not config.scanning_modules:
             return ModuleStatus.ABORT
         
+        self = args[0]
+        w = None
         
         try:
             cache_singleton = Cache()
+            
             cached_result = cache_singleton.check_if_ip_already_found_and_return_result(ip=value.get('ip'))
             cached_uri = cache_singleton.check_if_uri_already_found_and_return_result(value.get('uri'))
             if 80 in cached_result.get('open_ports'):
+                
+                vulnerability_checker = None
+                if config.check_webserver_vulnerabilities:
+                    try:
+                        vulnerability_checker = VulnerabilityCheckerManager.get_instance(name='nvd')
+                    except Exception as vcf_error:
+                        print(f"Error creating vulnerability checker: {vcf_error}")
+                        
                 if cached_uri:
                     loader = Loader(f"{Y}       [->] Webserver Scanning...{Y}").start()
                     loader.end = f"{Y}       [*] Webserver Scanning{Y}{G} [DONE]{G}"
@@ -332,13 +344,76 @@ def get_webserver(func):
                 webserver_scanning.target_uri = value.get('ip')
                 w_s = webserver_scanning.run()
                 loader.stop()
+                if w_s is None:
+                    w_s_version = extract_version(w_s)
+                    if w_s_version:
+                        w_v = w_s_version[0]
+                        w_n = extract_server_name_advanced(w_s)
+                        if config.check_webserver_vulnerabilities and vulnerability_checker and w_v:
+                                try:
+                                    # Check for vulnerabilities
+                                    vulnerabilities = vulnerability_checker.check_webserver_vulnerabilities(
+                                        w_n, w_v
+                                    )
+                                    
+                                    # Get summary of vulnerabilities
+                                    summary = vulnerability_checker.get_vulnerability_summary(vulnerabilities)
+                                    # Add vulnerability information to the cms result
+                                    w['vulnerabilities'] = vulnerabilities
+                                    w['vulnerability_summary'] = summary
+                                    w['is_vulnerable'] = summary['has_vulnerabilities']
+                                    
+                                    # Add vulnerability information to the output string
+                                    if summary['has_vulnerabilities']:
+                                        vuln_info = f" - VULNERABLE: {summary['total']} issues"
+                                        
+                                        # Add severity info
+                                        if summary['critical'] > 0:
+                                            vuln_info += f" ({summary['critical']} critical"
+                                            if summary['high'] > 0:
+                                                vuln_info += f", {summary['high']} high"
+                                            vuln_info += ")"
+                                        elif summary['high'] > 0:
+                                            vuln_info += f" ({summary['high']} high)"
+                                            
+                                        # Add exploitable count
+                                        if summary['exploitable'] > 0:
+                                            vuln_info += f", {summary['exploitable']} exploitable"
+                                            
+                                        w_s += vuln_info
+                                        
+                                    # DIRECT SAVE: Store vulnerabilities in the Subdomain instance
+                                    try:
+                                        # Check if _vulnerabilities attribute exists
+                                        if not hasattr(self, '_vulnerabilities'):
+                                            # Attribute doesn't exist - provide a helpful error message
+                                            error_msg = (
+                                                "Error: '_vulnerabilities' attribute not found in class."
+                                                "Please ensure your class defines a '_vulnerabilities' attribute, "
+                                                "typically initialized as: _vulnerabilities: List[Dict[str, Any]] = field(init=False, default_factory=list)"
+                                            )
+                                            print(error_msg)
+                                            # Create the attribute as a fallback
+                                            setattr(self, '_vulnerabilities', [])
+                                        
+                                        # Now we can safely store vulnerabilities
+                                        for vuln in vulnerabilities:
+                                            if vuln not in self._vulnerabilities:
+                                                self._vulnerabilities.append(vuln)
+                                        
+                                    except Exception as e:
+                                        print(f"Error saving vulnerabilities to instance: {str(e)}")
+                                        
+                                except Exception as e:
+                                    print(f"Error checking vulnerabilities: {str(e)}")
                 return w_s
             elif cached_uri:
                 loader = Loader('').start()
                 loader.end = f"{Y}       [*] Webserver Scanning (No port 80){Y}{G} [SKIPED]{G}"
                 loader.stop()
         except:
+            w = None
             pass
         
-        return []
+        return 'N/A'
     return wrapper

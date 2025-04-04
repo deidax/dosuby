@@ -15,7 +15,7 @@ class HttpClientWebserverScanningAdapter(WebserverEnumerationAdapter):
         super().__init__()
     
     
-    def _process(self):
+    def _process(self) -> str:
         conn = http.client.HTTPConnection(self.target_uri)
         conn.request("GET", "/")
         response = conn.getresponse()
