@@ -1,3 +1,4 @@
+from random import expovariate
 from dosuby.src.interfaces.report_repo import ReportRepo
 from dosuby.src.core.domain.enumeration_reporte import EnumerationReporte
 from rich.console import Console
@@ -273,6 +274,7 @@ class CliReportRepo(ReportRepo):
             vuln_table.add_column("CVE ID", style="bright_white")
             vuln_table.add_column("Severity", style="bright_white")
             vuln_table.add_column("CVSS", style="bright_white", justify="right")
+            vuln_table.add_column("Exploitable", style="bright_white", justify="right")
             vuln_table.add_column("Description", style="bright_white")
             
             # Sort vulnerabilities by severity
@@ -294,8 +296,13 @@ class CliReportRepo(ReportRepo):
                 cve_id = vuln.get('cve_id', 'N/A')
                 severity = vuln.get('severity', 'Unknown').upper()
                 cvss_score = vuln.get('cvss_score', 'N/A')
-                description = "No description available"
-                
+                exploitable = "Exploitable" if vuln.get('exploitable', False) else "No known exploit"
+                description = vuln.get('description', 'No description available') 
+                if description:
+                    # Split into words, take first 50, rejoin with spaces, and add ellipsis
+                    words = description.split()
+                    if len(words) > 50:
+                        description = " ".join(words[:50]) + "..."
                 # Get row style based on severity
                 row_style = {
                     "CRITICAL": "bright_red",
@@ -304,7 +311,7 @@ class CliReportRepo(ReportRepo):
                     "LOW": "bright_blue"
                 }.get(severity, "bright_white")
                 
-                vuln_table.add_row(cve_id, severity, str(cvss_score), description, style=row_style)
+                vuln_table.add_row(cve_id, severity, str(cvss_score), exploitable, description, style=row_style)
             
             console.print(vuln_table)
             console.print("\n")

@@ -88,7 +88,7 @@ class SuccessResponse(SearchResponse):
                 'subdomain_cve': safe_extract(
                     subdomain.cve_codes, 
                     formatter=lambda cves: ", ".join([
-                        f"{cve['cve_id']} (Score: {cve['cvss_score']} | {cve['severity']})" 
+                        f"{cve['cve_id']} (Score: {cve['cvss_score']} | {cve['severity']}{' | Exploitable' if cve.get('exploitable', False) else ''})" 
                         for cve in cves
                     ])
                 )

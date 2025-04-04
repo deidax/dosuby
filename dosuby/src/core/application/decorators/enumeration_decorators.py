@@ -179,7 +179,7 @@ def scan_for_cms(func):
                         
                     if result and result.get('detected'):
                         cms = result  # Return the full CMS result
-                        print("--->", cms)
+
                         if cms.get('confidence') != 'Low':
                             
                             if cms.get('version') is not None:
@@ -197,8 +197,6 @@ def scan_for_cms(func):
                                     vulnerabilities = vulnerability_checker.check_cms_vulnerabilities(
                                         cms.get('cms'), cms.get('version')
                                     )
-                                    
-                                    print(vulnerabilities)
                                     
                                     # Get summary of vulnerabilities
                                     summary = vulnerability_checker.get_vulnerability_summary(vulnerabilities)
@@ -245,33 +243,33 @@ def scan_for_cms(func):
                                             if vuln not in self._vulnerabilities:
                                                 self._vulnerabilities.append(vuln)
                                         
-                                        # Check if _vulnerability_summaries attribute exists
-                                        if not hasattr(self, '_vulnerability_summaries'):
-                                            # Attribute doesn't exist - provide a helpful error message
-                                            error_msg = (
-                                                "Error: '_vulnerability_summaries' attribute not found in class. "
-                                                "Please ensure your class has a '_vulnerability_summaries' attribute, "
-                                                "typically initialized as: _vulnerability_summaries: List[Dict[str, Any]] = field(init=False, default_factory=list)"
-                                            )
-                                            print(error_msg)
-                                            # Create the attribute as a fallback
-                                            setattr(self, '_vulnerability_summaries', [])
+                                        # # Check if _vulnerability_summaries attribute exists
+                                        # if not hasattr(self, '_vulnerability_summaries'):
+                                        #     # Attribute doesn't exist - provide a helpful error message
+                                        #     error_msg = (
+                                        #         "Error: '_vulnerability_summaries' attribute not found in class. "
+                                        #         "Please ensure your class has a '_vulnerability_summaries' attribute, "
+                                        #         "typically initialized as: _vulnerability_summaries: List[Dict[str, Any]] = field(init=False, default_factory=list)"
+                                        #     )
+                                        #     print(error_msg)
+                                        #     # Create the attribute as a fallback
+                                        #     setattr(self, '_vulnerability_summaries', [])
                                         
-                                        # Create a summary entry
-                                        summary_entry = {
-                                            'source': 'cms',
-                                            'cms_type': cms.get('cms'),
-                                            'cms_version': cms.get('version'),
-                                            'summary': summary
-                                        }
+                                        # # Create a summary entry
+                                        # summary_entry = {
+                                        #     'source': 'cms',
+                                        #     'cms_type': cms.get('cms'),
+                                        #     'cms_version': cms.get('version'),
+                                        #     'summary': summary
+                                        # }
                                         
-                                        # Add to summaries if not already present
-                                        summaries = getattr(self, '_vulnerability_summaries')
-                                        if not any(s.get('source') == 'cms' and 
-                                                s.get('cms_type') == summary_entry['cms_type'] and
-                                                s.get('cms_version') == summary_entry['cms_version']
-                                                for s in summaries):
-                                            summaries.append(summary_entry)
+                                        # # Add to summaries if not already present
+                                        # summaries = getattr(self, '_vulnerability_summaries')
+                                        # if not any(s.get('source') == 'cms' and 
+                                        #         s.get('cms_type') == summary_entry['cms_type'] and
+                                        #         s.get('cms_version') == summary_entry['cms_version']
+                                        #         for s in summaries):
+                                        #     summaries.append(summary_entry)
                                     except Exception as e:
                                         print(f"Error saving vulnerabilities to instance: {str(e)}")
                                         

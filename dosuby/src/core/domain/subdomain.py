@@ -78,7 +78,9 @@ class Subdomain:
             {
                 'cve_id': vuln.get('cve_id', 'Unknown'),
                 'cvss_score': vuln.get('cvss_score', 0.0),
-                'severity': vuln.get('severity', 'unknown')
+                'severity': vuln.get('severity', 'unknown'),
+                'exploitable': vuln.get('exploitable', False),
+                'description' : vuln.get('description', 'No description available')
             } 
             for vuln in self._vulnerabilities
         ]
