@@ -3,7 +3,7 @@ from dosuby.src.core.application.enums.cli_response_type_enum import CliResponse
 from dosuby.src.core.domain.target import Target
 from dosuby.src.core.domain.config import Config
 from dosuby.src.core.application.decorators.loggers_decorators import *
-from dosuby.src.core.application.decorators.loggers_decorators import Loader
+from dosuby.infrastructure.libs.loader import Loader
 from rich.console import Console
 from rich.table import Table
 

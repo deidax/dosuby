@@ -110,7 +110,7 @@ class Subdomain:
     @property
     @save_cms('cms')
     @scan_for_cms
-    @info_logger('Scanning for CMS')
+    # @info_logger('Scanning for CMS')
     def subdomain_cms(self):
         return self._subdomain_cms
     
@@ -131,6 +131,7 @@ class Subdomain:
     @property
     @save_webserver('webserver')
     @get_webserver
+    # @info_logger('Scanning for Webservers')
     def subdomain_webserver(self) -> str:
         """Scan for webserver
 
