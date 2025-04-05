@@ -3,5 +3,7 @@ requires = ["setuptools>=45", "wheel", "setuptools_scm>=6.2"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools_scm]
+version_scheme = "release-branch-semver"
+local_scheme = "no-local-version"
 write_to = "dosuby/version.py"
 write_to_template = '__version__ = "{version}"'
