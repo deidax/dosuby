@@ -3,5 +3,6 @@ requires = ["setuptools>=45", "wheel", "setuptools_scm>=6.2"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools_scm]
+version_scheme = "no-guess-dev"
 write_to = "dosuby/version.py"
 write_to_template = '__version__ = "{version}"'
