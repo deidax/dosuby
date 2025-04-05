@@ -4,6 +4,11 @@ from dosuby.src.adapter.cms_scanning.joomia_scanning_adapter import JoomlaScanni
 from dosuby.src.adapter.cms_scanning.moodle_scanning_adapter import MoodleScanningAdapter
 from dosuby.src.adapter.cms_scanning.wordpress_scanning_adapter import WordPressScanningAdapter
 from dosuby.src.adapter.ports_scanning.socket_port_scanning_adapter import SocketPortScanningAdapter
+from dosuby.src.adapter.webserver_scanning.apache_webserver_scanning_adapter import ApacheWebServerScanningAdapter
+from dosuby.src.adapter.webserver_scanning.generic_webserver_scanning_adapter import GenericWebServerScanningAdapter
+from dosuby.src.adapter.webserver_scanning.iis_webserver_scanning_adapter import IISWebServerScanningAdapter
+from dosuby.src.adapter.webserver_scanning.lighthttp_webserver_scanning_adapter import LighttpdWebServerScanningAdapter
+from dosuby.src.adapter.webserver_scanning.ngnix_webserver_scanning_adapter import NginxWebServerScanningAdapter
 from dosuby.src.core.domain.cache import Cache
 from dosuby.src.core.domain.config import Config
 from dosuby.src.core.application.enums.modules_status import ModuleStatus
@@ -259,7 +264,7 @@ def scan_for_cms(func):
                         break
             elif cached_uri:
                 loader = Loader('').start()
-                loader.end = f"{Y}       [*] CMS Scanning (No port 80){Y}{G} [SKIPED]{G}"
+                loader.end = f"{Y}       [*] CMS Scanning{Y}{G} [SKIPED]{G}"
         except Exception as e:
             # Log the exception but don't break the scan
             # print(f"Error in CMS scanning: {str(e)}")
@@ -306,65 +311,157 @@ def save_webserver(attr_name):
         return wrapper
     return decorator
 
-def get_webserver(func):
-    """Scan for webserver
+# def get_webserver(func):
+#     """Scan for webserver
 
+#     Args:
+#         func (Any): function that raturn a subdomain
+#     """
+#     def wrapper(*args, **kwargs):
+#         value = func(*args, **kwargs)
+#         config = Config()
+#         if not config.scanning_modules:
+#             return ModuleStatus.ABORT
+    
+#         try:
+#             cache_singleton = Cache()
+            
+#             cached_result = cache_singleton.check_if_ip_already_found_and_return_result(ip=value.get('ip'))
+#             cached_uri = cache_singleton.check_if_uri_already_found_and_return_result(value.get('uri'))
+#             if 80 in cached_result.get('open_ports'):
+                
+#                 vulnerability_checker = None
+#                 if config.check_webserver_vulnerabilities:
+#                     try:
+#                         vulnerability_checker = VulnerabilityCheckerManager.get_instance(name='nvd')
+#                     except Exception as vcf_error:
+#                         print(f"Error creating vulnerability checker: {vcf_error}")
+                        
+#                 if cached_uri:
+#                     loader = Loader(f"{Y}       [->] Webserver Scanning...{Y}").start()
+#                     loader.end = f"{Y}       [*] Webserver Scanning{Y}{G} [DONE]{G}"
+#                 else:
+#                     cache_singleton.add_subdomain_uri(value.get('uri'))
+#                 webserver_scanning = HttpClientWebserverScanningAdapter()
+#                 webserver_scanning.target_uri = value.get('ip')
+#                 w_s = webserver_scanning.run()
+#                 loader.stop()
+                
+#                 return w_s
+#             elif cached_uri:
+#                 loader = Loader('').start()
+#                 loader.end = f"{Y}       [*] Webserver Scanning{Y}{G} [SKIPED]{G}"
+#                 loader.stop()
+#         except:
+#             pass
+        
+#         return 'N/A'
+#     return wrapper
+
+def get_webserver(func):
+    """Decorator to scan for webserver and its vulnerabilities
+    
+    This decorator takes the result of the wrapped function, which should include
+    subdomain information, and performs webserver detection on that subdomain.
+    It also saves any discovered vulnerabilities directly to the Subdomain instance.
+    Returns the webserver detection result directly.
+    
     Args:
-        func (Any): function that raturn a subdomain
+        func: The function that returns subdomain information
+        
+    Returns:
+        String representation of the webserver or "N/A" if not detected
     """
     def wrapper(*args, **kwargs):
+        # Get the subdomain info from the wrapped function
         value = func(*args, **kwargs)
+        
+        # Get the Subdomain instance (self) from args
+        self = args[0]
+        
         config = Config()
         if not config.scanning_modules:
             return ModuleStatus.ABORT
         
-        self = args[0]
-        w = None
+        loader = None
         
         try:
+            # Check cache for existing results
             cache_singleton = Cache()
-            
             cached_result = cache_singleton.check_if_ip_already_found_and_return_result(ip=value.get('ip'))
             cached_uri = cache_singleton.check_if_uri_already_found_and_return_result(value.get('uri'))
-            if 80 in cached_result.get('open_ports'):
-                
+            
+            # Check if port 80 is open (required for webserver scanning)
+            if 80 in cached_result.get('open_ports', []):
+                # Initialize vulnerability checker if needed
                 vulnerability_checker = None
                 if config.check_webserver_vulnerabilities:
                     try:
                         vulnerability_checker = VulnerabilityCheckerManager.get_instance(name='nvd')
                     except Exception as vcf_error:
-                        print(f"Error creating vulnerability checker: {vcf_error}")
-                        
+                        print(f"[red]Error creating vulnerability checker: {vcf_error}[/red]")
+                
+                # Show loader if this is a new URI
                 if cached_uri:
+                    # Use improved Loader with Rich styling
                     loader = Loader(f"{Y}       [->] Webserver Scanning...{Y}").start()
                     loader.end = f"{Y}       [*] Webserver Scanning{Y}{G} [DONE]{G}"
                 else:
                     cache_singleton.add_subdomain_uri(value.get('uri'))
-                webserver_scanning = HttpClientWebserverScanningAdapter()
-                webserver_scanning.target_uri = value.get('ip')
-                w_s = webserver_scanning.run()
-                loader.stop()
-                if w_s is None:
-                    w_s_version = extract_version(w_s)
-                    if w_s_version:
-                        w_v = w_s_version[0]
-                        w_n = extract_server_name_advanced(w_s)
-                        if config.check_webserver_vulnerabilities and vulnerability_checker and w_v:
+                
+                # Create webserver scanners in priority order
+                webserver_scanners = [
+                    ApacheWebServerScanningAdapter(),
+                    NginxWebServerScanningAdapter(),
+                    IISWebServerScanningAdapter(),
+                    LighttpdWebServerScanningAdapter(),
+                    GenericWebServerScanningAdapter()  # Fallback for other servers
+                ]
+                
+                # Initialize result variables
+                server_info = None
+                server_output = "N/A"
+                
+                # Try to detect web server with specialized scanners first
+                for scanner in webserver_scanners:
+                    scanner.target_uri = value.get('ip')
+                    result = scanner.run()
+                    
+                    if result and result.get('detected'):
+                        server_info = result
+                        
+                        # Only process further if we have reasonable confidence
+                        if server_info.get('confidence') != 'Low':
+                            server_version = ""
+                            if server_info.get('version') is not None:
+                                server_version = f" v{server_info.get('version')}"
+                            
+                            # Create output string with server and version
+                            server_output = "{}{}".format(
+                                server_info.get('server'),
+                                server_version
+                            )
+                            
+                            # Check for vulnerabilities if version is available
+                            vulnerabilities_found = False
+                            if config.check_webserver_vulnerabilities and vulnerability_checker and server_info.get('version'):
                                 try:
                                     # Check for vulnerabilities
                                     vulnerabilities = vulnerability_checker.check_webserver_vulnerabilities(
-                                        w_n, w_v
+                                        server_info.get('server'), server_info.get('version')
                                     )
                                     
                                     # Get summary of vulnerabilities
                                     summary = vulnerability_checker.get_vulnerability_summary(vulnerabilities)
-                                    # Add vulnerability information to the cms result
-                                    w['vulnerabilities'] = vulnerabilities
-                                    w['vulnerability_summary'] = summary
-                                    w['is_vulnerable'] = summary['has_vulnerabilities']
+                                    
+                                    # Add vulnerability information to the server result
+                                    server_info['vulnerabilities'] = vulnerabilities
+                                    server_info['vulnerability_summary'] = summary
+                                    server_info['is_vulnerable'] = summary['has_vulnerabilities']
                                     
                                     # Add vulnerability information to the output string
                                     if summary['has_vulnerabilities']:
+                                        vulnerabilities_found = True
                                         vuln_info = f" - VULNERABLE: {summary['total']} issues"
                                         
                                         # Add severity info
@@ -375,12 +472,16 @@ def get_webserver(func):
                                             vuln_info += ")"
                                         elif summary['high'] > 0:
                                             vuln_info += f" ({summary['high']} high)"
-                                            
+                                        
                                         # Add exploitable count
                                         if summary['exploitable'] > 0:
                                             vuln_info += f", {summary['exploitable']} exploitable"
-                                            
-                                        w_s += vuln_info
+                                        
+                                        server_output += vuln_info
+                                        
+                                        # Stop the loader if vulnerabilities are found
+                                        if loader:
+                                            loader.stop()
                                         
                                     # DIRECT SAVE: Store vulnerabilities in the Subdomain instance
                                     try:
@@ -392,7 +493,7 @@ def get_webserver(func):
                                                 "Please ensure your class defines a '_vulnerabilities' attribute, "
                                                 "typically initialized as: _vulnerabilities: List[Dict[str, Any]] = field(init=False, default_factory=list)"
                                             )
-                                            print(error_msg)
+                                            print(f"[red]{error_msg}[/red]")
                                             # Create the attribute as a fallback
                                             setattr(self, '_vulnerabilities', [])
                                         
@@ -400,20 +501,45 @@ def get_webserver(func):
                                         for vuln in vulnerabilities:
                                             if vuln not in self._vulnerabilities:
                                                 self._vulnerabilities.append(vuln)
-                                        
+                                    
                                     except Exception as e:
-                                        print(f"Error saving vulnerabilities to instance: {str(e)}")
-                                        
+                                        print(f"[red]Error saving vulnerabilities to instance: {str(e)}[/red]")
+                                
                                 except Exception as e:
-                                    print(f"Error checking vulnerabilities: {str(e)}")
-                return w_s
+                                    print(f"[red]Error checking vulnerabilities: {str(e)}[/red]")
+                            
+                        # We found a server, break out of the loop
+                        break
+                
+                # If no server detected by specialized scanners, fall back to basic HTTP client
+                if server_output == "N/A":
+                    basic_http = HttpClientWebserverScanningAdapter()
+                    basic_http.target_uri = value.get('ip')
+                    server_header = basic_http.run()
+                    
+                    if server_header and server_header != "Unknown" and server_header != "N/A":
+                        server_output = server_header
+                        
+                
+                # Make sure to stop the loader if it's still running
+                if loader:
+                    loader.stop()
+                
+                return server_output
+            
+            # If port 80 is not open, show skipped message
             elif cached_uri:
                 loader = Loader('').start()
-                loader.end = f"{Y}       [*] Webserver Scanning (No port 80){Y}{G} [SKIPED]{G}"
+                loader.end = f"{Y}       [*] Webserver Scanning{Y}{G} [SKIPED]{G}"
+                if loader:
+                    loader.stop()
+            
+        except Exception as e:
+            # Only try to stop the loader if it was initialized
+            if loader:
                 loader.stop()
-        except:
-            w = None
-            pass
+            print(f"[red]Error in Webserver scanning: {str(e)}[/red]")
         
         return 'N/A'
+    
     return wrapper

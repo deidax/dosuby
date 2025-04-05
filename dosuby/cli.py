@@ -1,4 +1,5 @@
 import sys
+import argparse
 from dosuby.src.handlers.cli.interruptible_handler import InterruptibleHandler
 import inquirer
 import re
@@ -19,11 +20,44 @@ from rich.layout import Layout
 from rich.progress import Progress, SpinnerColumn, TextColumn
 from rich.style import Style
 
+# Import version information
+try:
+    from dosuby.version import __version__ as dosuby_version
+except ImportError:
+    try:
+        from setuptools_scm import get_version
+        dosuby_version = get_version(root='..', relative_to=__file__)
+    except (ImportError, LookupError):
+        dosuby_version = "unknown"
+
 # Create a console instance
 console = Console()
 
+def show_version():
+    """Display the current version of the dosuby package"""
+    console.print(Panel(
+        Text(f"Current version: {dosuby_version}", style="bright_white"),
+        title="[bold bright_blue]DOSUBY[/bold bright_blue]",
+        border_style="bright_blue",
+        box=ROUNDED,
+        expand=False,
+        padding=(1, 2)
+    ))
+    return 0
+
 def main():
     """Main function for the interactive CLI with enhanced interrupt handling and Rich styling."""
+    
+    # Set up argument parser for command line options
+    parser = argparse.ArgumentParser(description="Dosuby - Subdomain Enumeration and Assessment Tool")
+    parser.add_argument('--version', '-v', action='store_true', help='Show the current version and exit')
+    
+    # Parse arguments
+    args, unknown_args = parser.parse_known_args()
+    
+    # If --version flag is provided, show version and exit
+    if args.version:
+        return show_version()
     
     try:
         # Initialize interrupt handling at the class level
@@ -33,7 +67,7 @@ def main():
         console.print("\n")
         console.print(Panel(
             Text("An Advanced Subdomain Enumeration and Assessment Tool", style="bright_white"),
-            title="[bold bright_blue]DOSUBY v1.5.0[/bold bright_blue]",
+            title=f"[bold bright_blue]DOSUBY v{dosuby_version}[/bold bright_blue]",
             subtitle="[bright_blue]https://github.com/deidax[/bright_blue]",
             border_style="bright_blue",
             box=DOUBLE,
@@ -72,24 +106,6 @@ def main():
             {'id': '12', 'name': 'WaybackMachine', 'value': make_interruptible(WaybackmachineHandler)},
             {'id': '13', 'name': 'VirusTotal', 'value': make_interruptible(VirustotalHandler)}
         ]
-
-        # Display options in a nice table before prompting
-        # handler_table = Table(
-        #     title="Available Enumeration Methods",
-        #     box=ROUNDED,
-        #     header_style="bold bright_blue",
-        #     border_style="bright_blue",
-        #     show_header=True
-        # )
-        
-        # handler_table.add_column("ID", justify="center", style="cyan")
-        # handler_table.add_column("Method", style="bright_white")
-        
-        # for handler in handlers:
-        #     handler_table.add_row(handler['id'], handler['name'])
-        
-        # console.print(handler_table)
-        # console.print("\n")
 
         # Extract handler names for choices
         handlers_choices = [handler['name'] for handler in handlers]

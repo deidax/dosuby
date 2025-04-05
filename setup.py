@@ -8,7 +8,16 @@ with open('requirements.txt', 'r', encoding='utf-8') as f:
 
 setup(
     name='dosuby',
-    version='1.5.0',
+    use_scm_version={
+        # "version_scheme": "post-release",
+        "local_scheme": "node-and-date",
+        "write_to": "dosuby/version.py",
+        "write_to_template": '__version__ = "{version}"',
+        "relative_to": __file__,
+        "tag_regex": r"^v[0-9]+\.[0-9]+\.[0-9]+$",
+    },
+    setup_requires=["setuptools_scm"],
+    # version='1.5.0',
     packages=find_packages(),
     install_requires=requirements,
     entry_points={
