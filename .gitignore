@@ -6,4 +6,5 @@ __pycache__
 *.pyc
 dist
 dosuby.egg-info
-builddosuby/version.py
+build
+dosuby/version.py
